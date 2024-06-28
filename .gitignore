@@ -1,0 +1,8 @@
+node_modules
+obj
+bin
+.vs
+*.avi
+*.csv
+*.bin
+
