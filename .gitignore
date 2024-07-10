@@ -2,6 +2,7 @@ node_modules
 obj
 bin
 .vs
+data
 *.avi
 *.csv
 *.bin
