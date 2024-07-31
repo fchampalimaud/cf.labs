@@ -1,33 +1,359 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
-      <Expression xsi:type="Annotation">
-        <Name>1</Name>
-        <Text><![CDATA[]]></Text>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Init File Processing</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Current File Number</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Current File</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>Init</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Status</Name>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Input path" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>C:\Users\HugoMarques\Downloads\X</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Input Path</Name>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="Output path" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>.\data2</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Output Path</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Current Output Path</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Frame Number</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Filestem</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Input Path</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Path" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="SearchPattern" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="io:GetFiles">
+                <io:Path>C:\Users\HugoMarques\Downloads\X</io:Path>
+                <io:SearchPattern>*.avi</io:SearchPattern>
+                <io:SearchOption>AllDirectories</io:SearchOption>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>File List</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>File List</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Length</Selector>
+            </Expression>
+            <Expression xsi:type="InputMapping">
+              <PropertyMappings>
+                <Property Name="Value" Selector="it" />
+              </PropertyMappings>
+              <Selector>it</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>2</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Number of Files</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="21" Label="Source1" />
+            <Edge From="20" To="21" Label="Source2" />
+            <Edge From="21" To="22" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="io:GetFiles">
-          <io:Path>\\10.40.12.81\Saheli\2-Experiment_videos\6-Pilot_Loomie\SR3\Raw data\Videos\example</io:Path>
-          <io:SearchPattern>*.avi</io:SearchPattern>
-          <io:SearchOption>TopDirectoryOnly</io:SearchOption>
-        </Combinator>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>File List</Name>
       </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>2</Name>
-        <Text><![CDATA[]]></Text>
+      <Expression xsi:type="rx:SelectMany">
+        <Name>Select Current File</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Concat" />
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Current File Number</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Count" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Skip">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Current File</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="4" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Concat" />
-      </Expression>
-      <Expression xsi:type="Annotation">
-        <Name>3</Name>
-        <Text><![CDATA[]]></Text>
+      <Expression xsi:type="rx:SelectMany">
+        <Name>Prepare Current File</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Get Filestem</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Output Path</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Input Path</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>Item1.Substring(Item2)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>Remove Extension</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="Subtract">
+                    <Operand xsi:type="IntProperty">
+                      <Value>4</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>Item1.Substring(0,Item2)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>Filestem</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="6" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="7" To="11" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Create Output Path</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>/C mkdir "</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="io:GetFileName" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="scr:ExpressionTransform">
+                    <scr:Expression>Item1.Substring(0, Item2-Item3)</scr:Expression>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="StringProperty">
+                      <Value>"</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Zip" />
+                  </Expression>
+                  <Expression xsi:type="Add" />
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Arguments" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="io:StartProcess">
+                      <io:FileName>cmd.exe</io:FileName>
+                      <io:Arguments>/C mkdir ".\data2\"</io:Arguments>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="7" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="1" To="3" Label="Source1" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source3" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="10" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>Prepare current file</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Status</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="rx:SelectMany">
         <Name>Process File</Name>
@@ -40,7 +366,7 @@
               <Name>File</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
+              <Name>Current File</Name>
             </Expression>
             <Expression xsi:type="PropertyMapping">
               <PropertyMappings>
@@ -49,7 +375,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>\\10.40.12.81\Saheli\2-Experiment_videos\6-Pilot_Loomie\SR3\Raw data\Videos\example\Loom6_2024-04-04T15-00-322024-04-04T16_00_32.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\X\Loom7_2024-04-04T15-00-322024-04-04T16_00_32.avi</cv:FileName>
                 <cv:PlaybackRate>100000000</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -59,6 +385,28 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Grayscale" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Last" />
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:ElementIndex" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Index</Selector>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Frame Number</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -71,10 +419,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -88,10 +433,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly1.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly1.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -100,6 +445,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -112,10 +460,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -129,10 +474,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly2.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly2.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -141,6 +486,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -153,10 +501,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -170,10 +515,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly3.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly3.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -182,6 +527,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -194,10 +542,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -211,10 +556,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly4.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly4.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -223,6 +568,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -235,10 +583,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -252,10 +597,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly5.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly5.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -264,6 +609,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -276,10 +624,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -293,10 +638,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly6.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly6.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -305,6 +650,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -317,10 +665,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -334,10 +679,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly7.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly7.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -346,6 +691,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -358,10 +706,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -375,10 +720,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly8.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly8.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -387,6 +732,9 @@
                 </cv:FrameSize>
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Crop">
@@ -399,10 +747,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>File</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+              <Name>Filestem</Name>
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="StringProperty">
@@ -416,10 +761,10 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>Loom6_2024-04-04T15-00-322024-04-04T16_00_32_fly9.avi</cv:FileName>
+                <cv:FileName>.\data2\Loom7_2024-04-04T15-00-322024-04-04T16_00_32_fly9.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
-                <cv:Overwrite>false</cv:Overwrite>
+                <cv:Overwrite>true</cv:Overwrite>
                 <cv:FourCC>MPEG</cv:FourCC>
                 <cv:FrameRate>20</cv:FrameRate>
                 <cv:FrameSize>
@@ -429,6 +774,21 @@
                 <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
               </Combinator>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>Processing: </Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Current File</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Add" />
+            <Expression xsi:type="MulticastSubject">
+              <Name>Status</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -436,71 +796,162 @@
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="5" To="12" Label="Source1" />
-            <Edge From="5" To="18" Label="Source1" />
-            <Edge From="5" To="24" Label="Source1" />
-            <Edge From="5" To="30" Label="Source1" />
-            <Edge From="5" To="36" Label="Source1" />
-            <Edge From="5" To="42" Label="Source1" />
-            <Edge From="5" To="48" Label="Source1" />
-            <Edge From="5" To="54" Label="Source1" />
-            <Edge From="6" To="11" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source2" />
-            <Edge From="12" To="17" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="14" To="18" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="17" Label="Source2" />
-            <Edge From="18" To="23" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="20" To="24" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source2" />
-            <Edge From="24" To="29" Label="Source1" />
+            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
             <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="26" To="30" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source2" />
-            <Edge From="30" To="35" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="29" To="30" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="32" To="36" Label="Source1" />
             <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source2" />
-            <Edge From="36" To="41" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source2" />
             <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="38" To="42" Label="Source1" />
             <Edge From="39" To="40" Label="Source1" />
-            <Edge From="40" To="41" Label="Source2" />
-            <Edge From="42" To="47" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="42" Label="Source2" />
             <Edge From="43" To="44" Label="Source1" />
-            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="44" To="48" Label="Source1" />
             <Edge From="45" To="46" Label="Source1" />
-            <Edge From="46" To="47" Label="Source2" />
-            <Edge From="48" To="53" Label="Source1" />
+            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="47" To="48" Label="Source2" />
             <Edge From="49" To="50" Label="Source1" />
-            <Edge From="50" To="51" Label="Source1" />
+            <Edge From="50" To="54" Label="Source1" />
             <Edge From="51" To="52" Label="Source1" />
-            <Edge From="52" To="53" Label="Source2" />
-            <Edge From="54" To="59" Label="Source1" />
+            <Edge From="52" To="53" Label="Source1" />
+            <Edge From="53" To="54" Label="Source2" />
             <Edge From="55" To="56" Label="Source1" />
-            <Edge From="56" To="57" Label="Source1" />
+            <Edge From="56" To="60" Label="Source1" />
             <Edge From="57" To="58" Label="Source1" />
-            <Edge From="58" To="59" Label="Source2" />
+            <Edge From="58" To="59" Label="Source1" />
+            <Edge From="59" To="60" Label="Source2" />
+            <Edge From="61" To="62" Label="Source1" />
+            <Edge From="62" To="66" Label="Source1" />
+            <Edge From="63" To="64" Label="Source1" />
+            <Edge From="64" To="65" Label="Source1" />
+            <Edge From="65" To="66" Label="Source2" />
+            <Edge From="67" To="69" Label="Source1" />
+            <Edge From="68" To="69" Label="Source2" />
+            <Edge From="69" To="70" Label="Source1" />
+            <Edge From="70" To="71" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="rx:SelectMany">
+        <Name>Prepare Next File</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Current File Number</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
+            </Expression>
+            <Expression xsi:type="Add">
+              <Operand xsi:type="IntProperty">
+                <Value>1</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Current File Number</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Frame Number</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>Preparing next file</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Status</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="2" Label="Source1" />
+            <Edge From="1" To="2" Label="Source2" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Delay">
+          <rx:DueTime>PT2S</rx:DueTime>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Take">
+          <rx:Count>1</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Number of Files</Name>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Count" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:RepeatCount">
+          <rx:Count>2</rx:Count>
+        </Combinator>
+      </Expression>
       <Expression xsi:type="WorkflowOutput" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Filestem</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Current File</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Status</Name>
+      </Expression>
     </Nodes>
     <Edges>
-      <Edge From="0" To="1" Label="Source1" />
-      <Edge From="1" To="3" Label="Source1" />
-      <Edge From="2" To="3" Label="Source2" />
-      <Edge From="3" To="5" Label="Source1" />
-      <Edge From="4" To="5" Label="Source2" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="10" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source2" />
+      <Edge From="10" To="11" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
