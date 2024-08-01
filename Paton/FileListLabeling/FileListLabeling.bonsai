@@ -8,6 +8,7 @@
   <Workflow>
     <Nodes>
       <Expression xsi:type="GroupWorkflow">
+        <Name>Init</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="Combinator">
