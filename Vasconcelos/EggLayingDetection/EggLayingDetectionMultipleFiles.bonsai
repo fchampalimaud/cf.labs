@@ -42,7 +42,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
-                <Value>10</Value>
+                <Value>15</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -549,7 +549,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Take">
-                <rx:Count>1000</rx:Count>
+                <rx:Count>3000</rx:Count>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -672,7 +672,7 @@
                   <cv:X>0</cv:X>
                   <cv:Y>0</cv:Y>
                 </cv:Offset>
-                <cv:MinArea>10</cv:MinArea>
+                <cv:MinArea>15</cv:MinArea>
                 <cv:MaxArea>150</cv:MaxArea>
               </Combinator>
             </Expression>
@@ -1690,7 +1690,7 @@
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="drw:AddText">
-                                  <drw:Text>997</drw:Text>
+                                  <drw:Text>2634</drw:Text>
                                   <drw:Alignment>Center</drw:Alignment>
                                   <drw:LineAlignment>Center</drw:LineAlignment>
                                   <drw:TextRenderingHint>AntiAliasGridFit</drw:TextRenderingHint>
@@ -1702,8 +1702,8 @@
                                   </drw:Color>
                                   <drw:Font>Arial, 10.2pt, style=Bold</drw:Font>
                                   <drw:Origin>
-                                    <drw:X>488</drw:X>
-                                    <drw:Y>359</drw:Y>
+                                    <drw:X>521</drw:X>
+                                    <drw:Y>357</drw:Y>
                                   </drw:Origin>
                                 </Combinator>
                               </Expression>
@@ -1751,7 +1751,7 @@
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Skip">
-                            <rx:Count>57</rx:Count>
+                            <rx:Count>64</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
