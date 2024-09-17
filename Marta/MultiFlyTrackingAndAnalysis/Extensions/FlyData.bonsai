@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.4.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item1</Selector>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ArenaDrawer.bonsai" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Mask">
+          <cv:FillValue>
+            <cv:Val0>75</cv:Val0>
+            <cv:Val1>0</cv:Val1>
+            <cv:Val2>0</cv:Val2>
+            <cv:Val3>0</cv:Val3>
+          </cv:FillValue>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item2</Selector>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\ValidPoint.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\RollingAvg.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\Zoomer.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\PxChange.bonsai">
+        <ThresholdValue>5</ThresholdValue>
+        <MinArea>3</MinArea>
+      </Expression>
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\Zoomer.bonsai" />
+      <Expression xsi:type="IncludeWorkflow" Path="Extensions\FlyOrientation.bonsai" />
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Name>centHEADTAIL</scr:Name>
+        <scr:Script>
+import clr
+clr.AddReference("OpenCV.Net")
+from System import Tuple, Math, Single
+from OpenCV.Net import *
+from math import sin, cos, pi
+
+
+def distancesquare(pt1,pt2):
+  dx = (pt2.X - pt1.X)
+  dy = (pt2.Y - pt1.Y)
+  return dx * dx + dy * dy
+
+@returns(Tuple[Point2f,Point2f])
+def process(value):
+  tailState = value.Item1
+  extreme1 = value.Item2
+  extreme2 = value.Item3
+  head = value.Item3
+  tail = value.Item3
+
+  if (distancesquare(tailState,extreme1) &lt;= distancesquare(tailState,extreme2)):
+    head = extreme2
+    tail = extreme1
+  else:
+    head = extreme1
+    tail = extreme2
+
+  #CV.Circle(output, Point(headState), 3, Scalar.Rgb(204, 0, 0), -1)
+
+  #CV.Circle(output, Point(tailState), 3, Scalar.Rgb(0, 204, 0), -1)
+
+  #CV.Circle(output, Point(headState), 2, Scalar.Rgb(0, 0, 204), -1)
+  #CV.Circle(output, Point(tail), 2, Scalar.Rgb(0, 204, 0), -1)
+  #CV.Circle(output, Point(head), 2, Scalar.Rgb(0, 0, 204), -1)
+  return Tuple[Point2f,Point2f](head,tail)</scr:Script>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item1</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item2</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="WorkflowOutput" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Name>centHEADTAIL</scr:Name>
+        <scr:Script>
+import clr
+clr.AddReference("OpenCV.Net")
+from OpenCV.Net import *
+from math import sin, cos, pi
+
+font = None
+def load():
+  global font
+  font = Font(2,2)
+
+@returns(IplImage)
+def process(value):
+  output =  value.Item1.Clone()
+  image = value.Item1.Clone()
+  output = IplImage(image.Size, image.Depth, 3)
+  CV.CvtColor(image,output,ColorConversion.Gray2Bgr)
+
+  headState = value.Item2
+  tailState = value.Item3
+
+
+  CV.Circle(output, Point(headState), 3, Scalar.Rgb(204, 0, 0), -1)
+
+  CV.Circle(output, Point(tailState), 3, Scalar.Rgb(0, 204, 0), -1)
+  return output</scr:Script>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="0" To="4" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="2" To="3" Label="Source1" />
+      <Edge From="3" To="7" Label="Source2" />
+      <Edge From="3" To="9" Label="Source2" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="4" To="14" Label="Source1" />
+      <Edge From="4" To="9" Label="Source1" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="14" Label="Source2" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="9" To="16" Label="Source1" />
+      <Edge From="10" To="11" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="11" To="13" Label="Source1" />
+      <Edge From="12" To="16" Label="Source2" />
+      <Edge From="12" To="14" Label="Source3" />
+      <Edge From="13" To="16" Label="Source3" />
+      <Edge From="13" To="14" Label="Source4" />
+      <Edge From="14" To="15" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
