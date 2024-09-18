@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
@@ -13,7 +13,7 @@
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:GetFiles">
-          <io:Path>C:\Users\hgmar\Downloads\FlyTracking</io:Path>
+          <io:Path>C:\Users\HugoMarques\Downloads\Mirjam Ori</io:Path>
           <io:SearchPattern>*.avi</io:SearchPattern>
           <io:SearchOption>TopDirectoryOnly</io:SearchOption>
         </Combinator>
@@ -50,12 +50,12 @@ def process(value):
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.avi</cv:FileName>
                 <cv:PlaybackRate>25</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
                 <cv:Loop>false</cv:Loop>
-                <cv:Playing>true</cv:Playing>
+                <cv:Playing>false</cv:Playing>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -73,7 +73,7 @@ def process(value):
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.avi</cv:FileName>
                 <cv:PlaybackRate>0</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -313,7 +313,7 @@ def process(value):
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.w_led.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.w_led.avi</cv:FileName>
                 <cv:Suffix>None</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
                 <cv:Overwrite>false</cv:Overwrite>
@@ -513,7 +513,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.fly1_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.fly1_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -635,7 +635,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.fly2_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.fly2_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -702,7 +702,7 @@ def process(value):
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="io:CsvReader">
-              <io:FileName>C:\Users\hgmar\Downloads\FlyTracking\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.csv</io:FileName>
+              <io:FileName>C:\Users\HugoMarques\Downloads\Mirjam Ori\MH-Empty_TNT_5F-20Loom_50cm-FH1_1-2023-03-24T13_42_57.csv</io:FileName>
               <io:ScanPattern>%i %i %i %d %d </io:ScanPattern>
               <io:SkipRows>0</io:SkipRows>
             </Expression>
