@@ -31,7 +31,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
-                <Value>20</Value>
+                <Value>13</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -88,7 +88,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="StringProperty">
-                <Value>.\data\noise</Value>
+                <Value>.\data\fly6newcut</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -130,7 +130,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:GetFiles">
-                <io:Path>.\data\noise</io:Path>
+                <io:Path>.\data\fly6newcut</io:Path>
                 <io:SearchPattern>*.avi</io:SearchPattern>
                 <io:SearchOption>AllDirectories</io:SearchOption>
               </Combinator>
@@ -437,7 +437,7 @@
                     <Combinator xsi:type="rx:ToArray" />
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>Egg Persistency</Name>
+                    <Name>Egg Persistence</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:CreatePoint2f">
@@ -485,7 +485,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:FileCapture">
-                      <cv:FileName>.\data\noise\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5.avi</cv:FileName>
+                      <cv:FileName>.\data\fly6newcut\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6.avi</cv:FileName>
                       <cv:PlaybackRate>10000</cv:PlaybackRate>
                       <cv:StartPosition>0</cv:StartPosition>
                       <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -539,7 +539,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>.\data\noise\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5.avi</cv:FileName>
+                <cv:FileName>.\data\fly6newcut\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6.avi</cv:FileName>
                 <cv:PlaybackRate>10000</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -598,7 +598,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:Threshold">
-                <cv:ThresholdValue>20</cv:ThresholdValue>
+                <cv:ThresholdValue>13</cv:ThresholdValue>
                 <cv:MaxValue>255</cv:MaxValue>
                 <cv:ThresholdType>Binary</cv:ThresholdType>
               </Combinator>
@@ -688,6 +688,15 @@
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Video Terminated</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Egg Starting Frame</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Concat" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Regions</Name>
@@ -899,7 +908,7 @@
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
-                          <Name>Egg Persistency</Name>
+                          <Name>Egg Persistence</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:WithLatestFrom" />
@@ -946,7 +955,7 @@
                           </Workflow>
                         </Expression>
                         <Expression xsi:type="MulticastSubject">
-                          <Name>Egg Persistency</Name>
+                          <Name>Egg Persistence</Name>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Length</Selector>
@@ -1234,7 +1243,7 @@
                                 <Name>Source1</Name>
                               </Expression>
                               <Expression xsi:type="SubscribeSubject">
-                                <Name>Egg Persistency</Name>
+                                <Name>Egg Persistence</Name>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="rx:WithLatestFrom" />
@@ -1290,7 +1299,7 @@
                     <Combinator xsi:type="rx:ToArray" />
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>Egg Persistency</Name>
+                    <Name>Egg Persistence</Name>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -1310,7 +1319,7 @@
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Egg Persistency</Name>
+                    <Name>Egg Persistence</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
@@ -1390,7 +1399,7 @@
                     <Selector>Index</Selector>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
-                    <Name>Egg Persistency</Name>
+                    <Name>Egg Persistence</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:WithLatestFrom" />
@@ -1402,7 +1411,7 @@
                     <Combinator xsi:type="rx:ToArray" />
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
-                    <Name>Egg Persistency</Name>
+                    <Name>Egg Persistence</Name>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Index</Selector>
@@ -1514,157 +1523,129 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_EggPositions.csv</io:FileName>
+                    <io:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_EggPositions.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>true</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
                     <io:IncludeHeader>false</io:IncludeHeader>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Annotation">
-                      <Name>Save Egg Persistece</Name>
-                      <Text><![CDATA[]]></Text>
-                    </Builder>
+                  <Expression xsi:type="Annotation">
+                    <Name>Save Egg Persistece</Name>
+                    <Text><![CDATA[]]></Text>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>Egg Persistency</Name>
-                    </Builder>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Egg Persistence</Name>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="GroupWorkflow">
-                      <Name>Parse Array</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Concat" />
-                          </Expression>
-                          <Expression xsi:type="rx:SelectMany">
-                            <Workflow>
-                              <Nodes>
-                                <Expression xsi:type="WorkflowInput">
-                                  <Name>Source1</Name>
-                                </Expression>
-                                <Expression xsi:type="WorkflowOutput" />
-                              </Nodes>
-                              <Edges>
-                                <Edge From="0" To="1" Label="Source1" />
-                              </Edges>
-                            </Workflow>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Builder>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Parse Array</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Concat" />
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>Filestem</Name>
-                    </Builder>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Filestem</Name>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Add">
-                      <Operand xsi:type="StringProperty">
-                        <Value>_EggPersistence.csv</Value>
-                      </Operand>
-                    </Builder>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="StringProperty">
+                      <Value>_EggPersistence.csv</Value>
+                    </Operand>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="PropertyMapping">
-                      <PropertyMappings>
-                        <Property Name="FileName" />
-                      </PropertyMappings>
-                    </Builder>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="FileName" />
+                    </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="io:CsvWriter">
-                      <io:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_EggPersistence.csv</io:FileName>
-                      <io:Append>false</io:Append>
-                      <io:Overwrite>true</io:Overwrite>
-                      <io:Suffix>None</io:Suffix>
-                      <io:IncludeHeader>false</io:IncludeHeader>
-                    </Builder>
+                  <Expression xsi:type="io:CsvWriter">
+                    <io:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_EggPersistence.csv</io:FileName>
+                    <io:Append>false</io:Append>
+                    <io:Overwrite>true</io:Overwrite>
+                    <io:Suffix>None</io:Suffix>
+                    <io:IncludeHeader>false</io:IncludeHeader>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Annotation">
-                      <Name>Save Egg Starting Frame</Name>
-                      <Text><![CDATA[]]></Text>
-                    </Builder>
+                  <Expression xsi:type="Annotation">
+                    <Name>Save Egg Starting Frame</Name>
+                    <Text><![CDATA[]]></Text>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>Egg Starting Frame</Name>
-                    </Builder>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Egg Starting Frame</Name>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="GroupWorkflow">
-                      <Name>Parse Array</Name>
-                      <Workflow>
-                        <Nodes>
-                          <Expression xsi:type="WorkflowInput">
-                            <Name>Source1</Name>
-                          </Expression>
-                          <Expression xsi:type="Combinator">
-                            <Combinator xsi:type="rx:Concat" />
-                          </Expression>
-                          <Expression xsi:type="rx:SelectMany">
-                            <Workflow>
-                              <Nodes>
-                                <Expression xsi:type="WorkflowInput">
-                                  <Name>Source1</Name>
-                                </Expression>
-                                <Expression xsi:type="WorkflowOutput" />
-                              </Nodes>
-                              <Edges>
-                                <Edge From="0" To="1" Label="Source1" />
-                              </Edges>
-                            </Workflow>
-                          </Expression>
-                          <Expression xsi:type="WorkflowOutput" />
-                        </Nodes>
-                        <Edges>
-                          <Edge From="0" To="1" Label="Source1" />
-                          <Edge From="1" To="2" Label="Source1" />
-                          <Edge From="2" To="3" Label="Source1" />
-                        </Edges>
-                      </Workflow>
-                    </Builder>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Parse Array</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Concat" />
+                        </Expression>
+                        <Expression xsi:type="rx:SelectMany">
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="SubscribeSubject">
-                      <Name>Filestem</Name>
-                    </Builder>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Filestem</Name>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Add">
-                      <Operand xsi:type="StringProperty">
-                        <Value>_EggLayingFrames.csv</Value>
-                      </Operand>
-                    </Builder>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="StringProperty">
+                      <Value>_EggLayingFrames.csv</Value>
+                    </Operand>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="PropertyMapping">
-                      <PropertyMappings>
-                        <Property Name="FileName" />
-                      </PropertyMappings>
-                    </Builder>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="FileName" />
+                    </PropertyMappings>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="io:CsvWriter">
-                      <io:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_EggLayingFrames.csv</io:FileName>
-                      <io:Append>false</io:Append>
-                      <io:Overwrite>true</io:Overwrite>
-                      <io:Suffix>None</io:Suffix>
-                      <io:IncludeHeader>false</io:IncludeHeader>
-                    </Builder>
+                  <Expression xsi:type="io:CsvWriter">
+                    <io:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_EggLayingFrames.csv</io:FileName>
+                    <io:Append>false</io:Append>
+                    <io:Overwrite>true</io:Overwrite>
+                    <io:Suffix>None</io:Suffix>
+                    <io:IncludeHeader>false</io:IncludeHeader>
                   </Expression>
                   <Expression xsi:type="Annotation">
                     <Name>Draw Final Contours</Name>
@@ -1691,7 +1672,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:SaveImage">
-                      <cv:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_Contours.png</cv:FileName>
+                      <cv:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_Contours.png</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                     </Combinator>
                   </Expression>
@@ -1725,7 +1706,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:SaveImage">
-                      <cv:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_LastFrame.png</cv:FileName>
+                      <cv:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_LastFrame.png</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                     </Combinator>
                   </Expression>
@@ -1800,7 +1781,7 @@
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="drw:AddText">
-                                  <drw:Text>1126</drw:Text>
+                                  <drw:Text>154</drw:Text>
                                   <drw:Alignment>Center</drw:Alignment>
                                   <drw:LineAlignment>Center</drw:LineAlignment>
                                   <drw:TextRenderingHint>AntiAliasGridFit</drw:TextRenderingHint>
@@ -1812,8 +1793,8 @@
                                   </drw:Color>
                                   <drw:Font>Arial, 10.2pt, style=Bold</drw:Font>
                                   <drw:Origin>
-                                    <drw:X>256</drw:X>
-                                    <drw:Y>361</drw:Y>
+                                    <drw:X>513</drw:X>
+                                    <drw:Y>194</drw:Y>
                                   </drw:Origin>
                                 </Combinator>
                               </Expression>
@@ -1838,11 +1819,6 @@
                             </Edges>
                           </Workflow>
                         </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Delay">
-                            <rx:DueTime>PT0.01S</rx:DueTime>
-                          </Combinator>
-                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>Last Frame Canvas</Name>
                         </Expression>
@@ -1861,7 +1837,7 @@
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Skip">
-                            <rx:Count>71</rx:Count>
+                            <rx:Count>1</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1869,22 +1845,26 @@
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
                         <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="1" To="8" Label="Source1" />
+                        <Edge From="1" To="7" Label="Source1" />
                         <Edge From="2" To="4" Label="Source1" />
                         <Edge From="3" To="4" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                        <Edge From="7" To="11" Label="Source1" />
+                        <Edge From="6" To="10" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
                         <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source1" />
-                        <Edge From="10" To="11" Label="Source2" />
-                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source2" />
+                        <Edge From="10" To="11" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="drw:DrawCanvas" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>Filestem</Name>
@@ -1901,7 +1881,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:SaveImage">
-                      <cv:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_LastFrameLabelled.png</cv:FileName>
+                      <cv:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_LastFrameLabelled.png</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                     </Combinator>
                   </Expression>
@@ -1927,8 +1907,8 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="drw:CreateCanvas">
                             <drw:Size>
-                              <drw:Width>582</drw:Width>
-                              <drw:Height>366</drw:Height>
+                              <drw:Width>544</drw:Width>
+                              <drw:Height>318</drw:Height>
                             </drw:Size>
                             <drw:Depth>U8</drw:Depth>
                             <drw:Channels>3</drw:Channels>
@@ -2030,8 +2010,8 @@
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="drw:CreateCanvas">
                             <drw:Size>
-                              <drw:Width>582</drw:Width>
-                              <drw:Height>366</drw:Height>
+                              <drw:Width>544</drw:Width>
+                              <drw:Height>318</drw:Height>
                             </drw:Size>
                             <drw:Depth>U8</drw:Depth>
                             <drw:Channels>3</drw:Channels>
@@ -2086,28 +2066,28 @@
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source2" />
-                  <Edge From="6" To="43" Label="Source1" />
+                  <Edge From="6" To="44" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="13" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="13" To="43" Label="Source2" />
+                  <Edge From="13" To="44" Label="Source2" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="20" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source2" />
-                  <Edge From="20" To="43" Label="Source3" />
+                  <Edge From="20" To="44" Label="Source3" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="27" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
                   <Edge From="26" To="27" Label="Source2" />
-                  <Edge From="27" To="43" Label="Source4" />
+                  <Edge From="27" To="44" Label="Source4" />
                   <Edge From="28" To="29" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
                   <Edge From="30" To="31" Label="Source1" />
@@ -2115,17 +2095,18 @@
                   <Edge From="32" To="33" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
                   <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="43" Label="Source5" />
+                  <Edge From="35" To="44" Label="Source5" />
                   <Edge From="36" To="37" Label="Source1" />
                   <Edge From="37" To="38" Label="Source1" />
-                  <Edge From="38" To="42" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="38" To="39" Label="Source1" />
+                  <Edge From="39" To="43" Label="Source1" />
                   <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="42" Label="Source2" />
-                  <Edge From="42" To="43" Label="Source6" />
-                  <Edge From="43" To="44" Label="Source1" />
-                  <Edge From="45" To="46" Label="Source1" />
-                  <Edge From="47" To="48" Label="Source1" />
+                  <Edge From="41" To="42" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source2" />
+                  <Edge From="43" To="44" Label="Source6" />
+                  <Edge From="44" To="45" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="48" To="49" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2151,7 +2132,7 @@
               <Name>Frames</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>Egg Persistency</Name>
+              <Name>Egg Persistence</Name>
             </Expression>
           </Nodes>
           <Edges>
@@ -2176,12 +2157,14 @@
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="26" To="28" Label="Source1" />
-            <Edge From="27" To="28" Label="Source2" />
-            <Edge From="28" To="29" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="29" To="31" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
