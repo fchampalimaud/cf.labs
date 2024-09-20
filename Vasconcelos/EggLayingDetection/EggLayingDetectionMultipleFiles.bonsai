@@ -53,7 +53,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
-                <Value>150</Value>
+                <Value>300</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -544,7 +544,7 @@
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
                 <cv:Loop>false</cv:Loop>
-                <cv:Playing>true</cv:Playing>
+                <cv:Playing>false</cv:Playing>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -671,7 +671,7 @@
                   <cv:Y>0</cv:Y>
                 </cv:Offset>
                 <cv:MinArea>15</cv:MinArea>
-                <cv:MaxArea>150</cv:MaxArea>
+                <cv:MaxArea>300</cv:MaxArea>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1582,7 +1582,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>.\out\Control2_2024-07-22T12-22-442024-07-22T13_22_44_fly5_EggPersistence.csv</io:FileName>
+                    <io:FileName>.\out\Nostim6_2024-07-25T14-35-182024-07-25T15_35_18_fly6_EggPersistence.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>true</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1781,7 +1781,7 @@
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="drw:AddText">
-                                  <drw:Text>154</drw:Text>
+                                  <drw:Text>4890</drw:Text>
                                   <drw:Alignment>Center</drw:Alignment>
                                   <drw:LineAlignment>Center</drw:LineAlignment>
                                   <drw:TextRenderingHint>AntiAliasGridFit</drw:TextRenderingHint>
@@ -1793,8 +1793,8 @@
                                   </drw:Color>
                                   <drw:Font>Arial, 10.2pt, style=Bold</drw:Font>
                                   <drw:Origin>
-                                    <drw:X>513</drw:X>
-                                    <drw:Y>194</drw:Y>
+                                    <drw:X>47</drw:X>
+                                    <drw:Y>27</drw:Y>
                                   </drw:Origin>
                                 </Combinator>
                               </Expression>
@@ -1837,7 +1837,7 @@
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Skip">
-                            <rx:Count>1</rx:Count>
+                            <rx:Count>26</rx:Count>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
