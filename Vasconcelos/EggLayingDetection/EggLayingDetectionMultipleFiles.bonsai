@@ -5,6 +5,8 @@
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:bz="clr-namespace:BonZeb;assembly=BonZeb"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:drw="clr-namespace:Bonsai.Vision.Drawing;assembly=Bonsai.Vision"
@@ -456,6 +458,20 @@
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Egg Positions</Name>
                   </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="num:CreateRandom">
+                      <num:Seed xsi:nil="true" />
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="p1:CreateContinuousUniform">
+                      <p1:Lower>0</p1:Lower>
+                      <p1:Upper>180</p1:Upper>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Random Color Distribution</Name>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -468,6 +484,8 @@
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -544,11 +562,18 @@
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
                 <cv:Loop>false</cv:Loop>
-                <cv:Playing>false</cv:Playing>
+                <cv:Playing>true</cv:Playing>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Take">
+                  <rx:Count>1500</rx:Count>
+                </Combinator>
+              </Builder>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Original Frames</Name>
@@ -1722,11 +1747,6 @@
                           <Name>Egg Starting Frame</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Take">
-                            <rx:Count>1</rx:Count>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Concat" />
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -1750,6 +1770,78 @@
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="rx:SelectMany">
+                                <Name>Get Random Color</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Random Color Distribution</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="p1:SampleArray">
+                                        <p1:Count>3</p1:Count>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Index">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>0</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="Index">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>1</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="Index">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>2</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="IntProperty">
+                                        <Value>255</Value>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:WithLatestFrom" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="8" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="2" To="4" Label="Source1" />
+                                    <Edge From="2" To="5" Label="Source1" />
+                                    <Edge From="2" To="6" Label="Source1" />
+                                    <Edge From="3" To="7" Label="Source1" />
+                                    <Edge From="4" To="7" Label="Source2" />
+                                    <Edge From="5" To="7" Label="Source3" />
+                                    <Edge From="6" To="7" Label="Source4" />
+                                    <Edge From="7" To="8" Label="Source2" />
+                                    <Edge From="8" To="9" Label="Source1" />
+                                    <Edge From="9" To="10" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:WithLatestFrom" />
+                              </Expression>
+                              <Expression xsi:type="InputMapping">
+                                <PropertyMappings>
+                                  <Property Name="Color" Selector="Item2.Item1,Item2.Item2,Item2.Item3,Item2.Item4" />
+                                </PropertyMappings>
+                                <Selector>Item1</Selector>
                               </Expression>
                               <Expression xsi:type="MemberSelector">
                                 <Selector>Item1</Selector>
@@ -1781,20 +1873,20 @@
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="drw:AddText">
-                                  <drw:Text>4890</drw:Text>
+                                  <drw:Text>1416</drw:Text>
                                   <drw:Alignment>Center</drw:Alignment>
                                   <drw:LineAlignment>Center</drw:LineAlignment>
                                   <drw:TextRenderingHint>AntiAliasGridFit</drw:TextRenderingHint>
                                   <drw:Color>
-                                    <drw:Val0>0</drw:Val0>
-                                    <drw:Val1>0</drw:Val1>
-                                    <drw:Val2>255</drw:Val2>
+                                    <drw:Val0>142.48495460603615</drw:Val0>
+                                    <drw:Val1>69.102367204196</drw:Val1>
+                                    <drw:Val2>2.6994843700432614</drw:Val2>
                                     <drw:Val3>255</drw:Val3>
                                   </drw:Color>
                                   <drw:Font>Arial, 10.2pt, style=Bold</drw:Font>
                                   <drw:Origin>
-                                    <drw:X>47</drw:X>
-                                    <drw:Y>27</drw:Y>
+                                    <drw:X>4</drw:X>
+                                    <drw:Y>196</drw:Y>
                                   </drw:Origin>
                                 </Combinator>
                               </Expression>
@@ -1803,68 +1895,70 @@
                             <Edges>
                               <Edge From="0" To="1" Label="Source1" />
                               <Edge From="1" To="2" Label="Source1" />
-                              <Edge From="1" To="7" Label="Source1" />
+                              <Edge From="1" To="10" Label="Source1" />
                               <Edge From="2" To="3" Label="Source1" />
-                              <Edge From="2" To="4" Label="Source1" />
-                              <Edge From="3" To="12" Label="Source1" />
-                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="2" To="7" Label="Source1" />
+                              <Edge From="3" To="4" Label="Source1" />
+                              <Edge From="3" To="5" Label="Source1" />
+                              <Edge From="4" To="5" Label="Source2" />
                               <Edge From="5" To="6" Label="Source1" />
-                              <Edge From="6" To="12" Label="Source2" />
-                              <Edge From="7" To="9" Label="Source1" />
-                              <Edge From="8" To="9" Label="Source2" />
-                              <Edge From="9" To="10" Label="Source1" />
-                              <Edge From="10" To="11" Label="Source1" />
-                              <Edge From="11" To="12" Label="Source3" />
+                              <Edge From="6" To="15" Label="Source1" />
+                              <Edge From="7" To="8" Label="Source1" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="15" Label="Source2" />
+                              <Edge From="10" To="12" Label="Source1" />
+                              <Edge From="11" To="12" Label="Source2" />
                               <Edge From="12" To="13" Label="Source1" />
+                              <Edge From="13" To="14" Label="Source1" />
+                              <Edge From="14" To="15" Label="Source3" />
+                              <Edge From="15" To="16" Label="Source1" />
                             </Edges>
                           </Workflow>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Delay">
+                            <rx:DueTime>PT0.05S</rx:DueTime>
+                          </Combinator>
+                        </Expression>
                         <Expression xsi:type="MulticastSubject">
                           <Name>Last Frame Canvas</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Length</Selector>
-                        </Expression>
-                        <Expression xsi:type="Subtract">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Count" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Skip">
-                            <rx:Count>26</rx:Count>
-                          </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                       </Nodes>
                       <Edges>
                         <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="1" To="7" Label="Source1" />
-                        <Edge From="2" To="4" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
                         <Edge From="4" To="5" Label="Source1" />
                         <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="10" Label="Source1" />
-                        <Edge From="7" To="8" Label="Source1" />
-                        <Edge From="8" To="9" Label="Source1" />
-                        <Edge From="9" To="10" Label="Source2" />
-                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="drw:DrawCanvas" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Egg Starting Frame</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="Subtract">
+                    <Operand xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" />
+                    </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
+                    <Combinator xsi:type="rx:Skip">
+                      <rx:Count>14</rx:Count>
                     </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="drw:DrawCanvas" />
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
                     <Name>Filestem</Name>
@@ -1889,6 +1983,80 @@
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Create Frame Canvas</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Original Frames</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Size</Selector>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Size" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="drw:CreateCanvas">
+                            <drw:Size>
+                              <drw:Width>544</drw:Width>
+                              <drw:Height>318</drw:Height>
+                            </drw:Size>
+                            <drw:Depth>U8</drw:Depth>
+                            <drw:Channels>3</drw:Channels>
+                            <drw:Color>
+                              <drw:Val0>0</drw:Val0>
+                              <drw:Val1>0</drw:Val1>
+                              <drw:Val2>0</drw:Val2>
+                              <drw:Val3>0</drw:Val3>
+                            </drw:Color>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Original Frames</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Image" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="drw:AddImage">
+                            <drw:Destination>
+                              <drw:X>0</drw:X>
+                              <drw:Y>0</drw:Y>
+                              <drw:Width>0</drw:Width>
+                              <drw:Height>0</drw:Height>
+                            </drw:Destination>
+                            <drw:Interpolation>Linear</drw:Interpolation>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="6" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source2" />
+                        <Edge From="6" To="7" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Last Frame Canvas</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Start Adding Text</Name>
+                  </Expression>
                   <Expression xsi:type="GroupWorkflow">
                     <Name>Create Contour Canvas</Name>
                     <Workflow>
@@ -1992,72 +2160,6 @@
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Contour Canvas</Name>
                   </Expression>
-                  <Expression xsi:type="GroupWorkflow">
-                    <Name>Create Frame Canvas</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Original Frames</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Size</Selector>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Size" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="drw:CreateCanvas">
-                            <drw:Size>
-                              <drw:Width>544</drw:Width>
-                              <drw:Height>318</drw:Height>
-                            </drw:Size>
-                            <drw:Depth>U8</drw:Depth>
-                            <drw:Channels>3</drw:Channels>
-                            <drw:Color>
-                              <drw:Val0>0</drw:Val0>
-                              <drw:Val1>0</drw:Val1>
-                              <drw:Val2>0</drw:Val2>
-                              <drw:Val3>0</drw:Val3>
-                            </drw:Color>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="SubscribeSubject">
-                          <Name>Original Frames</Name>
-                        </Expression>
-                        <Expression xsi:type="PropertyMapping">
-                          <PropertyMappings>
-                            <Property Name="Image" />
-                          </PropertyMappings>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="drw:AddImage">
-                            <drw:Destination>
-                              <drw:X>0</drw:X>
-                              <drw:Y>0</drw:Y>
-                              <drw:Width>0</drw:Width>
-                              <drw:Height>0</drw:Height>
-                            </drw:Destination>
-                            <drw:Interpolation>Linear</drw:Interpolation>
-                          </Combinator>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source1" />
-                        <Edge From="3" To="6" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source2" />
-                        <Edge From="6" To="7" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>Last Frame Canvas</Name>
-                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -2066,28 +2168,28 @@
                   <Edge From="3" To="4" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source2" />
-                  <Edge From="6" To="44" Label="Source1" />
+                  <Edge From="6" To="48" Label="Source1" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="9" Label="Source1" />
                   <Edge From="9" To="13" Label="Source1" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
                   <Edge From="12" To="13" Label="Source2" />
-                  <Edge From="13" To="44" Label="Source2" />
+                  <Edge From="13" To="48" Label="Source2" />
                   <Edge From="14" To="15" Label="Source1" />
                   <Edge From="15" To="16" Label="Source1" />
                   <Edge From="16" To="20" Label="Source1" />
                   <Edge From="17" To="18" Label="Source1" />
                   <Edge From="18" To="19" Label="Source1" />
                   <Edge From="19" To="20" Label="Source2" />
-                  <Edge From="20" To="44" Label="Source3" />
+                  <Edge From="20" To="48" Label="Source3" />
                   <Edge From="21" To="22" Label="Source1" />
                   <Edge From="22" To="23" Label="Source1" />
                   <Edge From="23" To="27" Label="Source1" />
                   <Edge From="24" To="25" Label="Source1" />
                   <Edge From="25" To="26" Label="Source1" />
                   <Edge From="26" To="27" Label="Source2" />
-                  <Edge From="27" To="44" Label="Source4" />
+                  <Edge From="27" To="48" Label="Source4" />
                   <Edge From="28" To="29" Label="Source1" />
                   <Edge From="29" To="30" Label="Source1" />
                   <Edge From="30" To="31" Label="Source1" />
@@ -2095,18 +2197,24 @@
                   <Edge From="32" To="33" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
                   <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="44" Label="Source5" />
+                  <Edge From="35" To="48" Label="Source5" />
                   <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="37" To="42" Label="Source1" />
                   <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="43" Label="Source1" />
+                  <Edge From="39" To="40" Label="Source1" />
                   <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="42" Label="Source1" />
-                  <Edge From="42" To="43" Label="Source2" />
-                  <Edge From="43" To="44" Label="Source6" />
+                  <Edge From="41" To="42" Label="Source2" />
+                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="47" Label="Source1" />
                   <Edge From="44" To="45" Label="Source1" />
-                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="45" To="46" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source2" />
+                  <Edge From="47" To="48" Label="Source6" />
                   <Edge From="48" To="49" Label="Source1" />
+                  <Edge From="50" To="51" Label="Source1" />
+                  <Edge From="51" To="52" Label="Source1" />
+                  <Edge From="52" To="53" Label="Source1" />
+                  <Edge From="54" To="55" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2141,30 +2249,31 @@
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="10" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="16" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="16" Label="Source2" />
-            <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source3" />
-            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="17" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="17" Label="Source2" />
+            <Edge From="15" To="16" Label="Source1" />
+            <Edge From="16" To="17" Label="Source3" />
             <Edge From="17" To="18" Label="Source1" />
             <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="22" To="23" Label="Source1" />
+            <Edge From="21" To="22" Label="Source1" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="29" To="31" Label="Source1" />
-            <Edge From="30" To="31" Label="Source2" />
-            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="30" To="32" Label="Source1" />
+            <Edge From="31" To="32" Label="Source2" />
             <Edge From="32" To="33" Label="Source1" />
-            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
