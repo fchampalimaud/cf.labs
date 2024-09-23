@@ -24,21 +24,11 @@ jobs:
           done
         done
 
-    - name: Create GitHub Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create GitHub Release with zipped folders
+      uses: softprops/action-gh-release@v2
       with:
+        token: ${{ secrets.GITHUB_TOKEN }}
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
         draft: true
         prerelease: false
-
-    - name: Upload zip files to release
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: '*.zip'
-        asset_name: ${{ github.ref }}-examples.zip
-        asset_content_type: application/zip
+        files: '*.zip'
