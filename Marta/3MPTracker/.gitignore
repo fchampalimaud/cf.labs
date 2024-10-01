@@ -1,0 +1,14 @@
+# Bonsai scripting files
+.vs
+.vscode
+bin
+obj
+Packages
+Data
+data
+*.bin
+*.avi
+*.dll
+*.exe.settings
+Bonsai.exe.WebView2
+
