@@ -1,4 +1,5 @@
-# BonFly
+# 3MPTracker
+
 
 ## Setting up
 
@@ -14,3 +15,8 @@ These should only need to be installed once on a fresh new system, and are not r
 
 
 You can download the latest release of tensorflow.dll [here](https://www.tensorflow.org/install/lang_c#download_and_extract) and copy it inside your Extensions folder. You can click [here](https://github.com/bonsai-rx/sleap) for further instructions on install sleap in Bonsai.
+
+## Acknowledgements
+
+This code was modified from the original one created by Bruno Cruz.
+
