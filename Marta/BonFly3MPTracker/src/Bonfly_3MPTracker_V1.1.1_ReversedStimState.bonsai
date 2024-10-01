@@ -38,7 +38,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Value" DisplayName="1. Path" />
+        <Property Name="Value" DisplayName="InputPath" />
       </Expression>
       <Expression xsi:type="PropertySource" TypeArguments="io:GetDirectories,sys:String">
         <MemberName>Path</MemberName>
@@ -51,7 +51,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:GetFiles">
-          <io:Path>C:\Users\HugoMarques\Documents\Code\MyReps\cf.labs\Marta\3MPTracker\data</io:Path>
+          <io:Path>C:\Users\HugoMarques\Documents\Code\MyReps\cf.labs\Marta\BonFly3MPTracker\data</io:Path>
           <io:SearchPattern>*.avi</io:SearchPattern>
           <io:SearchOption>AllDirectories</io:SearchOption>
         </Combinator>
