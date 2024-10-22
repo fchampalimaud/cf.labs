@@ -1,1 +1,1 @@
-powershell -ExecutionPolicy Bypass -File .\Setup.ps1
+powershell -ExecutionPolicy Bypass -File .\SetupPS.ps1
