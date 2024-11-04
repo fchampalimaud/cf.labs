@@ -16,6 +16,10 @@ These should only need to be installed once on a fresh new system, and are not r
 
 You can download the latest release of tensorflow.dll [here](https://www.tensorflow.org/install/lang_c#download_and_extract) and copy it inside your Extensions folder. You can click [here](https://github.com/bonsai-rx/sleap) for further instructions on install sleap in Bonsai.
 
+
+## Running the parallel code
+Currently, to parallelise the workflows, you need to manually divide your files across different directories in a given parent directory.  Each of working directory will run independently from the others. This can be improved in the future, but we should test whether this is a good strategy to handle the data.
+
 ## Acknowledgements
 
 This code was modified from the original one created by Bruno Cruz.
