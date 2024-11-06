@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.6.0"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source1</Name>
+      </Expression>
+      <Expression xsi:type="WorkflowInput">
+        <Name>Source2</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item1.Item1</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item2.Item1</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item3.Item1</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item4.Item1</Selector>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item5.Item1</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:CombineLatest" />
+      </Expression>
+      <Expression xsi:type="scr:PythonTransform">
+        <scr:Name>TrackingVisualizer</scr:Name>
+        <scr:Script>
+import clr
+clr.AddReference("OpenCV.Net")
+from OpenCV.Net import *
+from math import sin, cos, pi
+
+font = None
+def load():
+  global font
+  font = Font(2,2)
+
+@returns(IplImage)
+def process(value):
+  output =  value.Item1.Clone()
+  image = value.Item1.Clone()
+  output = IplImage(image.Size, image.Depth, 3)
+  CV.CvtColor(image,output,ColorConversion.Gray2Bgr)
+
+  fly1 = value.Item2
+  fly2 = value.Item3
+  fly3 = value.Item4
+  fly4 = value.Item5
+  fly5 = value.Item6
+
+
+  CV.Circle(output, Point(fly1), 30, Scalar.Rgb(255, 0, 0), 2)
+  CV.Circle(output, Point(fly2), 30, Scalar.Rgb(0, 255, 0), 2)
+  CV.Circle(output, Point(fly3), 30, Scalar.Rgb(0, 0, 255), 2)
+  CV.Circle(output, Point(fly4), 30, Scalar.Rgb(255, 0, 127), 2)
+  CV.Circle(output, Point(fly5), 30, Scalar.Rgb(255, 255, 0), 2)
+
+  return output</scr:Script>
+      </Expression>
+      <Expression xsi:type="WorkflowOutput" />
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="7" Label="Source1" />
+      <Edge From="1" To="2" Label="Source1" />
+      <Edge From="1" To="3" Label="Source1" />
+      <Edge From="1" To="4" Label="Source1" />
+      <Edge From="1" To="5" Label="Source1" />
+      <Edge From="1" To="6" Label="Source1" />
+      <Edge From="2" To="7" Label="Source2" />
+      <Edge From="3" To="7" Label="Source3" />
+      <Edge From="4" To="7" Label="Source4" />
+      <Edge From="5" To="7" Label="Source5" />
+      <Edge From="6" To="7" Label="Source6" />
+      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="8" To="9" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
