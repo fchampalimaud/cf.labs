@@ -88,16 +88,13 @@ public class BinaryRegionsTracking
     public IObservable<ConnectedComponentCollection> Process(IObservable<ConnectedComponentCollection> source)
     {
         ConnectedComponentCollection previous = null;
+        Console.WriteLine("START!");
+
         return source.Select(value => 
         { 
-
-            if (previous==null)
-            {
-                previous = new ConnectedComponentCollection(value,value.ImageSize);
-                return previous; //bestPermute.permuted;
-            }
             var VirtualConnectedComponent = new ConnectedComponent();
-            VirtualConnectedComponent.Centroid = new OpenCV.Net.Point2f(float.NaN,float.NaN);
+            //VirtualConnectedComponent.Centroid = new OpenCV.Net.Point2f(float.NaN,float.NaN);
+            VirtualConnectedComponent.Centroid = new OpenCV.Net.Point2f(0,0);
 
             var valueCopy = new ConnectedComponentCollection(value.ImageSize);
             for (int i = 0; i < value.Count; i++)
@@ -114,6 +111,12 @@ public class BinaryRegionsTracking
                     //temp.Centroid = new OpenCV.Net.Point2f(float.NaN,float.NaN);
                     valueCopy.Add(VirtualConnectedComponent);
                  }
+
+            if (previous==null)
+            {
+                previous = new ConnectedComponentCollection(valueCopy,value.ImageSize);
+                return previous; //bestPermute.permuted;
+            }
 
             var bestPermute = permute(valueCopy,0,valueCopy.Count-1,previous);
             previous = bestPermute.ConnCompCollection;
