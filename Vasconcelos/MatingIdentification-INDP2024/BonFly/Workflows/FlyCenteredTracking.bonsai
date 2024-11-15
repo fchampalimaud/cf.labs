@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.5"
+<WorkflowBuilder Version="2.8.2"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
@@ -106,31 +106,13 @@
               <Name>Output Window Size</Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Number of Frames" Description="Numer of frames estimated to be processed." />
+              <Property Name="Value" DisplayName="Frames per Video Cut" Description="Numer of frames estimated to be processed." />
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="IntProperty">
-                <Value>54000</Value>
+                <Value>5000</Value>
               </Combinator>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Number Of Frames</Name>
-            </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Number of Video Cuts" Description="Number of videos in which to divide the output video" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>12</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Number Of Video Cuts</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Zip" />
-            </Expression>
-            <Expression xsi:type="Divide" />
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Frames per Video Cut</Name>
             </Expression>
@@ -156,12 +138,6 @@
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="27" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source2" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="28" To="29" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -215,13 +191,16 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:FileCapture">
-          <cv:FileName>C:\Users\hgmar\Downloads\video7_2018-10-09T11_17_09.avi</cv:FileName>
+          <cv:FileName>C:\Users\HugoMarques\Downloads\LuisaData\MaleCenteredAligned\video1_2018-10-08T09_42_47.avi</cv:FileName>
           <cv:PlaybackRate>10000</cv:PlaybackRate>
           <cv:StartPosition>0</cv:StartPosition>
           <cv:PositionUnits>Frames</cv:PositionUnits>
           <cv:Loop>false</cv:Loop>
-          <cv:Playing>true</cv:Playing>
+          <cv:Playing>false</cv:Playing>
         </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Distinct" />
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Read Frame Attributes</Name>
@@ -265,14 +244,6 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:Grayscale" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Skip">
-          <rx:Count>20</rx:Count>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="rx:BehaviorSubject">
-        <Name>Frames</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Background</Name>
@@ -324,8 +295,28 @@
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Skip">
+          <rx:Count>50</rx:Count>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item1</Selector>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>Frames</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Item2</Selector>
+      </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
         <Name>Background Subtraction</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Define Transform</Name>
@@ -504,8 +495,8 @@
                   <cv:Y>0</cv:Y>
                 </cv:Pivot>
                 <cv:Translation>
-                  <cv:X>-449.685516</cv:X>
-                  <cv:Y>-105.74411</cv:Y>
+                  <cv:X>-259.136963</cv:X>
+                  <cv:Y>-613.8959</cv:Y>
                 </cv:Translation>
                 <cv:Rotation>0</cv:Rotation>
                 <cv:Scale>
@@ -548,7 +539,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:WarpAffine">
-          <cv:Transform>1,0,-449.6855;0,1,-105.7441</cv:Transform>
+          <cv:Transform>1,0,-259.137;0,1,-613.8959</cv:Transform>
           <cv:Flags>Linear</cv:Flags>
           <cv:FillValue>
             <cv:Val0>0</cv:Val0>
@@ -707,6 +698,317 @@
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Define Transform</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Body Contour</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Centroid</Selector>
+                        </Expression>
+                        <Expression xsi:type="Negate" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Half Aligned Body Window</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="WorkflowProperty" TypeArguments="p1:Point2f">
+                            <Value>
+                              <X>200</X>
+                              <Y>200</Y>
+                            </Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Body Zoom</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:Threshold">
+                            <cv:ThresholdValue>32</cv:ThresholdValue>
+                            <cv:MaxValue>255</cv:MaxValue>
+                            <cv:ThresholdType>Binary</cv:ThresholdType>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:FindContours">
+                            <cv:Mode>External</cv:Mode>
+                            <cv:Method>ChainApproxNone</cv:Method>
+                            <cv:Offset>
+                              <cv:X>0</cv:X>
+                              <cv:Y>0</cv:Y>
+                            </cv:Offset>
+                            <cv:MinArea xsi:nil="true" />
+                            <cv:MaxArea xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:BinaryRegionAnalysis" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:LargestBinaryRegion" />
+                        </Expression>
+                        <Expression xsi:type="GroupWorkflow">
+                          <Name>Calculate Orientation</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Centroid</Selector>
+                              </Expression>
+                              <Expression xsi:type="SubscribeSubject">
+                                <Name>Half Body Size</Name>
+                              </Expression>
+                              <Expression xsi:type="GroupWorkflow">
+                                <Name>Create Vector</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source2</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="Subtract" />
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="cv:BinaryRegionExtremes">
+                                  <cv:Method>MajorAxisVertex</cv:Method>
+                                </Combinator>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="GroupWorkflow">
+                                <Name>Create Vector</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source2</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="Subtract" />
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="GroupWorkflow">
+                                <Name>Dot Product</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source2</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="rx:Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="scr:ExpressionTransform">
+                                      <scr:Expression>Math.acos((Item1.X*Item2.X + Item1.Y*Item2.Y) / (Math.Sqrt(Math.Pow(Item1.X,2)+Math.Pow(Item1.Y,2)) * Math.Sqrt(Math.Pow(Item2.X,2)+Math.Pow(Item2.Y,2))))</scr:Expression>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="2" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source2" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Zip" />
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="0" To="4" Label="Source1" />
+                              <Edge From="1" To="3" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source2" />
+                              <Edge From="3" To="8" Label="Source1" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="4" To="6" Label="Source1" />
+                              <Edge From="4" To="9" Label="Source2" />
+                              <Edge From="5" To="7" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source2" />
+                              <Edge From="7" To="8" Label="Source2" />
+                              <Edge From="8" To="9" Label="Source1" />
+                              <Edge From="9" To="10" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="GroupWorkflow">
+                          <Name>Calculate Direction</Name>
+                          <Workflow>
+                            <Nodes>
+                              <Expression xsi:type="WorkflowInput">
+                                <Name>Source1</Name>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="GreaterThanOrEqual">
+                                      <Operand xsi:type="DoubleProperty">
+                                        <Value>1.57079632679</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="BitwiseNot" />
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                    <Edge From="3" To="4" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Expression>Math.Atan2(Item1.Y-Item2.Y, Item1.X-Item2.X)</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="rx:Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="GreaterThanOrEqual">
+                                      <Operand xsi:type="DoubleProperty">
+                                        <Value>1.57079632679</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge From="0" To="1" Label="Source1" />
+                                    <Edge From="1" To="2" Label="Source1" />
+                                    <Edge From="2" To="3" Label="Source1" />
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Item2</Selector>
+                              </Expression>
+                              <Expression xsi:type="scr:ExpressionTransform">
+                                <scr:Expression>Math.Atan2(Item2.Y-Item1.Y, Item2.X-Item1.X)</scr:Expression>
+                              </Expression>
+                              <Expression xsi:type="Combinator">
+                                <Combinator xsi:type="rx:Merge" />
+                              </Expression>
+                              <Expression xsi:type="WorkflowOutput" />
+                            </Nodes>
+                            <Edges>
+                              <Edge From="0" To="1" Label="Source1" />
+                              <Edge From="0" To="4" Label="Source1" />
+                              <Edge From="1" To="2" Label="Source1" />
+                              <Edge From="2" To="3" Label="Source1" />
+                              <Edge From="3" To="7" Label="Source1" />
+                              <Edge From="4" To="5" Label="Source1" />
+                              <Edge From="5" To="6" Label="Source1" />
+                              <Edge From="6" To="7" Label="Source2" />
+                              <Edge From="7" To="8" Label="Source1" />
+                            </Edges>
+                          </Workflow>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property Name="Translation" Selector="Item1" />
+                            <Property Name="Pivot" Selector="Item2" />
+                            <Property Name="Rotation" Selector="Item3" />
+                          </PropertyMappings>
+                          <Selector>it</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="cv:AffineTransform">
+                            <cv:Pivot>
+                              <cv:X>310.2517</cv:X>
+                              <cv:Y>665.815857</cv:Y>
+                            </cv:Pivot>
+                            <cv:Translation>
+                              <cv:X>-110.251709</cv:X>
+                              <cv:Y>-465.815857</cv:Y>
+                            </cv:Translation>
+                            <cv:Rotation>1.87216067</cv:Rotation>
+                            <cv:Scale>
+                              <cv:X>1</cv:X>
+                              <cv:Y>1</cv:Y>
+                            </cv:Scale>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="1" To="13" Label="Source2" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="13" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source3" />
+                        <Edge From="13" To="14" Label="Source1" />
+                        <Edge From="14" To="15" Label="Source1" />
+                        <Edge From="15" To="16" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge From="0" To="1" Label="Source1" />
@@ -730,7 +1032,7 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="GroupWorkflow">
-              <Name>Calculate Rotation</Name>
+              <Name>Calculate Direction</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
@@ -828,14 +1130,14 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:AffineTransform">
                 <cv:Pivot>
-                  <cv:X>499.685516</cv:X>
-                  <cv:Y>155.74411</cv:Y>
+                  <cv:X>309.136963</cv:X>
+                  <cv:Y>663.8959</cv:Y>
                 </cv:Pivot>
                 <cv:Translation>
-                  <cv:X>-299.685516</cv:X>
-                  <cv:Y>44.25589</cv:Y>
+                  <cv:X>-109.136963</cv:X>
+                  <cv:Y>-463.895874</cv:Y>
                 </cv:Translation>
-                <cv:Rotation>1.15068</cv:Rotation>
+                <cv:Rotation>1.85961843</cv:Rotation>
                 <cv:Scale>
                   <cv:X>1</cv:X>
                   <cv:Y>1</cv:Y>
@@ -872,7 +1174,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:WarpAffine">
-          <cv:Transform>0.4078667,0.9130415,-146.0059;-0.9130415,0.4078667,592.7108</cv:Transform>
+          <cv:Transform>-0.2848233,0.95858,-348.3479;-0.95858,-0.2848233,685.4255</cv:Transform>
           <cv:Flags>Linear</cv:Flags>
           <cv:FillValue>
             <cv:Val0>0</cv:Val0>
@@ -1040,8 +1342,8 @@
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="drw:Circle">
                 <drw:Center>
-                  <drw:X>500</drw:X>
-                  <drw:Y>156</drw:Y>
+                  <drw:X>309</drw:X>
+                  <drw:Y>664</drw:Y>
                 </drw:Center>
                 <drw:Radius>50</drw:Radius>
                 <drw:Color>
@@ -1097,7 +1399,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:VideoWriter">
-          <cv:FileName>C:\Users\hgmar\Downloads\video7_2018-10-09T11_17_09_Tracked.avi</cv:FileName>
+          <cv:FileName>C:\Users\HugoMarques\Downloads\LuisaData\MaleCenteredAligned\video7_2018-10-09T11_17_09_Tracked.avi</cv:FileName>
           <cv:Suffix>None</cv:Suffix>
           <cv:Buffered>true</cv:Buffered>
           <cv:Overwrite>true</cv:Overwrite>
@@ -1127,7 +1429,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:WindowCount">
-          <rx:Count>4500</rx:Count>
+          <rx:Count>5000</rx:Count>
           <rx:Skip xsi:nil="true" />
         </Combinator>
       </Expression>
@@ -1139,7 +1441,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:VideoWriter">
-                <cv:FileName>C:\Users\hgmar\Downloads\alignment.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\LuisaData\MaleCenteredAligned\alignment_files\alignment_1\a.avi</cv:FileName>
                 <cv:Suffix>FileCount</cv:Suffix>
                 <cv:Buffered>true</cv:Buffered>
                 <cv:Overwrite>false</cv:Overwrite>
@@ -1176,37 +1478,44 @@
       <Edge From="3" To="4" Label="Source1" />
       <Edge From="4" To="5" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
-      <Edge From="6" To="7" Label="Source1" />
+      <Edge From="5" To="7" Label="Source1" />
+      <Edge From="6" To="7" Label="Source2" />
       <Edge From="7" To="8" Label="Source1" />
-      <Edge From="9" To="11" Label="Source1" />
-      <Edge From="10" To="11" Label="Source2" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="8" To="11" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="10" To="13" Label="Source1" />
       <Edge From="11" To="12" Label="Source1" />
-      <Edge From="11" To="13" Label="Source1" />
-      <Edge From="12" To="15" Label="Source1" />
-      <Edge From="13" To="14" Label="Source1" />
-      <Edge From="14" To="15" Label="Source2" />
-      <Edge From="15" To="16" Label="Source1" />
+      <Edge From="12" To="13" Label="Source2" />
+      <Edge From="14" To="16" Label="Source1" />
+      <Edge From="15" To="16" Label="Source2" />
       <Edge From="16" To="17" Label="Source1" />
-      <Edge From="18" To="21" Label="Source1" />
-      <Edge From="19" To="20" Label="Source1" />
-      <Edge From="20" To="21" Label="Source2" />
+      <Edge From="16" To="18" Label="Source1" />
+      <Edge From="17" To="20" Label="Source1" />
+      <Edge From="18" To="19" Label="Source1" />
+      <Edge From="19" To="20" Label="Source2" />
+      <Edge From="20" To="21" Label="Source1" />
       <Edge From="21" To="22" Label="Source1" />
-      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="23" To="26" Label="Source1" />
       <Edge From="24" To="25" Label="Source1" />
-      <Edge From="25" To="26" Label="Source1" />
+      <Edge From="25" To="26" Label="Source2" />
       <Edge From="26" To="27" Label="Source1" />
       <Edge From="27" To="28" Label="Source1" />
-      <Edge From="29" To="32" Label="Source1" />
+      <Edge From="29" To="30" Label="Source1" />
       <Edge From="30" To="31" Label="Source1" />
-      <Edge From="31" To="32" Label="Source2" />
+      <Edge From="31" To="32" Label="Source1" />
       <Edge From="32" To="33" Label="Source1" />
-      <Edge From="33" To="34" Label="Source1" />
-      <Edge From="34" To="35" Label="Source1" />
+      <Edge From="34" To="37" Label="Source1" />
       <Edge From="35" To="36" Label="Source1" />
-      <Edge From="37" To="40" Label="Source1" />
+      <Edge From="36" To="37" Label="Source2" />
+      <Edge From="37" To="38" Label="Source1" />
       <Edge From="38" To="39" Label="Source1" />
-      <Edge From="39" To="40" Label="Source2" />
+      <Edge From="39" To="40" Label="Source1" />
       <Edge From="40" To="41" Label="Source1" />
+      <Edge From="42" To="45" Label="Source1" />
+      <Edge From="43" To="44" Label="Source1" />
+      <Edge From="44" To="45" Label="Source2" />
+      <Edge From="45" To="46" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
