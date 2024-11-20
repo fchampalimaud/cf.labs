@@ -47,6 +47,141 @@
                 </Edges>
               </Workflow>
             </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Get Number of Animals</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>File Prefix</Name>
+                  </Expression>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="StringProperty">
+                      <Value>trajectories.csv</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="FileName" Selector="it" />
+                    </PropertyMappings>
+                    <Selector>it</Selector>
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="FileName" />
+                        </Expression>
+                        <Expression xsi:type="io:CsvReader">
+                          <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.trajectories.csv</io:FileName>
+                          <io:ListSeparator>,</io:ListSeparator>
+                          <io:ScanPattern />
+                          <io:SkipRows>1</io:SkipRows>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Length</Selector>
+                        </Expression>
+                        <Expression xsi:type="Divide">
+                          <Operand xsi:type="IntProperty">
+                            <Value>2</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Number of Animals</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Get Filenames Prefix</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Filename</Name>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>Create File Prefix</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="io:GetDirectoryName" />
+                        </Expression>
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="StringProperty">
+                            <Value>\</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="io:GetFileNameWithoutExtension" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="Add" />
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="StringProperty">
+                            <Value>.</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="0" To="3" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="4" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>File Prefix</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Filename</Name>
             </Expression>
@@ -57,7 +192,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.avi</cv:FileName>
                 <cv:PlaybackRate>25</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -97,7 +232,7 @@
                     <gui:Enabled>true</gui:Enabled>
                     <gui:Visible>true</gui:Visible>
                     <gui:Font>Microsoft Sans Serif, 7.8pt</gui:Font>
-                    <gui:Text>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.avi</gui:Text>
+                    <gui:Text>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.avi</gui:Text>
                   </Expression>
                   <Expression xsi:type="VisualizerMapping" />
                   <Expression xsi:type="gui:LabelBuilder">
@@ -191,120 +326,6 @@
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>Get Number of Animals</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>File Prefix</Name>
-                  </Expression>
-                  <Expression xsi:type="Add">
-                    <Operand xsi:type="StringProperty">
-                      <Value>trajectories.csv</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="FileName" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="io:CsvReader">
-                    <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.trajectories.csv</io:FileName>
-                    <io:ListSeparator>,</io:ListSeparator>
-                    <io:ScanPattern />
-                    <io:SkipRows>1</io:SkipRows>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Length</Selector>
-                  </Expression>
-                  <Expression xsi:type="Divide">
-                    <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>Number of Animals</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="WorkflowInput">
-              <Name>Source1</Name>
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>Get Filenames Prefix</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>Filename</Name>
-                  </Expression>
-                  <Expression xsi:type="GroupWorkflow">
-                    <Name>Create File Prefix</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="io:GetDirectoryName" />
-                        </Expression>
-                        <Expression xsi:type="Add">
-                          <Operand xsi:type="StringProperty">
-                            <Value>\</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="io:GetFileNameWithoutExtension" />
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Zip" />
-                        </Expression>
-                        <Expression xsi:type="Add" />
-                        <Expression xsi:type="Add">
-                          <Operand xsi:type="StringProperty">
-                            <Value>.</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="0" To="3" Label="Source1" />
-                        <Edge From="1" To="2" Label="Source1" />
-                        <Edge From="2" To="4" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
-                        <Edge From="4" To="5" Label="Source1" />
-                        <Edge From="5" To="6" Label="Source1" />
-                        <Edge From="6" To="7" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>File Prefix</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Raw Frames</Name>
             </Expression>
@@ -333,7 +354,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:FileCapture">
-                <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.avi</cv:FileName>
+                <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.avi</cv:FileName>
                 <cv:PlaybackRate>0</cv:PlaybackRate>
                 <cv:StartPosition>0</cv:StartPosition>
                 <cv:PositionUnits>Frames</cv:PositionUnits>
@@ -638,7 +659,7 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:VideoWriter">
-                      <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.w_led.avi</cv:FileName>
+                      <cv:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.w_led.avi</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                       <cv:Buffered>true</cv:Buffered>
                       <cv:Overwrite>true</cv:Overwrite>
@@ -1560,7 +1581,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.fly1_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.fly1_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -1726,7 +1747,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.fly2_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.fly2_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -1892,7 +1913,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.fly3_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.fly3_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -2058,7 +2079,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.fly4_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.fly4_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -2224,7 +2245,7 @@ def process(value):
                                 </PropertyMappings>
                               </Expression>
                               <Expression xsi:type="io:CsvWriter">
-                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.fly5_tracked.csv</io:FileName>
+                                <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.fly5_tracked.csv</io:FileName>
                                 <io:Delimiter>,</io:Delimiter>
                                 <io:Append>true</io:Append>
                                 <io:Overwrite>false</io:Overwrite>
@@ -2397,7 +2418,7 @@ def process(value):
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="io:CsvReader">
-              <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T15_02_41.csv</io:FileName>
+              <io:FileName>C:\Users\HugoMarques\Downloads\two video files for bonsai\MC-EmptyTNT_2Trh2NorpA-20Looms-5F-4_7d-FH0-CamA-2024-06-10T14_51_42.csv</io:FileName>
               <io:ScanPattern>%i,%i,%i</io:ScanPattern>
               <io:SkipRows>1</io:SkipRows>
             </Expression>
@@ -2487,13 +2508,13 @@ def process(value):
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="3" To="7" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="6" To="10" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="13" To="15" Label="Source1" />
@@ -2540,11 +2561,6 @@ def process(value):
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="rx:Concat" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="IntProperty">
-          <Value>0</Value>
-        </Combinator>
       </Expression>
     </Nodes>
     <Edges>
