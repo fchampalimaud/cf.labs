@@ -5,6 +5,7 @@
 filePath = 'C:\Users\HugoMarques\Downloads\LuisaData\MaleCentered';
 filePath = 'C:\Users\HugoMarques\Downloads\LuisaData\MaleCenteredAligned';
 filePath = 'C:\Users\HugoMarques\Downloads\LuisaData\MaleAlignedVerified';
+filePath = 'C:\Users\hgmar\Downloads\LuisaData\MaleAlignedVerified';
 
 %add utilities folder to path
 addpath(genpath('.\utilities\'));
