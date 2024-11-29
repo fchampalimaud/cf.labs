@@ -7,14 +7,15 @@
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:p1="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
-                 xmlns:bz="clr-namespace:BonZeb;assembly=BonZeb"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
+                 xmlns:bz="clr-namespace:BonZeb;assembly=BonZeb"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
       <Expression xsi:type="GroupWorkflow">
-        <Name>Arena RIO Selection</Name>
+        <Name>Arena ROI Selection</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
@@ -26,48 +27,68 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Arena Selected</Name>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Raw Frames</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>Raw Frames</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Number of Arenas</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>Number of Arenas</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:WithLatestFrom" />
+              </Builder>
             </Expression>
-            <Expression xsi:type="InputMapping">
-              <PropertyMappings>
-                <Property Name="Count" Selector="Item2" />
-              </PropertyMappings>
-              <Selector>it</Selector>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="InputMapping">
+                <PropertyMappings>
+                  <Property Name="Count" Selector="Item2" />
+                </PropertyMappings>
+                <Selector>it</Selector>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Range">
-                <rx:Start>0</rx:Start>
-                <rx:Count>0</rx:Count>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Range">
+                  <rx:Start>0</rx:Start>
+                  <rx:Count>4</rx:Count>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:RoiActivity">
-                <cv:Operation>Sum</cv:Operation>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:RoiActivity">
+                  <cv:Operation>Sum</cv:Operation>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:WithLatestFrom" />
+              </Builder>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Count" />
-              </PropertyMappings>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Count" />
+                </PropertyMappings>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:BufferCount">
-                <rx:Count>0</rx:Count>
-                <rx:Skip xsi:nil="true" />
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:BufferCount">
+                  <rx:Count>4</rx:Count>
+                  <rx:Skip xsi:nil="true" />
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Arena ROI Activity Regions</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:BehaviorSubject">
+                <Name>Arena ROI Activity Regions</Name>
+              </Builder>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Arena Regions </Name>
@@ -82,7 +103,7 @@
             </Expression>
             <Expression xsi:type="Index">
               <Operand xsi:type="IntProperty">
-                <Value>2</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -90,178 +111,213 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="cv:RoiActivity">
+                <cv:Regions>
+                  <cv:ArrayOfPoint>
+                    <cv:Point>
+                      <cv:X>22</cv:X>
+                      <cv:Y>15</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>30</cv:X>
+                      <cv:Y>15</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>30</cv:X>
+                      <cv:Y>22</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>22</cv:X>
+                      <cv:Y>22</cv:Y>
+                    </cv:Point>
+                  </cv:ArrayOfPoint>
+                  <cv:ArrayOfPoint>
+                    <cv:Point>
+                      <cv:X>53</cv:X>
+                      <cv:Y>23</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>63</cv:X>
+                      <cv:Y>23</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>63</cv:X>
+                      <cv:Y>31</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>53</cv:X>
+                      <cv:Y>31</cv:Y>
+                    </cv:Point>
+                  </cv:ArrayOfPoint>
+                </cv:Regions>
                 <cv:Operation>Sum</cv:Operation>
               </Combinator>
             </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Number of Arenas</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Count" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>it</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Range">
-                      <rx:Start>0</rx:Start>
-                      <rx:Count>0</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Arena Selected</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Selected Index?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item1</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item2</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Zip" />
-                        </Expression>
-                        <Expression xsi:type="Equal" />
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="0" To="2" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item1.Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Zip" />
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Not Selected Index?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item1</Selector>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>Item2</Selector>
-                        </Expression>
-                        <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="rx:Zip" />
-                        </Expression>
-                        <Expression xsi:type="Equal" />
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="0" To="2" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                        <Edge From="4" To="5" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Arena ROI Activity Regions</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Value" Selector="Item1.Item1" />
-                    </PropertyMappings>
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Merge" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Take">
-                      <rx:Count>1</rx:Count>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Number of Arenas</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="Count" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:BufferCount">
-                      <rx:Count>4</rx:Count>
-                      <rx:Skip xsi:nil="true" />
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="2" Label="Source1" />
-                  <Edge From="0" To="8" Label="Source2" />
-                  <Edge From="1" To="2" Label="Source2" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="6" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source2" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="6" To="12" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="8" To="10" Label="Source1" />
-                  <Edge From="9" To="11" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source2" />
-                  <Edge From="11" To="17" Label="Source1" />
-                  <Edge From="12" To="14" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source2" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="21" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source2" />
-                  <Edge From="21" To="22" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>Update Arena ROI Activity</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Number of Arenas</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="Count" Selector="Item2" />
+                      </PropertyMappings>
+                      <Selector>it</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Range">
+                        <rx:Start>0</rx:Start>
+                        <rx:Count>4</rx:Count>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Arena Selected</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Name>Selected Index?</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item2</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Zip" />
+                          </Expression>
+                          <Expression xsi:type="Equal" />
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="3" Label="Source1" />
+                          <Edge From="2" To="3" Label="Source2" />
+                          <Edge From="3" To="4" Label="Source1" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item1.Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item2</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Expression>
+                    <Expression xsi:type="rx:Condition">
+                      <Name>Not Selected Index?</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item1</Selector>
+                          </Expression>
+                          <Expression xsi:type="MemberSelector">
+                            <Selector>Item2</Selector>
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="rx:Zip" />
+                          </Expression>
+                          <Expression xsi:type="Equal" />
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="1" Label="Source1" />
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="3" Label="Source1" />
+                          <Edge From="2" To="3" Label="Source2" />
+                          <Edge From="3" To="4" Label="Source1" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Arena ROI Activity Regions</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="Value" Selector="Item1.Item1" />
+                      </PropertyMappings>
+                      <Selector>Item2</Selector>
+                    </Expression>
+                    <Expression xsi:type="Index">
+                      <Operand xsi:type="IntProperty">
+                        <Value>0</Value>
+                      </Operand>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Merge" />
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Number of Arenas</Name>
+                    </Expression>
+                    <Expression xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="Count" />
+                      </PropertyMappings>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:BufferCount">
+                        <rx:Count>4</rx:Count>
+                        <rx:Skip xsi:nil="true" />
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="2" Label="Source1" />
+                    <Edge From="0" To="8" Label="Source2" />
+                    <Edge From="1" To="2" Label="Source2" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="6" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source2" />
+                    <Edge From="6" To="7" Label="Source1" />
+                    <Edge From="6" To="12" Label="Source1" />
+                    <Edge From="7" To="8" Label="Source1" />
+                    <Edge From="8" To="9" Label="Source1" />
+                    <Edge From="8" To="10" Label="Source1" />
+                    <Edge From="9" To="11" Label="Source1" />
+                    <Edge From="10" To="11" Label="Source2" />
+                    <Edge From="11" To="17" Label="Source1" />
+                    <Edge From="12" To="14" Label="Source1" />
+                    <Edge From="13" To="14" Label="Source2" />
+                    <Edge From="14" To="15" Label="Source1" />
+                    <Edge From="15" To="16" Label="Source1" />
+                    <Edge From="16" To="17" Label="Source2" />
+                    <Edge From="17" To="20" Label="Source1" />
+                    <Edge From="18" To="19" Label="Source1" />
+                    <Edge From="19" To="20" Label="Source2" />
+                    <Edge From="20" To="21" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
             <Expression xsi:type="gui:ListBoxBuilder">
               <gui:Enabled>true</gui:Enabled>
@@ -272,7 +328,7 @@
                 <gui:string>2</gui:string>
                 <gui:string>3</gui:string>
               </gui:Items>
-              <gui:SelectedItem>2</gui:SelectedItem>
+              <gui:SelectedItem>3</gui:SelectedItem>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Arena Selected String</Name>
@@ -295,7 +351,7 @@
                   </Expression>
                   <Expression xsi:type="Index">
                     <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
+                      <Value>3</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -309,37 +365,45 @@
               </Workflow>
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="GroupWorkflow">
-              <Name>Selected Arena ROIs</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Arena ROI Activity Regions</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Arena Selected</Name>
-                  </Expression>
-                  <Expression xsi:type="PropertyMapping">
-                    <PropertyMappings>
-                      <Property Name="Value" />
-                    </PropertyMappings>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="3" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
-                  <Edge From="3" To="4" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>Selected Arena ROIs</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Arena ROI Activity Regions</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>Arena Selected</Name>
+                    </Expression>
+                    <Expression xsi:type="PropertyMapping">
+                      <PropertyMappings>
+                        <Property Name="Value" />
+                      </PropertyMappings>
+                    </Expression>
+                    <Expression xsi:type="Index">
+                      <Operand xsi:type="IntProperty">
+                        <Value>0</Value>
+                      </Operand>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item2</Selector>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="3" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source2" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
-            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="VisualizerMapping" />
+            </Expression>
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -384,7 +448,7 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="IntProperty">
-          <Value>0</Value>
+          <Value>4</Value>
         </Combinator>
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
@@ -418,212 +482,775 @@
         <Name>Raw Frames</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
-        <Name>Get Arena Rects</Name>
+        <Name>Define Arenas</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
               <Name>Source1</Name>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Regions" />
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Set New Arena Rects</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>Image Rescaling</Name>
+                    <Text><![CDATA[This shifts the intensity of the pixels to have a minimum value of 2 to allow for further ROI thresholding.]]></Text>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>0</dsp:Min>
+                      <dsp:Max>255</dsp:Max>
+                      <dsp:RangeMin>2</dsp:RangeMin>
+                      <dsp:RangeMax>255</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="Regions" />
+                  </Expression>
+                  <Expression xsi:type="PropertySource" TypeArguments="cv:CropPolygon,p1:Point[][]">
+                    <MemberName>Regions</MemberName>
+                    <Value>
+                      <ArrayOfPoint>
+                        <Point>
+                          <X>214</X>
+                          <Y>206</Y>
+                        </Point>
+                        <Point>
+                          <X>320</X>
+                          <Y>206</Y>
+                        </Point>
+                        <Point>
+                          <X>320</X>
+                          <Y>286</Y>
+                        </Point>
+                        <Point>
+                          <X>214</X>
+                          <Y>286</Y>
+                        </Point>
+                      </ArrayOfPoint>
+                      <ArrayOfPoint>
+                        <Point>
+                          <X>509</X>
+                          <Y>94</Y>
+                        </Point>
+                        <Point>
+                          <X>590</X>
+                          <Y>94</Y>
+                        </Point>
+                        <Point>
+                          <X>590</X>
+                          <Y>192</Y>
+                        </Point>
+                        <Point>
+                          <X>509</X>
+                          <Y>192</Y>
+                        </Point>
+                      </ArrayOfPoint>
+                      <ArrayOfPoint>
+                        <Point>
+                          <X>272</X>
+                          <Y>82</Y>
+                        </Point>
+                        <Point>
+                          <X>271</X>
+                          <Y>88</Y>
+                        </Point>
+                        <Point>
+                          <X>270</X>
+                          <Y>93</Y>
+                        </Point>
+                        <Point>
+                          <X>267</X>
+                          <Y>98</Y>
+                        </Point>
+                        <Point>
+                          <X>264</X>
+                          <Y>102</Y>
+                        </Point>
+                        <Point>
+                          <X>260</X>
+                          <Y>106</Y>
+                        </Point>
+                        <Point>
+                          <X>255</X>
+                          <Y>109</Y>
+                        </Point>
+                        <Point>
+                          <X>249</X>
+                          <Y>111</Y>
+                        </Point>
+                        <Point>
+                          <X>243</X>
+                          <Y>113</Y>
+                        </Point>
+                        <Point>
+                          <X>238</X>
+                          <Y>113</Y>
+                        </Point>
+                        <Point>
+                          <X>232</X>
+                          <Y>113</Y>
+                        </Point>
+                        <Point>
+                          <X>226</X>
+                          <Y>111</Y>
+                        </Point>
+                        <Point>
+                          <X>220</X>
+                          <Y>109</Y>
+                        </Point>
+                        <Point>
+                          <X>215</X>
+                          <Y>106</Y>
+                        </Point>
+                        <Point>
+                          <X>211</X>
+                          <Y>102</Y>
+                        </Point>
+                        <Point>
+                          <X>208</X>
+                          <Y>98</Y>
+                        </Point>
+                        <Point>
+                          <X>205</X>
+                          <Y>93</Y>
+                        </Point>
+                        <Point>
+                          <X>204</X>
+                          <Y>88</Y>
+                        </Point>
+                        <Point>
+                          <X>203</X>
+                          <Y>82</Y>
+                        </Point>
+                        <Point>
+                          <X>204</X>
+                          <Y>77</Y>
+                        </Point>
+                        <Point>
+                          <X>205</X>
+                          <Y>72</Y>
+                        </Point>
+                        <Point>
+                          <X>208</X>
+                          <Y>67</Y>
+                        </Point>
+                        <Point>
+                          <X>211</X>
+                          <Y>63</Y>
+                        </Point>
+                        <Point>
+                          <X>215</X>
+                          <Y>59</Y>
+                        </Point>
+                        <Point>
+                          <X>220</X>
+                          <Y>56</Y>
+                        </Point>
+                        <Point>
+                          <X>226</X>
+                          <Y>54</Y>
+                        </Point>
+                        <Point>
+                          <X>232</X>
+                          <Y>52</Y>
+                        </Point>
+                        <Point>
+                          <X>238</X>
+                          <Y>52</Y>
+                        </Point>
+                        <Point>
+                          <X>243</X>
+                          <Y>52</Y>
+                        </Point>
+                        <Point>
+                          <X>249</X>
+                          <Y>54</Y>
+                        </Point>
+                        <Point>
+                          <X>255</X>
+                          <Y>56</Y>
+                        </Point>
+                        <Point>
+                          <X>260</X>
+                          <Y>59</Y>
+                        </Point>
+                        <Point>
+                          <X>264</X>
+                          <Y>63</Y>
+                        </Point>
+                        <Point>
+                          <X>267</X>
+                          <Y>67</Y>
+                        </Point>
+                        <Point>
+                          <X>270</X>
+                          <Y>72</Y>
+                        </Point>
+                        <Point>
+                          <X>271</X>
+                          <Y>77</Y>
+                        </Point>
+                      </ArrayOfPoint>
+                      <ArrayOfPoint>
+                        <Point>
+                          <X>49</X>
+                          <Y>305</Y>
+                        </Point>
+                        <Point>
+                          <X>137</X>
+                          <Y>305</Y>
+                        </Point>
+                        <Point>
+                          <X>137</X>
+                          <Y>406</Y>
+                        </Point>
+                        <Point>
+                          <X>49</X>
+                          <Y>406</Y>
+                        </Point>
+                      </ArrayOfPoint>
+                    </Value>
+                  </Expression>
+                  <Expression xsi:type="rx:BehaviorSubject">
+                    <Name>Set Arena Rects</Name>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Regions" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CropPolygon">
+                      <cv:Regions>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>214</cv:X>
+                            <cv:Y>206</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>320</cv:X>
+                            <cv:Y>206</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>320</cv:X>
+                            <cv:Y>286</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>214</cv:X>
+                            <cv:Y>286</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>509</cv:X>
+                            <cv:Y>94</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>590</cv:X>
+                            <cv:Y>94</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>590</cv:X>
+                            <cv:Y>192</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>509</cv:X>
+                            <cv:Y>192</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>272</cv:X>
+                            <cv:Y>82</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>271</cv:X>
+                            <cv:Y>88</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>270</cv:X>
+                            <cv:Y>93</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>267</cv:X>
+                            <cv:Y>98</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>264</cv:X>
+                            <cv:Y>102</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>260</cv:X>
+                            <cv:Y>106</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>255</cv:X>
+                            <cv:Y>109</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>249</cv:X>
+                            <cv:Y>111</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>243</cv:X>
+                            <cv:Y>113</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>238</cv:X>
+                            <cv:Y>113</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>232</cv:X>
+                            <cv:Y>113</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>226</cv:X>
+                            <cv:Y>111</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>220</cv:X>
+                            <cv:Y>109</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>215</cv:X>
+                            <cv:Y>106</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>211</cv:X>
+                            <cv:Y>102</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>208</cv:X>
+                            <cv:Y>98</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>205</cv:X>
+                            <cv:Y>93</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>204</cv:X>
+                            <cv:Y>88</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>203</cv:X>
+                            <cv:Y>82</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>204</cv:X>
+                            <cv:Y>77</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>205</cv:X>
+                            <cv:Y>72</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>208</cv:X>
+                            <cv:Y>67</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>211</cv:X>
+                            <cv:Y>63</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>215</cv:X>
+                            <cv:Y>59</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>220</cv:X>
+                            <cv:Y>56</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>226</cv:X>
+                            <cv:Y>54</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>232</cv:X>
+                            <cv:Y>52</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>238</cv:X>
+                            <cv:Y>52</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>243</cv:X>
+                            <cv:Y>52</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>249</cv:X>
+                            <cv:Y>54</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>255</cv:X>
+                            <cv:Y>56</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>260</cv:X>
+                            <cv:Y>59</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>264</cv:X>
+                            <cv:Y>63</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>267</cv:X>
+                            <cv:Y>67</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>270</cv:X>
+                            <cv:Y>72</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>271</cv:X>
+                            <cv:Y>77</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>49</cv:X>
+                            <cv:Y>305</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>137</cv:X>
+                            <cv:Y>305</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>137</cv:X>
+                            <cv:Y>406</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>49</cv:X>
+                            <cv:Y>406</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                      </cv:Regions>
+                      <cv:MaskType>ToZero</cv:MaskType>
+                      <cv:FillValue>
+                        <cv:Val0>0</cv:Val0>
+                        <cv:Val1>0</cv:Val1>
+                        <cv:Val2>0</cv:Val2>
+                        <cv:Val3>0</cv:Val3>
+                      </cv:FillValue>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="7" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source2" />
+                  <Edge From="7" To="8" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="Annotation">
-              <Name>Image Rescaling</Name>
-              <Text><![CDATA[This shifts the intensity of the pixels to have a minimum value of 2 to allow for further ROI thresholding.]]></Text>
+              <Name>Load Arena Info</Name>
+              <Text><![CDATA[]]></Text>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Rescale">
-                <dsp:Min>0</dsp:Min>
-                <dsp:Max>255</dsp:Max>
-                <dsp:RangeMin>2</dsp:RangeMin>
-                <dsp:RangeMax>255</dsp:RangeMax>
-                <dsp:RescaleType>Linear</dsp:RescaleType>
+              <Combinator xsi:type="wie:KeyDown">
+                <wie:Filter>L</wie:Filter>
+                <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Regions" />
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Load Arenas</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="io:CsvReader">
+                    <io:FileName>tmp.csv</io:FileName>
+                    <io:ListSeparator>:</io:ListSeparator>
+                    <io:SkipRows>0</io:SkipRows>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Concat" />
+                  </Expression>
+                  <Expression xsi:type="Parse">
+                    <Pattern>%s</Pattern>
+                    <Separator>;</Separator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Concat" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="it[0]" />
+                      <Property Name="Y" Selector="it[1]" />
+                    </PropertyMappings>
+                    <Selector>it</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CreatePoint">
+                      <cv:X>53</cv:X>
+                      <cv:Y>51</cv:Y>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ToArray" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:ToArray" />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="0" To="7" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="9" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                </Edges>
+              </Workflow>
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="cv:CropPolygon,p1:Point[][]">
-              <MemberName>Regions</MemberName>
-              <Value>
-                <ArrayOfPoint>
-                  <Point>
-                    <X>265</X>
-                    <Y>348</Y>
-                  </Point>
-                  <Point>
-                    <X>340</X>
-                    <Y>348</Y>
-                  </Point>
-                  <Point>
-                    <X>340</X>
-                    <Y>400</Y>
-                  </Point>
-                  <Point>
-                    <X>265</X>
-                    <Y>400</Y>
-                  </Point>
-                </ArrayOfPoint>
-                <ArrayOfPoint>
-                  <Point>
-                    <X>22</X>
-                    <Y>266</Y>
-                  </Point>
-                  <Point>
-                    <X>113</X>
-                    <Y>266</Y>
-                  </Point>
-                  <Point>
-                    <X>113</X>
-                    <Y>343</Y>
-                  </Point>
-                  <Point>
-                    <X>22</X>
-                    <Y>343</Y>
-                  </Point>
-                </ArrayOfPoint>
-                <ArrayOfPoint>
-                  <Point>
-                    <X>136</X>
-                    <Y>135</Y>
-                  </Point>
-                  <Point>
-                    <X>137</X>
-                    <Y>135</Y>
-                  </Point>
-                  <Point>
-                    <X>137</X>
-                    <Y>143</Y>
-                  </Point>
-                  <Point>
-                    <X>136</X>
-                    <Y>143</Y>
-                  </Point>
-                </ArrayOfPoint>
-                <ArrayOfPoint>
-                  <Point>
-                    <X>517</X>
-                    <Y>200</Y>
-                  </Point>
-                  <Point>
-                    <X>517</X>
-                    <Y>200</Y>
-                  </Point>
-                  <Point>
-                    <X>517</X>
-                    <Y>198</Y>
-                  </Point>
-                  <Point>
-                    <X>517</X>
-                    <Y>198</Y>
-                  </Point>
-                </ArrayOfPoint>
-              </Value>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="GreaterThan">
+                    <Operand xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Loaded Arena Rects</Name>
+            </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>Save Arena Info</Name>
+              <Text><![CDATA[]]></Text>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="wie:KeyDown">
+                <wie:Filter>S</wie:Filter>
+                <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Arena Rects</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Concat" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="rx:SelectMany">
+                    <Name>Array2String</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Concat" />
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Expression" Description="Expression to be used in CSharpTransform for converting array elements to String." />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>Convert.ToString(X) + "," + Convert.ToString(Y)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Separator" />
+                        </Expression>
+                        <Expression xsi:type="Add">
+                          <Operand xsi:type="StringProperty">
+                            <Value>;</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Count" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:BufferCount">
+                            <rx:Count>4</rx:Count>
+                            <rx:Skip xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Add" />
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Length</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Zip" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>Item1.Substring(0,Item2-1)</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Take">
+                            <rx:Count>1</rx:Count>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="5" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="7" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="8" To="10" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source2" />
+                        <Edge From="10" To="11" Label="Source1" />
+                        <Edge From="11" To="12" Label="Source1" />
+                        <Edge From="12" To="13" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="io:CsvWriter">
+                    <io:FileName>tmp.csv</io:FileName>
+                    <io:Append>false</io:Append>
+                    <io:Overwrite>true</io:Overwrite>
+                    <io:Suffix>None</io:Suffix>
+                    <io:IncludeHeader>false</io:IncludeHeader>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Length</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Count" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>4</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="0" To="6" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="1" To="4" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source2" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source2" />
+                  <Edge From="8" To="9" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Length</Selector>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Set Arena Rects</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Loaded Arena Rects</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>Current Arena Info</Name>
+              <Text><![CDATA[]]></Text>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>Arena Rects</Name>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Regions" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:CropPolygon">
-                <cv:Regions>
-                  <cv:ArrayOfPoint>
-                    <cv:Point>
-                      <cv:X>265</cv:X>
-                      <cv:Y>348</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>340</cv:X>
-                      <cv:Y>348</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>340</cv:X>
-                      <cv:Y>400</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>265</cv:X>
-                      <cv:Y>400</cv:Y>
-                    </cv:Point>
-                  </cv:ArrayOfPoint>
-                  <cv:ArrayOfPoint>
-                    <cv:Point>
-                      <cv:X>22</cv:X>
-                      <cv:Y>266</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>113</cv:X>
-                      <cv:Y>266</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>113</cv:X>
-                      <cv:Y>343</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>22</cv:X>
-                      <cv:Y>343</cv:Y>
-                    </cv:Point>
-                  </cv:ArrayOfPoint>
-                  <cv:ArrayOfPoint>
-                    <cv:Point>
-                      <cv:X>136</cv:X>
-                      <cv:Y>135</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>137</cv:X>
-                      <cv:Y>135</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>137</cv:X>
-                      <cv:Y>143</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>136</cv:X>
-                      <cv:Y>143</cv:Y>
-                    </cv:Point>
-                  </cv:ArrayOfPoint>
-                  <cv:ArrayOfPoint>
-                    <cv:Point>
-                      <cv:X>517</cv:X>
-                      <cv:Y>200</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>517</cv:X>
-                      <cv:Y>200</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>517</cv:X>
-                      <cv:Y>198</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>517</cv:X>
-                      <cv:Y>198</cv:Y>
-                    </cv:Point>
-                  </cv:ArrayOfPoint>
-                </cv:Regions>
-                <cv:MaskType>ToZero</cv:MaskType>
-                <cv:FillValue>
-                  <cv:Val0>0</cv:Val0>
-                  <cv:Val1>0</cv:Val1>
-                  <cv:Val2>0</cv:Val2>
-                  <cv:Val3>0</cv:Val3>
-                </cv:FillValue>
-              </Combinator>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Length</Selector>
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="2" Label="Source1" />
             <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="7" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="12" Label="Source1" />
+            <Edge From="11" To="12" Label="Source2" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="13" To="15" Label="Source1" />
+            <Edge From="16" To="18" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
+            <Edge From="18" To="20" Label="Source1" />
+            <Edge From="19" To="20" Label="Source2" />
+            <Edge From="20" To="21" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>Raw Frames</Name>
+        <Name>Arena Regions </Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Count</Selector>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>Raw Frames</Name>
@@ -697,20 +1324,20 @@
           <cv:Regions>
             <cv:ArrayOfPoint>
               <cv:Point>
-                <cv:X>517</cv:X>
-                <cv:Y>200</cv:Y>
+                <cv:X>49</cv:X>
+                <cv:Y>305</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>517</cv:X>
-                <cv:Y>200</cv:Y>
+                <cv:X>137</cv:X>
+                <cv:Y>305</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>517</cv:X>
-                <cv:Y>198</cv:Y>
+                <cv:X>137</cv:X>
+                <cv:Y>406</cv:Y>
               </cv:Point>
               <cv:Point>
-                <cv:X>517</cv:X>
-                <cv:Y>198</cv:Y>
+                <cv:X>49</cv:X>
+                <cv:Y>406</cv:Y>
               </cv:Point>
             </cv:ArrayOfPoint>
           </cv:Regions>
@@ -2150,58 +2777,59 @@
       <Edge From="4" To="5" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
       <Edge From="7" To="8" Label="Source1" />
-      <Edge From="10" To="11" Label="Source1" />
-      <Edge From="10" To="12" Label="Source2" />
+      <Edge From="9" To="10" Label="Source1" />
       <Edge From="11" To="12" Label="Source1" />
+      <Edge From="11" To="13" Label="Source2" />
       <Edge From="12" To="13" Label="Source1" />
       <Edge From="13" To="14" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
-      <Edge From="17" To="18" Label="Source1" />
-      <Edge From="17" To="22" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
       <Edge From="18" To="19" Label="Source1" />
+      <Edge From="18" To="23" Label="Source1" />
       <Edge From="19" To="20" Label="Source1" />
       <Edge From="20" To="21" Label="Source1" />
-      <Edge From="21" To="25" Label="Source1" />
-      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="22" To="26" Label="Source1" />
       <Edge From="23" To="24" Label="Source1" />
-      <Edge From="24" To="25" Label="Source2" />
-      <Edge From="26" To="27" Label="Source1" />
+      <Edge From="24" To="25" Label="Source1" />
+      <Edge From="25" To="26" Label="Source2" />
       <Edge From="27" To="28" Label="Source1" />
-      <Edge From="29" To="31" Label="Source1" />
-      <Edge From="30" To="31" Label="Source2" />
-      <Edge From="31" To="32" Label="Source1" />
+      <Edge From="28" To="29" Label="Source1" />
+      <Edge From="30" To="32" Label="Source1" />
+      <Edge From="31" To="32" Label="Source2" />
       <Edge From="32" To="33" Label="Source1" />
       <Edge From="33" To="34" Label="Source1" />
       <Edge From="34" To="35" Label="Source1" />
       <Edge From="35" To="36" Label="Source1" />
       <Edge From="36" To="37" Label="Source1" />
-      <Edge From="38" To="39" Label="Source1" />
-      <Edge From="39" To="62" Label="Source1" />
-      <Edge From="40" To="41" Label="Source1" />
+      <Edge From="37" To="38" Label="Source1" />
+      <Edge From="39" To="40" Label="Source1" />
+      <Edge From="40" To="63" Label="Source1" />
       <Edge From="41" To="42" Label="Source1" />
       <Edge From="42" To="43" Label="Source1" />
-      <Edge From="43" To="56" Label="Source1" />
-      <Edge From="44" To="45" Label="Source1" />
+      <Edge From="43" To="44" Label="Source1" />
+      <Edge From="44" To="57" Label="Source1" />
       <Edge From="45" To="46" Label="Source1" />
       <Edge From="46" To="47" Label="Source1" />
-      <Edge From="47" To="56" Label="Source2" />
-      <Edge From="48" To="49" Label="Source1" />
+      <Edge From="47" To="48" Label="Source1" />
+      <Edge From="48" To="57" Label="Source2" />
       <Edge From="49" To="50" Label="Source1" />
       <Edge From="50" To="51" Label="Source1" />
-      <Edge From="51" To="56" Label="Source3" />
-      <Edge From="52" To="53" Label="Source1" />
+      <Edge From="51" To="52" Label="Source1" />
+      <Edge From="52" To="57" Label="Source3" />
       <Edge From="53" To="54" Label="Source1" />
       <Edge From="54" To="55" Label="Source1" />
-      <Edge From="55" To="56" Label="Source4" />
-      <Edge From="56" To="57" Label="Source1" />
-      <Edge From="57" To="62" Label="Source2" />
-      <Edge From="58" To="59" Label="Source1" />
-      <Edge From="59" To="62" Label="Source3" />
-      <Edge From="60" To="61" Label="Source1" />
-      <Edge From="61" To="62" Label="Source4" />
-      <Edge From="63" To="64" Label="Source1" />
+      <Edge From="55" To="56" Label="Source1" />
+      <Edge From="56" To="57" Label="Source4" />
+      <Edge From="57" To="58" Label="Source1" />
+      <Edge From="58" To="63" Label="Source2" />
+      <Edge From="59" To="60" Label="Source1" />
+      <Edge From="60" To="63" Label="Source3" />
+      <Edge From="61" To="62" Label="Source1" />
+      <Edge From="62" To="63" Label="Source4" />
       <Edge From="64" To="65" Label="Source1" />
+      <Edge From="65" To="66" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
