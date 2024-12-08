@@ -232,6 +232,18 @@
     </Size>
     <WindowState>Normal</WindowState>
   </DialogSettings>
+  <DialogSettings>
+    <Visible>false</Visible>
+    <Location>
+      <X>0</X>
+      <Y>0</Y>
+    </Location>
+    <Size>
+      <Width>0</Width>
+      <Height>0</Height>
+    </Size>
+    <WindowState>Normal</WindowState>
+  </DialogSettings>
   <DialogSettings xsi:type="WorkflowEditorSettings">
     <Visible>true</Visible>
     <Location>
@@ -870,8 +882,8 @@
         <EditorDialogSettings>
           <Visible>true</Visible>
           <Location>
-            <X>132</X>
-            <Y>189</Y>
+            <X>148</X>
+            <Y>275</Y>
           </Location>
           <Size>
             <Width>945</Width>
