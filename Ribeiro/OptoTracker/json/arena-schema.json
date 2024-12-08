@@ -1,0 +1,46 @@
+{
+  "definitions": {
+    "Point": {
+      "properties": {
+        "x": {
+          "default": 0,
+          "description": "X coordinate",
+          "minimum": 0,
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "default": 0,
+          "description": "Y coordinate",
+          "minimum": 0,
+          "title": "Y",
+          "type": "integer"
+        }
+      },
+      "title": "Point",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "id": {
+      "default": 0,
+      "description": "Arena ID",
+      "minimum": 0,
+      "title": "Id",
+      "type": "integer"
+    },
+    "region": {
+      "description": "List of points that define the arena",
+      "items": {
+        "$ref": "#/definitions/Point"
+      },
+      "title": "Region",
+      "type": "array"
+    }
+  },
+  "required": [
+    "region"
+  ],
+  "title": "Arena",
+  "type": "object"
+}

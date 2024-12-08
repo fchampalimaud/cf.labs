@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.8.5"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:p1="clr-namespace:OpenCV.Net;assembly=OpenCV.Net"
+                 xmlns:p2="clr-namespace:Bonsai.Vision.Design;assembly=Bonsai.Vision.Design"
+                 xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns="https://bonsai-rx.org/2018/workflow">
+  <Workflow>
+    <Nodes>
+      <Expression xsi:type="gui:ButtonBuilder">
+        <gui:Enabled>true</gui:Enabled>
+        <gui:Visible>true</gui:Visible>
+        <gui:Text>Start</gui:Text>
+      </Expression>
+      <Expression xsi:type="VisualizerMapping" />
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Raw Frames</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>MyRegions</Name>
+      </Expression>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="Value" />
+        </PropertyMappings>
+      </Expression>
+      <Expression xsi:type="PropertySource" TypeArguments="cv:RoiActivity,p1:Point[][]">
+        <MemberName>Regions</MemberName>
+        <Value>
+          <ArrayOfPoint>
+            <Point>
+              <X>785</X>
+              <Y>490</Y>
+            </Point>
+            <Point>
+              <X>1336</X>
+              <Y>490</Y>
+            </Point>
+            <Point>
+              <X>1336</X>
+              <Y>809</Y>
+            </Point>
+            <Point>
+              <X>785</X>
+              <Y>809</Y>
+            </Point>
+          </ArrayOfPoint>
+        </Value>
+      </Expression>
+      <Expression xsi:type="VisualizerMapping">
+        <VisualizerType xsi:type="TypeMapping" TypeArguments="p2:PolygonVisualizer" />
+      </Expression>
+      <Expression xsi:type="gui:TableLayoutPanelBuilder">
+        <gui:Enabled>true</gui:Enabled>
+        <gui:Visible>true</gui:Visible>
+        <gui:ColumnCount>3</gui:ColumnCount>
+        <gui:RowCount>1</gui:RowCount>
+        <gui:ColumnStyles />
+        <gui:RowStyles />
+        <gui:CellSpans />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:FileCapture">
+          <cv:FileName>C:\Users\hgmar\Downloads\Loom6_2024-04-04T15-00-322024-04-04T16_00_32.avi</cv:FileName>
+          <cv:PlaybackRate>0</cv:PlaybackRate>
+          <cv:StartPosition>1200</cv:StartPosition>
+          <cv:PositionUnits>Frames</cv:PositionUnits>
+          <cv:Loop>false</cv:Loop>
+          <cv:Playing>true</cv:Playing>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="cv:Grayscale" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>Raw Frames</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Raw Frames</Name>
+      </Expression>
+      <Expression xsi:type="PropertySource" TypeArguments="cv:RoiActivity,p1:Point[][]">
+        <MemberName>Regions</MemberName>
+        <Value>
+          <ArrayOfPoint>
+            <Point>
+              <X>785</X>
+              <Y>490</Y>
+            </Point>
+            <Point>
+              <X>1336</X>
+              <Y>490</Y>
+            </Point>
+            <Point>
+              <X>1336</X>
+              <Y>809</Y>
+            </Point>
+            <Point>
+              <X>785</X>
+              <Y>809</Y>
+            </Point>
+          </ArrayOfPoint>
+        </Value>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>MyRegions</Name>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge From="0" To="1" Label="Source1" />
+      <Edge From="1" To="7" Label="Source1" />
+      <Edge From="2" To="5" Label="Source1" />
+      <Edge From="3" To="4" Label="Source1" />
+      <Edge From="4" To="5" Label="Source2" />
+      <Edge From="5" To="6" Label="Source1" />
+      <Edge From="6" To="7" Label="Source2" />
+      <Edge From="8" To="9" Label="Source1" />
+      <Edge From="9" To="10" Label="Source1" />
+      <Edge From="11" To="12" Label="Source1" />
+      <Edge From="12" To="13" Label="Source1" />
+    </Edges>
+  </Workflow>
+</WorkflowBuilder>
