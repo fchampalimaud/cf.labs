@@ -5,14 +5,16 @@
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
                  xmlns:p1="clr-namespace:Harp.LedArray;assembly=Harp.LedArray"
                  xmlns:gui="clr-namespace:Bonsai.Gui;assembly=Bonsai.Gui"
+                 xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
+                 xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
-                 xmlns:drw="clr-namespace:Bonsai.Vision.Drawing;assembly=Bonsai.Vision"
-                 xmlns:p2="clr-namespace:;assembly=Extensions"
                  xmlns:viz="clr-namespace:Bonsai.Design.Visualizers;assembly=Bonsai.Design.Visualizers"
-                 xmlns:p3="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
+                 xmlns:drw="clr-namespace:Bonsai.Vision.Drawing;assembly=Bonsai.Vision"
+                 xmlns:p3="clr-namespace:;assembly=Extensions"
+                 xmlns:p4="clr-namespace:Bonsai.PointGrey;assembly=Bonsai.PointGrey"
                  xmlns:bz="clr-namespace:BonZeb;assembly=BonZeb"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
@@ -781,6 +783,84 @@
           </Edges>
         </Workflow>
       </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>LedControl</Name>
+          <Workflow>
+            <Nodes />
+            <Edges />
+          </Workflow>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="ExternalizedMapping">
+        <Property Name="MaxLedActivationTime (ms)" />
+        <Property Name="MinCoinFlipInterval (ms)" />
+        <Property Name="LedActivationProb" />
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>Init</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="MaxLedActivationTime (ms)" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>2000</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MaxActivationTime</Name>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="MinCoinFlipInterval (ms)" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>200</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MinCoinFlipInterval</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:CreateRandom">
+                <num:Seed xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p2:CreateContinuousUniform">
+                <p2:Lower>0</p2:Lower>
+                <p2:Upper>1</p2:Upper>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MyDistribution</Name>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="LedActivationProb" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>0.5</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>LedActivationProb</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
       <Expression xsi:type="ExternalizedMapping">
         <Property Name="FilePath" />
         <Property Name="VideoFileName" />
@@ -812,7 +892,7 @@
               <Name>VideoFileName</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>RoisActivity</Name>
+              <Name>RoisProcessed</Name>
             </Expression>
             <Expression xsi:type="rx:GroupBy">
               <rx:KeySelector>ArenaId</rx:KeySelector>
@@ -905,7 +985,7 @@
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="StringProperty">
-                            <Value>, LED</Value>
+                            <Value>, ActivityDetected, LED</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -973,7 +1053,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>data\Arena3.csv</io:FileName>
+                    <io:FileName>data\Arena0.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>true</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1024,7 +1104,7 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>RoisActivity</Name>
+              <Name>RoisProcessed</Name>
             </Expression>
             <Expression xsi:type="rx:GroupBy">
               <rx:KeySelector>ArenaId</rx:KeySelector>
@@ -1216,6 +1296,9 @@
                   <Expression xsi:type="MemberSelector">
                     <Selector>RoiActivity.ActivityDetected</Selector>
                   </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>LED</Selector>
+                  </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
@@ -1282,23 +1365,25 @@
                   <Edge From="3" To="9" Label="Source1" />
                   <Edge From="3" To="10" Label="Source1" />
                   <Edge From="3" To="13" Label="Source1" />
+                  <Edge From="3" To="14" Label="Source1" />
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
                   <Edge From="6" To="8" Label="Source1" />
-                  <Edge From="7" To="14" Label="Source1" />
-                  <Edge From="8" To="14" Label="Source2" />
-                  <Edge From="9" To="14" Label="Source3" />
+                  <Edge From="7" To="15" Label="Source1" />
+                  <Edge From="8" To="15" Label="Source2" />
+                  <Edge From="9" To="15" Label="Source3" />
                   <Edge From="10" To="11" Label="Source1" />
                   <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="14" Label="Source4" />
-                  <Edge From="13" To="14" Label="Source5" />
-                  <Edge From="14" To="17" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source2" />
-                  <Edge From="17" To="19" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source2" />
-                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="12" To="15" Label="Source4" />
+                  <Edge From="13" To="15" Label="Source5" />
+                  <Edge From="14" To="15" Label="Source6" />
+                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="20" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source2" />
+                  <Edge From="20" To="21" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1465,6 +1550,959 @@
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>RecordingStarted</Name>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>FlyZoom</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena0?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Frames</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MyArenas</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
+                    <Value>0</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Regions" Selector="Item2" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CropPolygon">
+                      <cv:Regions>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>3</cv:X>
+                            <cv:Y>113</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>564</cv:X>
+                            <cv:Y>113</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>564</cv:X>
+                            <cv:Y>679</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>3</cv:X>
+                            <cv:Y>679</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                      </cv:Regions>
+                      <cv:MaskType>ToZero</cv:MaskType>
+                      <cv:FillValue>
+                        <cv:Val0>0</cv:Val0>
+                        <cv:Val1>0</cv:Val1>
+                        <cv:Val2>0</cv:Val2>
+                        <cv:Val3>0</cv:Val3>
+                      </cv:FillValue>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>254</dsp:Min>
+                      <dsp:Max>0</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>254</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="Item1.Centroid.X" />
+                      <Property Name="Y" Selector="Item1.Centroid.Y" />
+                    </PropertyMappings>
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
+                    <X>354.776367</X>
+                    <Y>240.787277</Y>
+                    <HalfWidth>30</HalfWidth>
+                    <HalfHeight>30</HalfHeight>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena1?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>1</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Frames</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MyArenas</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
+                    <Value>1</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Regions" Selector="Item2" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CropPolygon">
+                      <cv:Regions>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>731</cv:X>
+                            <cv:Y>117</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>1289</cv:X>
+                            <cv:Y>117</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>1289</cv:X>
+                            <cv:Y>679</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>731</cv:X>
+                            <cv:Y>679</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                      </cv:Regions>
+                      <cv:MaskType>ToZero</cv:MaskType>
+                      <cv:FillValue>
+                        <cv:Val0>0</cv:Val0>
+                        <cv:Val1>0</cv:Val1>
+                        <cv:Val2>0</cv:Val2>
+                        <cv:Val3>0</cv:Val3>
+                      </cv:FillValue>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>254</dsp:Min>
+                      <dsp:Max>0</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>254</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="Item1.Centroid.X" />
+                      <Property Name="Y" Selector="Item1.Centroid.Y" />
+                    </PropertyMappings>
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
+                    <X>NaN</X>
+                    <Y>NaN</Y>
+                    <HalfWidth>30</HalfWidth>
+                    <HalfHeight>30</HalfHeight>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena2?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>2</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Frames</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MyArenas</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
+                    <Value>2</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Regions" Selector="Item2" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CropPolygon">
+                      <cv:Regions>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>5</cv:X>
+                            <cv:Y>851</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>568</cv:X>
+                            <cv:Y>851</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>568</cv:X>
+                            <cv:Y>1407</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>5</cv:X>
+                            <cv:Y>1407</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                      </cv:Regions>
+                      <cv:MaskType>ToZero</cv:MaskType>
+                      <cv:FillValue>
+                        <cv:Val0>0</cv:Val0>
+                        <cv:Val1>0</cv:Val1>
+                        <cv:Val2>0</cv:Val2>
+                        <cv:Val3>0</cv:Val3>
+                      </cv:FillValue>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>254</dsp:Min>
+                      <dsp:Max>0</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>254</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="Item1.Centroid.X" />
+                      <Property Name="Y" Selector="Item1.Centroid.Y" />
+                    </PropertyMappings>
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
+                    <X>NaN</X>
+                    <Y>NaN</Y>
+                    <HalfWidth>30</HalfWidth>
+                    <HalfHeight>30</HalfHeight>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena3?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>3</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>Frames</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>MyArenas</Name>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
+                    <Value>3</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="Regions" Selector="Item2" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="cv:CropPolygon">
+                      <cv:Regions>
+                        <cv:ArrayOfPoint>
+                          <cv:Point>
+                            <cv:X>732</cv:X>
+                            <cv:Y>857</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>1286</cv:X>
+                            <cv:Y>857</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>1286</cv:X>
+                            <cv:Y>1396</cv:Y>
+                          </cv:Point>
+                          <cv:Point>
+                            <cv:X>732</cv:X>
+                            <cv:Y>1396</cv:Y>
+                          </cv:Point>
+                        </cv:ArrayOfPoint>
+                      </cv:Regions>
+                      <cv:MaskType>ToZero</cv:MaskType>
+                      <cv:FillValue>
+                        <cv:Val0>0</cv:Val0>
+                        <cv:Val1>0</cv:Val1>
+                        <cv:Val2>0</cv:Val2>
+                        <cv:Val3>0</cv:Val3>
+                      </cv:FillValue>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="dsp:Rescale">
+                      <dsp:Min>254</dsp:Min>
+                      <dsp:Max>0</dsp:Max>
+                      <dsp:RangeMin>0</dsp:RangeMin>
+                      <dsp:RangeMax>254</dsp:RangeMax>
+                      <dsp:RescaleType>Linear</dsp:RescaleType>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:WithLatestFrom" />
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="X" Selector="Item1.Centroid.X" />
+                      <Property Name="Y" Selector="Item1.Centroid.Y" />
+                    </PropertyMappings>
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
+                    <X>319.563049</X>
+                    <Y>199.734024</Y>
+                    <HalfWidth>30</HalfWidth>
+                    <HalfHeight>30</HalfHeight>
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>2</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="9" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="52" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="22" Label="Source1" />
+                  <Edge From="15" To="18" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source2" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source2" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source1" />
+                  <Edge From="24" To="25" Label="Source1" />
+                  <Edge From="25" To="52" Label="Source2" />
+                  <Edge From="26" To="27" Label="Source1" />
+                  <Edge From="27" To="35" Label="Source1" />
+                  <Edge From="28" To="31" Label="Source1" />
+                  <Edge From="29" To="30" Label="Source1" />
+                  <Edge From="30" To="31" Label="Source2" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="33" Label="Source1" />
+                  <Edge From="33" To="34" Label="Source1" />
+                  <Edge From="34" To="35" Label="Source2" />
+                  <Edge From="35" To="36" Label="Source1" />
+                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source1" />
+                  <Edge From="38" To="52" Label="Source3" />
+                  <Edge From="39" To="40" Label="Source1" />
+                  <Edge From="40" To="48" Label="Source1" />
+                  <Edge From="41" To="44" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="43" To="44" Label="Source2" />
+                  <Edge From="44" To="45" Label="Source1" />
+                  <Edge From="45" To="46" Label="Source1" />
+                  <Edge From="46" To="47" Label="Source1" />
+                  <Edge From="47" To="48" Label="Source2" />
+                  <Edge From="48" To="49" Label="Source1" />
+                  <Edge From="49" To="50" Label="Source1" />
+                  <Edge From="50" To="51" Label="Source1" />
+                  <Edge From="51" To="52" Label="Source4" />
+                  <Edge From="52" To="53" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="gui:TableLayoutPanelBuilder">
+                <gui:Enabled>true</gui:Enabled>
+                <gui:Visible>true</gui:Visible>
+                <gui:ColumnCount>3</gui:ColumnCount>
+                <gui:RowCount>2</gui:RowCount>
+                <gui:ColumnStyles />
+                <gui:RowStyles />
+                <gui:CellSpans />
+              </Builder>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>RoiActivityDetection</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena0?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.ActivityDetected</Selector>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena1?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>1</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.ActivityDetected</Selector>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena2?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>2</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.ActivityDetected</Selector>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena3?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>3</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.ActivityDetected</Selector>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>2</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="20" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="20" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source1" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="20" Label="Source3" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="18" Label="Source1" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source4" />
+                  <Edge From="20" To="21" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="GroupWorkflow">
+              <Name>RoiActivity</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena0?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>0</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.RoiActivity</Selector>
+                  </Expression>
+                  <Expression xsi:type="Index">
+                    <Operand xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena1?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>1</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.RoiActivity</Selector>
+                  </Expression>
+                  <Expression xsi:type="Index">
+                    <Operand xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena2?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>2</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.RoiActivity</Selector>
+                  </Expression>
+                  <Expression xsi:type="Index">
+                    <Operand xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>RoisActivity</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Arena3?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>ArenaId</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" />
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="IntProperty">
+                            <Value>3</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="3" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source2" />
+                        <Edge From="3" To="4" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>RoiActivity.RoiActivity</Selector>
+                  </Expression>
+                  <Expression xsi:type="Index">
+                    <Operand xsi:type="IntProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="viz:RollingGraphBuilder">
+                    <viz:SymbolType>None</viz:SymbolType>
+                    <viz:LineWidth>1</viz:LineWidth>
+                    <viz:Capacity>100</viz:Capacity>
+                    <viz:Min xsi:nil="true" />
+                    <viz:Max xsi:nil="true" />
+                  </Expression>
+                  <Expression xsi:type="VisualizerMapping" />
+                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
+                    <gui:Enabled>true</gui:Enabled>
+                    <gui:Visible>true</gui:Visible>
+                    <gui:ColumnCount>2</gui:ColumnCount>
+                    <gui:RowCount>2</gui:RowCount>
+                    <gui:ColumnStyles />
+                    <gui:RowStyles />
+                    <gui:CellSpans />
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="24" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="24" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
+                  <Edge From="17" To="24" Label="Source3" />
+                  <Edge From="18" To="19" Label="Source1" />
+                  <Edge From="19" To="20" Label="Source1" />
+                  <Edge From="20" To="21" Label="Source1" />
+                  <Edge From="21" To="22" Label="Source1" />
+                  <Edge From="22" To="23" Label="Source1" />
+                  <Edge From="23" To="24" Label="Source4" />
+                  <Edge From="24" To="25" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="VisualizerMapping" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="WorkflowOutput" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>RecordingStarted</Name>
@@ -1729,7 +2767,7 @@
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p2:MyTransform,cv:RegionActivityCollection">
+            <Expression xsi:type="PropertySource" TypeArguments="p3:MyTransform,cv:RegionActivityCollection">
               <MemberName>RegionActivityCollection</MemberName>
               <Value>
                 <RegionActivity>
@@ -1886,7 +2924,7 @@
                     <Height>34</Height>
                   </Rect>
                   <Activity>
-                    <Val0>0</Val0>
+                    <Val0>4335</Val0>
                     <Val1>0</Val1>
                     <Val2>0</Val2>
                     <Val3>0</Val3>
@@ -1937,7 +2975,7 @@
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p2:MyTransform,cv:RegionActivityCollection">
+            <Expression xsi:type="PropertySource" TypeArguments="p3:MyTransform,cv:RegionActivityCollection">
               <MemberName>RegionActivityCollection</MemberName>
               <Value>
                 <RegionActivity>
@@ -2017,7 +3055,7 @@
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p2:MyTransform,cv:RegionActivityCollection">
+            <Expression xsi:type="PropertySource" TypeArguments="p3:MyTransform,cv:RegionActivityCollection">
               <MemberName>RegionActivityCollection</MemberName>
               <Value>
                 <RegionActivity>
@@ -2385,7 +3423,7 @@
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="PropertySource" TypeArguments="p2:MyTransform,cv:RegionActivityCollection">
+            <Expression xsi:type="PropertySource" TypeArguments="p3:MyTransform,cv:RegionActivityCollection">
               <MemberName>RegionActivityCollection</MemberName>
               <Value>
                 <RegionActivity>
@@ -2542,7 +3580,7 @@
                     <Height>43</Height>
                   </Rect>
                   <Activity>
-                    <Val0>0</Val0>
+                    <Val0>29325</Val0>
                     <Val1>0</Val1>
                     <Val2>0</Val2>
                     <Val3>0</Val3>
@@ -2561,945 +3599,6 @@
               <gui:CellSpans />
             </Expression>
             <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="GroupWorkflow">
-              <Name>FlyZoom</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena0?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Frames</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MyArenas</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
-                    <Value>0</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:CropPolygon">
-                      <cv:Regions>
-                        <cv:ArrayOfPoint>
-                          <cv:Point>
-                            <cv:X>3</cv:X>
-                            <cv:Y>113</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>564</cv:X>
-                            <cv:Y>113</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>564</cv:X>
-                            <cv:Y>679</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>3</cv:X>
-                            <cv:Y>679</cv:Y>
-                          </cv:Point>
-                        </cv:ArrayOfPoint>
-                      </cv:Regions>
-                      <cv:MaskType>ToZero</cv:MaskType>
-                      <cv:FillValue>
-                        <cv:Val0>0</cv:Val0>
-                        <cv:Val1>0</cv:Val1>
-                        <cv:Val2>0</cv:Val2>
-                        <cv:Val3>0</cv:Val3>
-                      </cv:FillValue>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>254</dsp:Min>
-                      <dsp:Max>0</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>254</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="X" Selector="Item1.Centroid.X" />
-                      <Property Name="Y" Selector="Item1.Centroid.Y" />
-                    </PropertyMappings>
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>404.331543</X>
-                    <Y>292.468262</Y>
-                    <HalfWidth>30</HalfWidth>
-                    <HalfHeight>30</HalfHeight>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena1?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Frames</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MyArenas</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
-                    <Value>1</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:CropPolygon">
-                      <cv:Regions>
-                        <cv:ArrayOfPoint>
-                          <cv:Point>
-                            <cv:X>731</cv:X>
-                            <cv:Y>117</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1289</cv:X>
-                            <cv:Y>117</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1289</cv:X>
-                            <cv:Y>679</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>731</cv:X>
-                            <cv:Y>679</cv:Y>
-                          </cv:Point>
-                        </cv:ArrayOfPoint>
-                      </cv:Regions>
-                      <cv:MaskType>ToZero</cv:MaskType>
-                      <cv:FillValue>
-                        <cv:Val0>0</cv:Val0>
-                        <cv:Val1>0</cv:Val1>
-                        <cv:Val2>0</cv:Val2>
-                        <cv:Val3>0</cv:Val3>
-                      </cv:FillValue>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>254</dsp:Min>
-                      <dsp:Max>0</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>254</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="X" Selector="Item1.Centroid.X" />
-                      <Property Name="Y" Selector="Item1.Centroid.Y" />
-                    </PropertyMappings>
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>NaN</X>
-                    <Y>NaN</Y>
-                    <HalfWidth>30</HalfWidth>
-                    <HalfHeight>30</HalfHeight>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena2?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>2</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Frames</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MyArenas</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
-                    <Value>2</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:CropPolygon">
-                      <cv:Regions>
-                        <cv:ArrayOfPoint>
-                          <cv:Point>
-                            <cv:X>5</cv:X>
-                            <cv:Y>851</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>568</cv:X>
-                            <cv:Y>851</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>568</cv:X>
-                            <cv:Y>1407</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>5</cv:X>
-                            <cv:Y>1407</cv:Y>
-                          </cv:Point>
-                        </cv:ArrayOfPoint>
-                      </cv:Regions>
-                      <cv:MaskType>ToZero</cv:MaskType>
-                      <cv:FillValue>
-                        <cv:Val0>0</cv:Val0>
-                        <cv:Val1>0</cv:Val1>
-                        <cv:Val2>0</cv:Val2>
-                        <cv:Val3>0</cv:Val3>
-                      </cv:FillValue>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>254</dsp:Min>
-                      <dsp:Max>0</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>254</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="X" Selector="Item1.Centroid.X" />
-                      <Property Name="Y" Selector="Item1.Centroid.Y" />
-                    </PropertyMappings>
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>335.941925</X>
-                    <Y>28.1843433</Y>
-                    <HalfWidth>30</HalfWidth>
-                    <HalfHeight>30</HalfHeight>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena3?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>3</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>Frames</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>MyArenas</Name>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:IndexedArenaToRegions.bonsai">
-                    <Value>3</Value>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="Regions" Selector="Item2" />
-                    </PropertyMappings>
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="cv:CropPolygon">
-                      <cv:Regions>
-                        <cv:ArrayOfPoint>
-                          <cv:Point>
-                            <cv:X>732</cv:X>
-                            <cv:Y>857</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1286</cv:X>
-                            <cv:Y>857</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>1286</cv:X>
-                            <cv:Y>1396</cv:Y>
-                          </cv:Point>
-                          <cv:Point>
-                            <cv:X>732</cv:X>
-                            <cv:Y>1396</cv:Y>
-                          </cv:Point>
-                        </cv:ArrayOfPoint>
-                      </cv:Regions>
-                      <cv:MaskType>ToZero</cv:MaskType>
-                      <cv:FillValue>
-                        <cv:Val0>0</cv:Val0>
-                        <cv:Val1>0</cv:Val1>
-                        <cv:Val2>0</cv:Val2>
-                        <cv:Val3>0</cv:Val3>
-                      </cv:FillValue>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Rescale">
-                      <dsp:Min>254</dsp:Min>
-                      <dsp:Max>0</dsp:Max>
-                      <dsp:RangeMin>0</dsp:RangeMin>
-                      <dsp:RangeMax>254</dsp:RangeMax>
-                      <dsp:RescaleType>Linear</dsp:RescaleType>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:WithLatestFrom" />
-                  </Expression>
-                  <Expression xsi:type="InputMapping">
-                    <PropertyMappings>
-                      <Property Name="X" Selector="Item1.Centroid.X" />
-                      <Property Name="Y" Selector="Item1.Centroid.Y" />
-                    </PropertyMappings>
-                    <Selector>Item2</Selector>
-                  </Expression>
-                  <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>356.775818</X>
-                    <Y>195.80542</Y>
-                    <HalfWidth>30</HalfWidth>
-                    <HalfHeight>30</HalfHeight>
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>2</gui:ColumnCount>
-                    <gui:RowCount>2</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="9" Label="Source1" />
-                  <Edge From="2" To="5" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="52" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="22" Label="Source1" />
-                  <Edge From="15" To="18" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source2" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source2" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source1" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="52" Label="Source2" />
-                  <Edge From="26" To="27" Label="Source1" />
-                  <Edge From="27" To="35" Label="Source1" />
-                  <Edge From="28" To="31" Label="Source1" />
-                  <Edge From="29" To="30" Label="Source1" />
-                  <Edge From="30" To="31" Label="Source2" />
-                  <Edge From="31" To="32" Label="Source1" />
-                  <Edge From="32" To="33" Label="Source1" />
-                  <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="36" Label="Source1" />
-                  <Edge From="36" To="37" Label="Source1" />
-                  <Edge From="37" To="38" Label="Source1" />
-                  <Edge From="38" To="52" Label="Source3" />
-                  <Edge From="39" To="40" Label="Source1" />
-                  <Edge From="40" To="48" Label="Source1" />
-                  <Edge From="41" To="44" Label="Source1" />
-                  <Edge From="42" To="43" Label="Source1" />
-                  <Edge From="43" To="44" Label="Source2" />
-                  <Edge From="44" To="45" Label="Source1" />
-                  <Edge From="45" To="46" Label="Source1" />
-                  <Edge From="46" To="47" Label="Source1" />
-                  <Edge From="47" To="48" Label="Source2" />
-                  <Edge From="48" To="49" Label="Source1" />
-                  <Edge From="49" To="50" Label="Source1" />
-                  <Edge From="50" To="51" Label="Source1" />
-                  <Edge From="51" To="52" Label="Source4" />
-                  <Edge From="52" To="53" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="GroupWorkflow">
-              <Name>RoiActivity</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena0?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.RoiActivity</Selector>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena1?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.RoiActivity</Selector>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena2?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>2</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.RoiActivity</Selector>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena3?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>3</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.RoiActivity</Selector>
-                  </Expression>
-                  <Expression xsi:type="Index">
-                    <Operand xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>2</gui:ColumnCount>
-                    <gui:RowCount>2</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="24" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="24" Label="Source2" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="15" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="24" Label="Source3" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source1" />
-                  <Edge From="20" To="21" Label="Source1" />
-                  <Edge From="21" To="22" Label="Source1" />
-                  <Edge From="22" To="23" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source4" />
-                  <Edge From="24" To="25" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping" />
-            <Expression xsi:type="GroupWorkflow">
-              <Name>RoiActivityDetection</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena0?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>0</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.ActivityDetected</Selector>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena1?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>1</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.ActivityDetected</Selector>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena2?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>2</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.ActivityDetected</Selector>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>RoisActivity</Name>
-                  </Expression>
-                  <Expression xsi:type="rx:Condition">
-                    <Name>Arena3?</Name>
-                    <Workflow>
-                      <Nodes>
-                        <Expression xsi:type="WorkflowInput">
-                          <Name>Source1</Name>
-                        </Expression>
-                        <Expression xsi:type="MemberSelector">
-                          <Selector>ArenaId</Selector>
-                        </Expression>
-                        <Expression xsi:type="ExternalizedMapping">
-                          <Property Name="Value" />
-                        </Expression>
-                        <Expression xsi:type="Equal">
-                          <Operand xsi:type="IntProperty">
-                            <Value>3</Value>
-                          </Operand>
-                        </Expression>
-                        <Expression xsi:type="WorkflowOutput" />
-                      </Nodes>
-                      <Edges>
-                        <Edge From="0" To="1" Label="Source1" />
-                        <Edge From="1" To="3" Label="Source1" />
-                        <Edge From="2" To="3" Label="Source2" />
-                        <Edge From="3" To="4" Label="Source1" />
-                      </Edges>
-                    </Workflow>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>RoiActivity.ActivityDetected</Selector>
-                  </Expression>
-                  <Expression xsi:type="viz:RollingGraphBuilder">
-                    <viz:SymbolType>None</viz:SymbolType>
-                    <viz:LineWidth>1</viz:LineWidth>
-                    <viz:Capacity>100</viz:Capacity>
-                    <viz:Min xsi:nil="true" />
-                    <viz:Max xsi:nil="true" />
-                  </Expression>
-                  <Expression xsi:type="VisualizerMapping" />
-                  <Expression xsi:type="gui:TableLayoutPanelBuilder">
-                    <gui:Enabled>true</gui:Enabled>
-                    <gui:Visible>true</gui:Visible>
-                    <gui:ColumnCount>2</gui:ColumnCount>
-                    <gui:RowCount>2</gui:RowCount>
-                    <gui:ColumnStyles />
-                    <gui:RowStyles />
-                    <gui:CellSpans />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="20" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source1" />
-                  <Edge From="9" To="20" Label="Source2" />
-                  <Edge From="10" To="11" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="12" To="13" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="14" To="20" Label="Source3" />
-                  <Edge From="15" To="16" Label="Source1" />
-                  <Edge From="16" To="17" Label="Source1" />
-                  <Edge From="17" To="18" Label="Source1" />
-                  <Edge From="18" To="19" Label="Source1" />
-                  <Edge From="19" To="20" Label="Source4" />
-                  <Edge From="20" To="21" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="VisualizerMapping" />
             <Expression xsi:type="gui:TableLayoutPanelBuilder">
               <gui:Enabled>true</gui:Enabled>
               <gui:Visible>true</gui:Visible>
@@ -3509,7 +3608,6 @@
               <gui:RowStyles />
               <gui:CellSpans />
             </Expression>
-            <Expression xsi:type="WorkflowOutput" />
             <Expression xsi:type="SubscribeSubject">
               <Name>StartButton</Name>
             </Expression>
@@ -3534,67 +3632,63 @@
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="15" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source2" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
             <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source2" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="59" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="23" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="59" Label="Source2" />
+            <Edge From="22" To="23" Label="Source2" />
             <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="24" To="26" Label="Source1" />
-            <Edge From="25" To="28" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source2" />
-            <Edge From="28" To="29" Label="Source1" />
-            <Edge From="29" To="51" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="24" To="27" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source2" />
+            <Edge From="27" To="28" Label="Source1" />
+            <Edge From="28" To="61" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
+            <Edge From="30" To="61" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="31" To="33" Label="Source1" />
-            <Edge From="32" To="35" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="35" Label="Source2" />
-            <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="51" Label="Source2" />
-            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="32" To="34" Label="Source1" />
+            <Edge From="33" To="36" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source2" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="59" Label="Source1" />
             <Edge From="38" To="39" Label="Source1" />
-            <Edge From="38" To="40" Label="Source1" />
-            <Edge From="39" To="42" Label="Source1" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source2" />
-            <Edge From="42" To="43" Label="Source1" />
-            <Edge From="43" To="51" Label="Source3" />
-            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="39" To="41" Label="Source1" />
+            <Edge From="40" To="43" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source2" />
+            <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="59" Label="Source2" />
             <Edge From="45" To="46" Label="Source1" />
-            <Edge From="45" To="47" Label="Source1" />
-            <Edge From="46" To="49" Label="Source1" />
-            <Edge From="47" To="48" Label="Source1" />
-            <Edge From="48" To="49" Label="Source2" />
-            <Edge From="49" To="50" Label="Source1" />
-            <Edge From="50" To="51" Label="Source4" />
-            <Edge From="51" To="52" Label="Source1" />
-            <Edge From="52" To="59" Label="Source3" />
+            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="46" To="48" Label="Source1" />
+            <Edge From="47" To="50" Label="Source1" />
+            <Edge From="48" To="49" Label="Source1" />
+            <Edge From="49" To="50" Label="Source2" />
+            <Edge From="50" To="51" Label="Source1" />
+            <Edge From="51" To="59" Label="Source3" />
+            <Edge From="52" To="53" Label="Source1" />
             <Edge From="53" To="54" Label="Source1" />
-            <Edge From="54" To="59" Label="Source4" />
+            <Edge From="53" To="55" Label="Source1" />
+            <Edge From="54" To="57" Label="Source1" />
             <Edge From="55" To="56" Label="Source1" />
-            <Edge From="56" To="59" Label="Source5" />
+            <Edge From="56" To="57" Label="Source2" />
             <Edge From="57" To="58" Label="Source1" />
-            <Edge From="58" To="59" Label="Source6" />
+            <Edge From="58" To="59" Label="Source4" />
             <Edge From="59" To="60" Label="Source1" />
-            <Edge From="61" To="62" Label="Source1" />
+            <Edge From="60" To="61" Label="Source3" />
             <Edge From="62" To="63" Label="Source1" />
             <Edge From="63" To="64" Label="Source1" />
             <Edge From="64" To="65" Label="Source1" />
+            <Edge From="65" To="66" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -3611,9 +3705,9 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:FileCapture">
-          <cv:FileName>C:\Users\hgmar\Downloads\Gili\Video2025-01-17T14_25_46.avi</cv:FileName>
+          <cv:FileName>C:\Users\HugoMarques\Downloads\cam07_2024-10-31T14_14_55.avi</cv:FileName>
           <cv:PlaybackRate>1000</cv:PlaybackRate>
-          <cv:StartPosition>0</cv:StartPosition>
+          <cv:StartPosition>28650</cv:StartPosition>
           <cv:PositionUnits>Frames</cv:PositionUnits>
           <cv:Loop>false</cv:Loop>
           <cv:Playing>true</cv:Playing>
@@ -3641,9 +3735,9 @@
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="Combinator">
-          <Combinator xsi:type="p3:FlyCapture">
-            <p3:Index>0</p3:Index>
-            <p3:ColorProcessing>Default</p3:ColorProcessing>
+          <Combinator xsi:type="p4:FlyCapture">
+            <p4:Index>0</p4:Index>
+            <p4:ColorProcessing>Default</p4:ColorProcessing>
           </Combinator>
         </Builder>
       </Expression>
@@ -3756,7 +3850,7 @@
         <Property Name="RoiActivityThreshold" />
       </Expression>
       <Expression xsi:type="rx:CreateObservable">
-        <Name>ProcessArenas</Name>
+        <Name>ProcessArenaRois</Name>
         <Workflow>
           <Nodes>
             <Expression xsi:type="WorkflowInput">
@@ -4320,6 +4414,345 @@
         <Selector>Interval.TotalMilliseconds</Selector>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
+        <Name>RoisActivity</Name>
+      </Expression>
+      <Expression xsi:type="rx:GroupBy">
+        <rx:KeySelector>ArenaId</rx:KeySelector>
+        <rx:ElementSelector>it</rx:ElementSelector>
+      </Expression>
+      <Expression xsi:type="rx:CreateObservable">
+        <Name>LedControl</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>ArenaData</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="DoubleProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>ActivationTime</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Timestamp" />
+            </Expression>
+            <Expression xsi:type="rx:PublishSubject">
+              <Name>ActivationReset</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ArenaData</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>ArenaData</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>RoiActivity.ActivityDetected</Selector>
+            </Expression>
+            <Expression xsi:type="GreaterThan">
+              <Operand xsi:type="DoubleProperty">
+                <Value>0</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>EnteredRoi</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="GroupWorkflow">
+              <Name>Coin Flip</Name>
+              <Description />
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>WaitingTimeElapsed?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:Timestamp" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Timestamp.TimeOfDay.TotalMilliseconds</Selector>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>ActivationReset</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Timestamp.TimeOfDay.TotalMilliseconds</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="Subtract" />
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>MinCoinFlipInterval</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="GreaterThan">
+                          <Operand xsi:type="DoubleProperty">
+                            <Value>200</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="5" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="5" Label="Source2" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="9" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source1" />
+                        <Edge From="8" To="9" Label="Source2" />
+                        <Edge From="9" To="10" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>FlipCoin</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>MyDistribution</Name>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2</Selector>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="p2:Sample" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>LedActivationProb</Name>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="Value" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="LessThan">
+                          <Operand xsi:type="DoubleProperty">
+                            <Value>0.5</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="3" Label="Source1" />
+                        <Edge From="3" To="4" Label="Source1" />
+                        <Edge From="4" To="7" Label="Source1" />
+                        <Edge From="5" To="6" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source2" />
+                        <Edge From="7" To="8" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>Timeout?</Name>
+              <Description>Turns OFF led if the maximum activation time is exceeded.
+</Description>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Delay">
+                      <rx:DueTime>PT0S</rx:DueTime>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ActivationReset</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>false</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Amb" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="5" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="8" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Name>ExitedRoi</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="BitwiseNot" />
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Timestamp" />
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>ActivationReset</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+  Item1.ArenaId as ArenaId,
+  Item1.Rois as Rois,
+  Item1.RoiActivity as RoiActivity,
+  Item1.CroppedArena as CroppedArena,
+  Item1.Centroid as Centroid,
+  Item1.Orientation as Orientation,
+  Item1.Segmentation as Segmentation,
+  Item2 as LED
+)
+ </scr:Expression>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="9" To="23" Label="Source1" />
+            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="13" To="18" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="14" To="16" Label="Source1" />
+            <Edge From="15" To="22" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="22" Label="Source2" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="21" To="22" Label="Source3" />
+            <Edge From="22" To="23" Label="Source2" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Concat" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>RoisProcessed</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
         <Name>StopButton</Name>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -4330,34 +4763,39 @@
       <Expression xsi:type="WorkflowOutput" />
     </Nodes>
     <Edges>
-      <Edge From="3" To="4" Label="Source1" />
-      <Edge From="5" To="6" Label="Source1" />
-      <Edge From="7" To="8" Label="Source1" />
+      <Edge From="4" To="5" Label="Source1" />
+      <Edge From="6" To="7" Label="Source1" />
       <Edge From="8" To="9" Label="Source1" />
       <Edge From="10" To="11" Label="Source1" />
       <Edge From="11" To="12" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
       <Edge From="13" To="14" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
       <Edge From="17" To="18" Label="Source1" />
       <Edge From="18" To="19" Label="Source1" />
-      <Edge From="19" To="20" Label="Source1" />
-      <Edge From="21" To="23" Label="Source1" />
-      <Edge From="22" To="23" Label="Source2" />
-      <Edge From="23" To="25" Label="Source1" />
-      <Edge From="24" To="25" Label="Source2" />
-      <Edge From="25" To="26" Label="Source1" />
-      <Edge From="27" To="29" Label="Source1" />
-      <Edge From="28" To="29" Label="Source2" />
-      <Edge From="29" To="31" Label="Source1" />
-      <Edge From="30" To="31" Label="Source2" />
-      <Edge From="31" To="32" Label="Source1" />
-      <Edge From="32" To="33" Label="Source1" />
-      <Edge From="33" To="34" Label="Source1" />
+      <Edge From="20" To="21" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="24" To="26" Label="Source1" />
+      <Edge From="25" To="26" Label="Source2" />
+      <Edge From="26" To="28" Label="Source1" />
+      <Edge From="27" To="28" Label="Source2" />
+      <Edge From="28" To="29" Label="Source1" />
+      <Edge From="30" To="32" Label="Source1" />
+      <Edge From="31" To="32" Label="Source2" />
+      <Edge From="32" To="34" Label="Source1" />
+      <Edge From="33" To="34" Label="Source2" />
       <Edge From="34" To="35" Label="Source1" />
+      <Edge From="35" To="36" Label="Source1" />
       <Edge From="36" To="37" Label="Source1" />
       <Edge From="37" To="38" Label="Source1" />
+      <Edge From="39" To="40" Label="Source1" />
+      <Edge From="40" To="41" Label="Source1" />
+      <Edge From="41" To="42" Label="Source1" />
+      <Edge From="42" To="43" Label="Source1" />
+      <Edge From="44" To="45" Label="Source1" />
+      <Edge From="45" To="46" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
