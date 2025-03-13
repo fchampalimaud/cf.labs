@@ -959,7 +959,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="DoubleProperty">
-                <Value>5000</Value>
+                <Value>1000</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -970,7 +970,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="DoubleProperty">
-                <Value>200</Value>
+                <Value>10</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1206,7 +1206,7 @@
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>data\Arena0.csv</io:FileName>
+                    <io:FileName>data\Arena3.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>true</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1808,8 +1808,8 @@
                     <Selector>Item2</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>353.8854</X>
-                    <Y>239.339783</Y>
+                    <X>297.44278</X>
+                    <Y>354.411865</Y>
                     <HalfWidth>30</HalfWidth>
                     <HalfHeight>30</HalfHeight>
                   </Expression>
@@ -2020,8 +2020,8 @@
                     <Selector>Item2</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>335.920624</X>
-                    <Y>241.550262</Y>
+                    <X>NaN</X>
+                    <Y>NaN</Y>
                     <HalfWidth>30</HalfWidth>
                     <HalfHeight>30</HalfHeight>
                   </Expression>
@@ -2126,8 +2126,8 @@
                     <Selector>Item2</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="CF.BonFly:CropAnimal.bonsai">
-                    <X>322.435455</X>
-                    <Y>202.829788</Y>
+                    <X>455.372955</X>
+                    <Y>390.368866</Y>
                     <HalfWidth>30</HalfWidth>
                     <HalfHeight>30</HalfHeight>
                   </Expression>
@@ -3077,7 +3077,7 @@
                     <Height>34</Height>
                   </Rect>
                   <Activity>
-                    <Val0>6630</Val0>
+                    <Val0>0</Val0>
                     <Val1>0</Val1>
                     <Val2>0</Val2>
                     <Val3>0</Val3>
@@ -3365,7 +3365,7 @@
                     <Height>37</Height>
                   </Rect>
                   <Activity>
-                    <Val0>11475</Val0>
+                    <Val0>0</Val0>
                     <Val1>0</Val1>
                     <Val2>0</Val2>
                     <Val3>0</Val3>
@@ -3733,7 +3733,7 @@
                     <Height>43</Height>
                   </Rect>
                   <Activity>
-                    <Val0>35445</Val0>
+                    <Val0>0</Val0>
                     <Val1>0</Val1>
                     <Val2>0</Val2>
                     <Val3>0</Val3>
@@ -3858,9 +3858,9 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="cv:FileCapture">
-          <cv:FileName>C:\Users\HugoMarques\Downloads\cam07_2024-10-31T14_14_55.avi</cv:FileName>
-          <cv:PlaybackRate>1000</cv:PlaybackRate>
-          <cv:StartPosition>28650</cv:StartPosition>
+          <cv:FileName>C:\Users\hgmar\Downloads\cam07_2024-10-31T10_13_40.avi</cv:FileName>
+          <cv:PlaybackRate>100000</cv:PlaybackRate>
+          <cv:StartPosition>4900</cv:StartPosition>
           <cv:PositionUnits>Frames</cv:PositionUnits>
           <cv:Loop>false</cv:Loop>
           <cv:Playing>true</cv:Playing>
@@ -4682,7 +4682,7 @@
                         </Expression>
                         <Expression xsi:type="GreaterThan">
                           <Operand xsi:type="DoubleProperty">
-                            <Value>200</Value>
+                            <Value>10</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -4778,7 +4778,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Delay">
-                      <rx:DueTime>PT5S</rx:DueTime>
+                      <rx:DueTime>PT1S</rx:DueTime>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -4914,7 +4914,7 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Concat" />
+        <Combinator xsi:type="rx:Merge" />
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
         <Name>RoisProcessed</Name>
