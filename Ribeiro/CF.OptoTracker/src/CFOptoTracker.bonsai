@@ -3761,6 +3761,20 @@
               <gui:RowStyles />
               <gui:CellSpans />
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Timestamp" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Timestamp.TimeOfDay.TotalMilliseconds</Selector>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>StartTime</Name>
+            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StartButton</Name>
             </Expression>
@@ -3775,7 +3789,7 @@
                 <rx:Count>1</rx:Count>
               </Combinator>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
+            <Expression xsi:type="MulticastSubject">
               <Name>StartTime</Name>
             </Expression>
           </Nodes>
@@ -3841,7 +3855,10 @@
             <Edge From="62" To="63" Label="Source1" />
             <Edge From="63" To="64" Label="Source1" />
             <Edge From="64" To="65" Label="Source1" />
-            <Edge From="65" To="66" Label="Source1" />
+            <Edge From="66" To="67" Label="Source1" />
+            <Edge From="67" To="68" Label="Source1" />
+            <Edge From="68" To="69" Label="Source1" />
+            <Edge From="69" To="70" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>

@@ -3,6 +3,7 @@ obj
 bin
 .vs
 data
+resources
 Packages
 *.exe.settings
 *.exe
