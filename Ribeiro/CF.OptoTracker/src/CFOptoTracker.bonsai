@@ -904,7 +904,9 @@
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty" />
+              <Combinator xsi:type="StringProperty">
+                <Value>Button</Value>
+              </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>StopButton</Name>
