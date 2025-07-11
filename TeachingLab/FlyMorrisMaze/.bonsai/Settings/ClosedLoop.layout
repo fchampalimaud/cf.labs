@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualizerLayout Version="2.9.0">
+  <WindowSettings Index="16">
+    <Location>
+      <X>83</X>
+      <Y>538</Y>
+    </Location>
+    <Size>
+      <Width>336</Width>
+      <Height>279</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <IplImageVisualizer />
+    </VisualizerSettings>
+  </WindowSettings>
+  <WindowSettings Index="17">
+    <Visible>false</Visible>
+    <Location>
+      <X>78</X>
+      <Y>78</Y>
+    </Location>
+    <Size>
+      <Width>336</Width>
+      <Height>82</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <ObjectTextVisualizer />
+    </VisualizerSettings>
+  </WindowSettings>
+  <WindowSettings Index="18">
+    <Location>
+      <X>76</X>
+      <Y>232</Y>
+    </Location>
+    <Size>
+      <Width>336</Width>
+      <Height>282</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <IplImageVisualizer />
+    </VisualizerSettings>
+  </WindowSettings>
+</VisualizerLayout>
