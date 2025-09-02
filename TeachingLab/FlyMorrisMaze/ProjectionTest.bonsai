@@ -377,7 +377,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.3</Value>
+                <Value>0.05</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -409,9 +409,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>1</gl:X>
+                <gl:X>-0.0291995462</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0</gl:Z>
+                <gl:Z>-0.9995736</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -506,9 +506,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.998308063</gl:X>
+                      <gl:X>-0.0291501451</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0</gl:Z>
+                      <gl:Z>-0.9978825</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -560,7 +560,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>0.5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -594,9 +594,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0</gl:X>
+                      <gl:X>0.329433262</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0</gl:Z>
+                      <gl:Z>-0.375004649</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -865,21 +865,21 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>0</X>
+          <X>5.60036564</X>
           <Y>0</Y>
-          <Z>0</Z>
+          <Z>-6.37508</Z>
         </Eye>
         <Target>
-          <X>1</X>
+          <X>5.571166</X>
           <Y>0</Y>
-          <Z>0</Z>
+          <Z>-7.374654</Z>
         </Target>
         <Up>
           <X>0</X>
           <Y>1</Y>
           <Z>0</Z>
         </Up>
-        <FieldOfView>90</FieldOfView>
+        <FieldOfView>140</FieldOfView>
         <NearClip>0.1</NearClip>
         <FarClip>1000</FarClip>
         <Light>
@@ -1025,7 +1025,7 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>5</X>
+          <X>0.7</X>
           <Y>0</Y>
           <Z>0</Z>
         </Eye>
@@ -1039,7 +1039,7 @@
           <Y>1</Y>
           <Z>0</Z>
         </Up>
-        <FieldOfView>10</FieldOfView>
+        <FieldOfView>100</FieldOfView>
         <NearClip>0.1</NearClip>
         <FarClip>1000</FarClip>
         <Light>
