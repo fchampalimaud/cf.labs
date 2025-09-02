@@ -15,10 +15,9 @@
     </VisualizerSettings>
   </WindowSettings>
   <WindowSettings Index="30">
-    <Visible>false</Visible>
     <Location>
-      <X>2020</X>
-      <Y>206</Y>
+      <X>2048</X>
+      <Y>233</Y>
     </Location>
     <Size>
       <Width>334</Width>
@@ -36,15 +35,14 @@
       <ObjectTextVisualizer />
     </VisualizerSettings>
   </WindowSettings>
-  <WindowSettings Index="43">
-    <Visible>false</Visible>
+  <WindowSettings Index="37">
     <Location>
-      <X>72</X>
-      <Y>78</Y>
+      <X>2035</X>
+      <Y>164</Y>
     </Location>
     <Size>
       <Width>334</Width>
-      <Height>81</Height>
+      <Height>414</Height>
     </Size>
     <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
     <VisualizerSettings>
