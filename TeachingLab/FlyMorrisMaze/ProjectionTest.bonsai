@@ -261,6 +261,58 @@
               <gl:ColorType>Unchanged</gl:ColorType>
               <gl:FlipMode>Vertical</gl:FlipMode>
             </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>black_circle_wall</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\black_circle_wall.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>black_circle_wall_stripes</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\black_circle_wall_stripes.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>black_line_wall</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\black_line_wall.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>black_line_wall_stripes</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\black_line_wall_stripes.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
           </gl:Textures>
         </Combinator>
       </Expression>
@@ -292,7 +344,7 @@
           <Nodes>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="DoubleProperty">
-                <Value>5</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -357,9 +409,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0.9601703</gl:X>
+                <gl:X>1</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.27941528</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -454,9 +506,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.9585459</gl:X>
+                      <gl:X>0.998308063</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>-0.278942555</gl:Z>
+                      <gl:Z>0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -508,7 +560,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0.5</Value>
+                      <Value>0</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -542,9 +594,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>-0.4941588</gl:X>
+                      <gl:X>0</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0.0704405755</gl:Z>
+                      <gl:Z>0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -643,7 +695,7 @@
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
           <gl:ShaderName>TexturedModel</gl:ShaderName>
-          <gl:TextureName>big_cicle</gl:TextureName>
+          <gl:TextureName>black_line_wall</gl:TextureName>
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
@@ -682,7 +734,7 @@
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
           <gl:ShaderName>TexturedModel</gl:ShaderName>
-          <gl:TextureName>one_line</gl:TextureName>
+          <gl:TextureName>black_line_wall_stripes</gl:TextureName>
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
@@ -721,7 +773,7 @@
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
           <gl:ShaderName>TexturedModel</gl:ShaderName>
-          <gl:TextureName>three_lines</gl:TextureName>
+          <gl:TextureName>black_circle_wall</gl:TextureName>
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
@@ -760,7 +812,7 @@
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
           <gl:ShaderName>TexturedModel</gl:ShaderName>
-          <gl:TextureName>small_circles</gl:TextureName>
+          <gl:TextureName>black_circle_wall_stripes</gl:TextureName>
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
@@ -813,14 +865,14 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>3.68848515</X>
+          <X>0</X>
           <Y>0</Y>
-          <Z>3.98383045</Z>
+          <Z>0</Z>
         </Eye>
         <Target>
-          <X>4.64865541</X>
+          <X>1</X>
           <Y>0</Y>
-          <Z>3.704415</Z>
+          <Z>0</Z>
         </Target>
         <Up>
           <X>0</X>
