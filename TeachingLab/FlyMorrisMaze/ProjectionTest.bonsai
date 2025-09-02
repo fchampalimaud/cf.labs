@@ -139,6 +139,10 @@
               <gl:Name>ProjectionPlanes2</gl:Name>
               <gl:FileName>Meshes\ProjectionPlanes2.obj</gl:FileName>
             </gl:MeshConfiguration>
+            <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+              <gl:Name>ProjectionPlane3</gl:Name>
+              <gl:FileName>Meshes\ProjectionPlanes3.obj</gl:FileName>
+            </gl:MeshConfiguration>
             <gl:MeshConfiguration xsi:type="gl:TexturedQuad">
               <gl:Name>WarpQuad</gl:Name>
               <gl:QuadEffects>None</gl:QuadEffects>
@@ -353,9 +357,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>-0.9899925</gl:X>
+                <gl:X>1</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.1411199</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -450,9 +454,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>-0.9883176</gl:X>
+                      <gl:X>0.998308063</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0.140881151</gl:Z>
+                      <gl:Z>0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -504,7 +508,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0.5</Value>
+                      <Value>0</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -538,9 +542,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>-0.4929045</gl:X>
+                      <gl:X>0</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>-0.0787394643</gl:Z>
+                      <gl:Z>0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -752,22 +756,6 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>Draw</Name>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="Combinator">
-          <Combinator xsi:type="gl:RenderTexture">
-            <gl:RenderState />
-            <gl:ClearColor>Black</gl:ClearColor>
-            <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
-            <gl:Width>1000</gl:Width>
-            <gl:Height>1000</gl:Height>
-            <gl:InternalFormat>Rgba</gl:InternalFormat>
-            <gl:WrapS>Repeat</gl:WrapS>
-            <gl:WrapT>Repeat</gl:WrapT>
-            <gl:MinFilter>Linear</gl:MinFilter>
-            <gl:MagFilter>Linear</gl:MagFilter>
-          </Combinator>
-        </Builder>
-      </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
@@ -775,22 +763,6 @@
           <gl:TextureName>big_cicle</gl:TextureName>
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
-      </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.CubemapView.bonsai">
-          <Eye>
-            <X>0</X>
-            <Y>0</Y>
-            <Z>-0.1</Z>
-          </Eye>
-          <NearClip>0.1</NearClip>
-          <FarClip>1000</FarClip>
-          <Light>
-            <X>0</X>
-            <Y>0</Y>
-            <Z>0</Z>
-          </Light>
-        </Builder>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
         <TranslationX>0</TranslationX>
@@ -841,14 +813,14 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>-14.8876286</X>
+          <X>0</X>
           <Y>0</Y>
-          <Z>-2.345237</Z>
+          <Z>0</Z>
         </Eye>
         <Target>
-          <X>-15.8776207</X>
+          <X>1</X>
           <Y>0</Y>
-          <Z>-2.204117</Z>
+          <Z>0</Z>
         </Target>
         <Up>
           <X>0</X>
@@ -1058,8 +1030,8 @@
         <TranslationX>0</TranslationX>
         <TranslationY>0</TranslationY>
         <TranslationZ>0</TranslationZ>
-        <RotationZ>90</RotationZ>
-        <RotationY>90</RotationY>
+        <RotationZ>-90</RotationZ>
+        <RotationY>-90</RotationY>
         <RotationX>0</RotationX>
         <ScaleX>1</ScaleX>
         <ScaleY>1</ScaleY>
@@ -1080,7 +1052,7 @@
           <Z>0</Z>
         </Specular>
         <SpecularExponent>0.1</SpecularExponent>
-        <MeshName>ProjectionPlanes2</MeshName>
+        <MeshName>ProjectionPlane3</MeshName>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
@@ -1383,19 +1355,19 @@ Item3 as Light)</scr:Expression>
       <Edge From="24" To="25" Label="Source1" />
       <Edge From="26" To="27" Label="Source1" />
       <Edge From="27" To="28" Label="Source1" />
-      <Edge From="28" To="29" Label="Source1" />
-      <Edge From="29" To="30" Label="Source1" />
-      <Edge From="31" To="36" Label="Source1" />
+      <Edge From="29" To="34" Label="Source1" />
+      <Edge From="30" To="31" Label="Source1" />
+      <Edge From="31" To="34" Label="Source2" />
       <Edge From="32" To="33" Label="Source1" />
-      <Edge From="33" To="36" Label="Source2" />
+      <Edge From="33" To="34" Label="Source3" />
       <Edge From="34" To="35" Label="Source1" />
-      <Edge From="35" To="36" Label="Source3" />
+      <Edge From="35" To="36" Label="Source1" />
       <Edge From="36" To="37" Label="Source1" />
       <Edge From="37" To="38" Label="Source1" />
       <Edge From="38" To="39" Label="Source1" />
       <Edge From="39" To="40" Label="Source1" />
-      <Edge From="40" To="41" Label="Source1" />
       <Edge From="41" To="42" Label="Source1" />
+      <Edge From="42" To="43" Label="Source1" />
       <Edge From="43" To="44" Label="Source1" />
       <Edge From="44" To="45" Label="Source1" />
       <Edge From="45" To="46" Label="Source1" />
@@ -1406,22 +1378,20 @@ Item3 as Light)</scr:Expression>
       <Edge From="50" To="51" Label="Source1" />
       <Edge From="51" To="52" Label="Source1" />
       <Edge From="52" To="53" Label="Source1" />
-      <Edge From="53" To="54" Label="Source1" />
       <Edge From="54" To="55" Label="Source1" />
+      <Edge From="55" To="56" Label="Source1" />
       <Edge From="56" To="57" Label="Source1" />
       <Edge From="57" To="58" Label="Source1" />
       <Edge From="58" To="59" Label="Source1" />
       <Edge From="59" To="60" Label="Source1" />
-      <Edge From="60" To="61" Label="Source1" />
-      <Edge From="61" To="62" Label="Source1" />
-      <Edge From="64" To="65" Label="Source1" />
+      <Edge From="62" To="63" Label="Source1" />
+      <Edge From="62" To="65" Label="Source1" />
+      <Edge From="62" To="66" Label="Source1" />
+      <Edge From="63" To="64" Label="Source1" />
       <Edge From="64" To="67" Label="Source1" />
-      <Edge From="64" To="68" Label="Source1" />
-      <Edge From="65" To="66" Label="Source1" />
-      <Edge From="66" To="69" Label="Source1" />
-      <Edge From="67" To="69" Label="Source2" />
-      <Edge From="68" To="69" Label="Source3" />
-      <Edge From="69" To="70" Label="Source1" />
+      <Edge From="65" To="67" Label="Source2" />
+      <Edge From="66" To="67" Label="Source3" />
+      <Edge From="67" To="68" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
