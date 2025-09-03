@@ -53,8 +53,8 @@
           <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
           <gl:CursorVisible>true</gl:CursorVisible>
           <gl:Location>
-            <gl:X>2000</gl:X>
-            <gl:Y>1000</gl:Y>
+            <gl:X>200</gl:X>
+            <gl:Y>100</gl:Y>
           </gl:Location>
           <gl:WindowBorder>Resizable</gl:WindowBorder>
           <gl:WindowState>Normal</gl:WindowState>
@@ -630,7 +630,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>-0.5</Value>
+                      <Value>0.5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -664,9 +664,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>-0.0353087336</gl:X>
-                      <gl:Y>-0</gl:Y>
-                      <gl:Z>-0.497903645</gl:Z>
+                      <gl:X>0.0353087336</gl:X>
+                      <gl:Y>0</gl:Y>
+                      <gl:Z>0.497903645</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -988,14 +988,14 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>0.988644242</X>
+          <X>0.0353087336</X>
           <Y>0</Y>
-          <Z>13.9413052</Z>
+          <Z>0.497903645</Z>
         </Eye>
         <Target>
-          <X>1.05938137</X>
+          <X>0.106045879</X>
           <Y>0</Y>
-          <Z>14.9388</Z>
+          <Z>1.49539864</Z>
         </Target>
         <Up>
           <X>0</X>
@@ -1043,23 +1043,23 @@
         </Combinator>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveMapping.bonsai">
-        <ClearColor>Gray</ClearColor>
+        <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>-0.348946154</X>
-            <Y>-0.9728813</Y>
+            <X>-0.0249999762</X>
+            <Y>-0.9083333</Y>
           </Point2f>
           <Point2f>
-            <X>-0.3348946</X>
-            <Y>0.959322035</Y>
+            <X>-0.0249999762</X>
+            <Y>0.6666666</Y>
           </Point2f>
           <Point2f>
-            <X>0.3114754</X>
-            <Y>0.959322035</Y>
+            <X>0.174999952</X>
+            <Y>0.8416667</Y>
           </Point2f>
           <Point2f>
-            <X>0.3021077</X>
-            <Y>-0.979661</Y>
+            <X>0.15625</X>
+            <Y>-0.875</Y>
           </Point2f>
         </Destination>
       </Expression>
@@ -1087,14 +1087,14 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>0.988644242</X>
+          <X>0.0353087336</X>
           <Y>0</Y>
-          <Z>13.9413052</Z>
+          <Z>0.497903645</Z>
         </Eye>
         <Target>
-          <X>-0.008850753</X>
+          <X>-0.9621863</X>
           <Y>0</Y>
-          <Z>14.012042</Z>
+          <Z>0.568640769</Z>
         </Target>
         <Up>
           <X>0</X>
@@ -1142,23 +1142,23 @@
         </Combinator>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveMapping.bonsai">
-        <ClearColor>Gray</ClearColor>
+        <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>0.971897</X>
-            <Y>-0.9525424</Y>
+            <X>0.924999952</X>
+            <Y>-0.9166666</Y>
           </Point2f>
           <Point2f>
-            <X>0.976580739</X>
-            <Y>0.959322035</Y>
+            <X>0.93125</X>
+            <Y>0.933333337</Y>
           </Point2f>
           <Point2f>
-            <X>0.2740047</X>
-            <Y>0.979661</Y>
+            <X>0.674999952</X>
+            <Y>0.9</Y>
           </Point2f>
           <Point2f>
-            <X>0.27868855</X>
-            <Y>-0.9728813</Y>
+            <X>0.71875</X>
+            <Y>-0.924999952</Y>
           </Point2f>
         </Destination>
       </Expression>
@@ -1186,14 +1186,14 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveView.bonsai">
         <Eye>
-          <X>0.988644242</X>
+          <X>0.0353087336</X>
           <Y>0</Y>
-          <Z>13.9413052</Z>
+          <Z>0.497903645</Z>
         </Eye>
         <Target>
-          <X>1.9861393</X>
+          <X>1.03280377</X>
           <Y>0</Y>
-          <Z>13.8705683</Z>
+          <Z>0.4271665</Z>
         </Target>
         <Up>
           <X>0</X>
@@ -1241,23 +1241,23 @@
         </Combinator>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.PerspectiveMapping.bonsai">
-        <ClearColor>Gray</ClearColor>
+        <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>-0.231850088</X>
-            <Y>-0.959322</Y>
+            <X>-0.129166663</X>
+            <Y>-0.641577</Y>
           </Point2f>
           <Point2f>
-            <X>-0.23653394</X>
-            <Y>0.9728814</Y>
+            <X>-0.143750012</X>
+            <Y>0.366666675</Y>
           </Point2f>
           <Point2f>
-            <X>-1.00468385</X>
-            <Y>0.8169491</Y>
+            <X>-0.3111111</X>
+            <Y>0.213859022</Y>
           </Point2f>
           <Point2f>
-            <X>-0.9906323</X>
-            <Y>-0.810169458</Y>
+            <X>-0.306249976</X>
+            <Y>-0.4666667</Y>
           </Point2f>
         </Destination>
       </Expression>

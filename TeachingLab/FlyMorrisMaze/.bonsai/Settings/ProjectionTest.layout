@@ -16,12 +16,12 @@
   </WindowSettings>
   <WindowSettings Index="30">
     <Location>
-      <X>2020</X>
-      <Y>206</Y>
+      <X>104</X>
+      <Y>104</Y>
     </Location>
     <Size>
-      <Width>334</Width>
-      <Height>64</Height>
+      <Width>336</Width>
+      <Height>65</Height>
     </Size>
     <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
     <VisualizerSettings>
@@ -30,8 +30,8 @@
   </WindowSettings>
   <WindowSettings Index="32">
     <Location>
-      <X>192</X>
-      <Y>208</Y>
+      <X>156</X>
+      <Y>250</Y>
     </Location>
     <Size>
       <Width>334</Width>
@@ -59,8 +59,8 @@
   </WindowSettings>
   <WindowSettings Index="46">
     <Location>
-      <X>280</X>
-      <Y>247</Y>
+      <X>180</X>
+      <Y>322</Y>
     </Location>
     <Size>
       <Width>334</Width>
