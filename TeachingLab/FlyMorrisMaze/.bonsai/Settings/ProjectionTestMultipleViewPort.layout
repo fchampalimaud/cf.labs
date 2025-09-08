@@ -82,9 +82,10 @@
     </VisualizerSettings>
   </WindowSettings>
   <WindowSettings Index="49">
+    <Visible>false</Visible>
     <Location>
-      <X>130</X>
-      <Y>130</Y>
+      <X>64</X>
+      <Y>353</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -108,6 +109,21 @@
     <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
     <VisualizerSettings>
       <ObjectTextVisualizer />
+    </VisualizerSettings>
+  </WindowSettings>
+  <WindowSettings Index="87">
+    <Visible>false</Visible>
+    <Location>
+      <X>1276</X>
+      <Y>237</Y>
+    </Location>
+    <Size>
+      <Width>334</Width>
+      <Height>278</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Vision.Design.IplImageVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <IplImageVisualizer />
     </VisualizerSettings>
   </WindowSettings>
 </VisualizerLayout>
