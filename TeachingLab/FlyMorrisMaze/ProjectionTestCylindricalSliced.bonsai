@@ -214,6 +214,15 @@
               <gl:VertexShader>Shaders\panoramic.vert</gl:VertexShader>
               <gl:FragmentShader>Shaders\panoramic_sliced.frag</gl:FragmentShader>
             </gl:ShaderConfiguration>
+            <gl:ShaderConfiguration xsi:type="gl:Material">
+              <gl:Name>PanoramicUnevenSlicing</gl:Name>
+              <gl:RenderState />
+              <gl:ShaderUniforms />
+              <gl:BufferBindings />
+              <gl:FramebufferAttachments />
+              <gl:VertexShader>Shaders\panoramic.vert</gl:VertexShader>
+              <gl:FragmentShader>Shaders\panoramic_sliced_uneven_angle_distribution.frag</gl:FragmentShader>
+            </gl:ShaderConfiguration>
           </gl:Shaders>
         </Combinator>
       </Expression>
@@ -485,9 +494,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>-0.504846156</gl:X>
+                <gl:X>1</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.8632093</gl:Z>
+                <gl:Z>0</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -520,9 +529,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>-0.8632093</gl:X>
+                <gl:X>6.123032E-17</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.504846156</gl:Z>
+                <gl:Z>1</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -555,9 +564,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0.8632093</gl:X>
+                <gl:X>6.123032E-17</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.504846156</gl:Z>
+                <gl:Z>-1</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -655,9 +664,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>-0.503992</gl:X>
+                      <gl:X>0.998308063</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0.861748934</gl:Z>
+                      <gl:Z>0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -743,9 +752,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.251996</gl:X>
+                      <gl:X>-0.499154031</gl:X>
                       <gl:Y>-0</gl:Y>
-                      <gl:Z>-0.430874467</gl:Z>
+                      <gl:Z>-0</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1209,9 +1218,9 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:CreateVector3">
-          <gl:X>-3.24691963</gl:X>
+          <gl:X>1.497462</gl:X>
           <gl:Y>-0</gl:Y>
-          <gl:Z>-0.4308746</gl:Z>
+          <gl:Z>-0</gl:Z>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -1221,9 +1230,9 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.CubemapView.bonsai">
         <Eye>
-          <X>-3.24691963</X>
+          <X>1.497462</X>
           <Y>-0</Y>
-          <Z>-0.4308746</Z>
+          <Z>-0</Z>
         </Eye>
         <NearClip>0.1</NearClip>
         <FarClip>1000</FarClip>
@@ -1250,7 +1259,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:RotateY">
           <gl:Order>Append</gl:Order>
-          <gl:Angle>-2.61238885</gl:Angle>
+          <gl:Angle>1.57079637</gl:Angle>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -1301,10 +1310,13 @@ Item2.Light as Light
                 <Value>0</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ShaderName" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>sliceIndex</gl:UniformName>
-                <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+                <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1312,22 +1324,23 @@ Item2.Light as Light
           <Edges>
             <Edge From="0" To="2" Label="Source1" />
             <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="2" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:TextureName />
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:DrawMesh">
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:MeshName>PanoramicMesh</gl:MeshName>
         </Combinator>
       </Expression>
@@ -1415,10 +1428,13 @@ Item2.Light as Light
                 <Value>1</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ShaderName" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>sliceIndex</gl:UniformName>
-                <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+                <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1426,22 +1442,23 @@ Item2.Light as Light
           <Edges>
             <Edge From="0" To="2" Label="Source1" />
             <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="2" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:TextureName />
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:DrawMesh">
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:MeshName>PanoramicMesh</gl:MeshName>
         </Combinator>
       </Expression>
@@ -1529,10 +1546,13 @@ Item2.Light as Light
                 <Value>2</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ShaderName" />
+            </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:UpdateUniform">
                 <gl:UniformName>sliceIndex</gl:UniformName>
-                <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+                <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
               </Combinator>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1540,22 +1560,23 @@ Item2.Light as Light
           <Edges>
             <Edge From="0" To="2" Label="Source1" />
             <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="2" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="4" To="5" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:BindTexture">
           <gl:TextureSlot>Texture0</gl:TextureSlot>
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:TextureName />
           <gl:TextureTarget>Texture2D</gl:TextureTarget>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:DrawMesh">
-          <gl:ShaderName>PanoramicSliced</gl:ShaderName>
+          <gl:ShaderName>PanoramicUnevenSlicing</gl:ShaderName>
           <gl:MeshName>PanoramicMesh</gl:MeshName>
         </Combinator>
       </Expression>
