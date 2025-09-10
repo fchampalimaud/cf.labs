@@ -48,8 +48,8 @@
   <WindowSettings Index="48">
     <Visible>false</Visible>
     <Location>
-      <X>216</X>
-      <Y>234</Y>
+      <X>39</X>
+      <Y>256</Y>
     </Location>
     <Size>
       <Width>334</Width>
@@ -61,7 +61,6 @@
     </VisualizerSettings>
   </WindowSettings>
   <WindowSettings Index="57">
-    <Visible>false</Visible>
     <Location>
       <X>104</X>
       <Y>104</Y>

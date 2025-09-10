@@ -350,6 +350,45 @@
               <gl:ColorType>Unchanged</gl:ColorType>
               <gl:FlipMode>Vertical</gl:FlipMode>
             </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>calibration_front</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\calibration_front.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>calibration_left</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\calibration_left.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
+            <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+              <gl:Name>calibration_right</gl:Name>
+              <gl:Width xsi:nil="true" />
+              <gl:Height xsi:nil="true" />
+              <gl:InternalFormat>Rgba</gl:InternalFormat>
+              <gl:WrapS>Repeat</gl:WrapS>
+              <gl:WrapT>Repeat</gl:WrapT>
+              <gl:MinFilter>Linear</gl:MinFilter>
+              <gl:MagFilter>Linear</gl:MagFilter>
+              <gl:FileName>Arenas\calibration_right.png</gl:FileName>
+              <gl:ColorType>Unchanged</gl:ColorType>
+              <gl:FlipMode>Vertical</gl:FlipMode>
+            </gl:TextureConfiguration>
           </gl:Textures>
         </Combinator>
       </Expression>
@@ -446,9 +485,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0.9998586</gl:X>
+                <gl:X>-0.504846156</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.01681415</gl:Z>
+                <gl:Z>0.8632093</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -481,9 +520,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>-0.01681415</gl:X>
+                <gl:X>-0.8632093</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.9998586</gl:Z>
+                <gl:Z>-0.504846156</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -516,9 +555,9 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0.01681415</gl:X>
+                <gl:X>0.8632093</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.9998586</gl:Z>
+                <gl:Z>0.504846156</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -616,9 +655,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.998167038</gl:X>
+                      <gl:X>-0.503992</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0.0167857036</gl:Z>
+                      <gl:Z>0.861748934</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -670,7 +709,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0.5</Value>
+                      <Value>-0.5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -704,9 +743,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.416650325</gl:X>
-                      <gl:Y>0</gl:Y>
-                      <gl:Z>-0.2748768</gl:Z>
+                      <gl:X>0.251996</gl:X>
+                      <gl:Y>-0</gl:Y>
+                      <gl:Z>-0.430874467</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -855,7 +894,7 @@
               <Combinator xsi:type="gl:BindTexture">
                 <gl:TextureSlot>Texture0</gl:TextureSlot>
                 <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>black_circle_wall</gl:TextureName>
+                <gl:TextureName>calibration_front</gl:TextureName>
                 <gl:TextureTarget>Texture2D</gl:TextureTarget>
               </Combinator>
             </Expression>
@@ -891,7 +930,7 @@
               <Combinator xsi:type="gl:BindTexture">
                 <gl:TextureSlot>Texture0</gl:TextureSlot>
                 <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>black_circle_wall_stripes</gl:TextureName>
+                <gl:TextureName>calibration_left</gl:TextureName>
                 <gl:TextureTarget>Texture2D</gl:TextureTarget>
               </Combinator>
             </Expression>
@@ -927,7 +966,7 @@
               <Combinator xsi:type="gl:BindTexture">
                 <gl:TextureSlot>Texture0</gl:TextureSlot>
                 <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>black_line_wall</gl:TextureName>
+                <gl:TextureName>calibration_right</gl:TextureName>
                 <gl:TextureTarget>Texture2D</gl:TextureTarget>
               </Combinator>
             </Expression>
@@ -963,7 +1002,7 @@
               <Combinator xsi:type="gl:BindTexture">
                 <gl:TextureSlot>Texture0</gl:TextureSlot>
                 <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>black_line_wall_stripes</gl:TextureName>
+                <gl:TextureName>calibration_left</gl:TextureName>
                 <gl:TextureTarget>Texture2D</gl:TextureTarget>
               </Combinator>
             </Expression>
@@ -1170,9 +1209,9 @@
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:CreateVector3">
-          <gl:X>3.58326364</gl:X>
+          <gl:X>-3.24691963</gl:X>
           <gl:Y>-0</gl:Y>
-          <gl:Z>11.4291563</gl:Z>
+          <gl:Z>-0.4308746</gl:Z>
         </Combinator>
       </Expression>
       <Expression xsi:type="PropertyMapping">
@@ -1182,9 +1221,9 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.CubemapView.bonsai">
         <Eye>
-          <X>3.58326364</X>
+          <X>-3.24691963</X>
           <Y>-0</Y>
-          <Z>11.4291563</Z>
+          <Z>-0.4308746</Z>
         </Eye>
         <NearClip>0.1</NearClip>
         <FarClip>1000</FarClip>
@@ -1211,7 +1250,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="gl:RotateY">
           <gl:Order>Append</gl:Order>
-          <gl:Angle>1.58761132</gl:Angle>
+          <gl:Angle>-2.61238885</gl:Angle>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -1338,20 +1377,20 @@ Item2.Light as Light
         <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>-0.1637168</X>
-            <Y>-0.335999966</Y>
+            <X>-0.15625</X>
+            <Y>-0.3416667</Y>
           </Point2f>
           <Point2f>
-            <X>-0.1681416</X>
-            <Y>0.248000026</Y>
+            <X>-0.162500024</X>
+            <Y>0.266666651</Y>
           </Point2f>
           <Point2f>
-            <X>-0.318584085</X>
-            <Y>0.276000023</Y>
+            <X>-0.3125</X>
+            <Y>0.274999976</Y>
           </Point2f>
           <Point2f>
-            <X>-0.303097367</X>
-            <Y>-0.340000033</Y>
+            <X>-0.3125</X>
+            <Y>-0.350000024</Y>
           </Point2f>
         </Destination>
       </Expression>
@@ -1452,16 +1491,16 @@ Item2.Light as Light
         <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>-0.0253968239</X>
-            <Y>-0.348973632</Y>
+            <X>-0.0375000238</X>
+            <Y>-0.358333349</Y>
           </Point2f>
           <Point2f>
             <X>-0.0344827771</X>
             <Y>0.330998242</Y>
           </Point2f>
           <Point2f>
-            <X>0.169540286</X>
-            <Y>0.3134851</Y>
+            <X>0.162500024</X>
+            <Y>0.3333333</Y>
           </Point2f>
           <Point2f>
             <X>0.163793087</X>
@@ -1566,20 +1605,20 @@ Item2.Light as Light
         <ClearColor>IndianRed</ClearColor>
         <Destination>
           <Point2f>
-            <X>0.450000048</X>
-            <Y>-0.3416667</Y>
-          </Point2f>
-          <Point2f>
             <X>0.431249976</X>
-            <Y>0.308333337</Y>
+            <Y>-0.333333373</Y>
           </Point2f>
           <Point2f>
-            <X>0.174999952</X>
-            <Y>0.366666675</Y>
+            <X>0.443750024</X>
+            <Y>0.2916667</Y>
           </Point2f>
           <Point2f>
-            <X>0.231250048</X>
-            <Y>-0.325000048</Y>
+            <X>0.243749976</X>
+            <Y>0.3333333</Y>
+          </Point2f>
+          <Point2f>
+            <X>0.243749976</X>
+            <Y>-0.358333349</Y>
           </Point2f>
         </Destination>
       </Expression>
