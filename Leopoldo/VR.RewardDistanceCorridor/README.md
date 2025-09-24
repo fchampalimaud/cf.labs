@@ -10,3 +10,11 @@ To create local version of Bonsai compatible with the package, simply go to the 
 # Usage
 
 Run Bonsai.exe and load the desired **.bonsai** file.
+
+While running your code you can edit add/remove/edit objects in your virtual scene dynamically (i.e while the code is running). You can do this by modifying the **.json** files in the **Protocol** directory, saving the file, and press **R** to update your virtual environment:
+- The **VR.ParalaxCorridor** loads the **parallax_settings.json**
+- The **VR.RewardDistanceCorridor** loads the **default_settings.json**
+
+Use the mouse wheel to move in the environment.
+
+
