@@ -1,0 +1,12 @@
+{
+  "Landmarks": [
+    { "MeshType": "Cylinder", "Translation": [0.0, 1.0, -2.0], "Scale": [1.0, 1.0, 1.0], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0]},
+    { "MeshType": "Plane", "Translation": [5.0, 2.0, -1.0],"Scale": [0.5, 0.5, 0.5], "Rotation": [0.0, 90.0, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0]},
+    { "MeshType": "Cylinder", "Translation": [2.0, 1.0, -5.0], "Scale": [1.0, 2.0, 1.0], "Rotation": [90.0, 0.0, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [0, 1, 0], "SpecularColor": [0, 0, 0]},
+    { "MeshType": "Cylinder", "Translation": [-2.0, 1.0, -10.0], "Scale": [1.0, 2.0, 1.0], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [0, 0, 1], "DiffuseColor": [0, 0, 1], "SpecularColor": [0, 0, 0]}
+  ],
+
+  "Floor": { "Translation": [0.0, -0.1, 0.0], "Scale": [10.0, 200.0, 1.0], "Rotation": [90.0, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Floor"},
+  "LeftWall": { "Translation": [-0.5, 0.0, 0.0], "Scale": [200.0, 8.0, 1.0], "Rotation": [0.0, 1.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"},
+  "RightWall": { "Translation": [0.5, 0.0, 0.0], "Scale": [1.0, 8.0, 1.0], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"}
+}

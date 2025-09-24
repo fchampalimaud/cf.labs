@@ -1,0 +1,79 @@
+{
+  "title": "VRCorridorSchema",
+  "definitions": {
+    "Landmark": {
+      "title": "Landmark",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "name"
+        },
+        "MeshType": {
+          "type": "string"
+        },
+        "Translation": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Scale": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Rotation": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "AmbientColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "DiffuseColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "SpecularColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Texture": {
+          "type": "string"
+        }
+     },
+      "required": ["Name", "MeshType", "Translation", "Scale", "Rotation", "AmbientColor", "DiffuseColor", "SpecularColor", "Texture"] 
+    }
+
+  },
+
+
+  "type": "object",
+  "properties": {
+    "Landmarks": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
+    },
+
+    "Floor": { "$ref": "#/definitions/Landmark" },
+    "RightWall": { "$ref": "#/definitions/Landmark" },
+    "LeftWall": { "$ref": "#/definitions/Landmark" }
+
+  },
+  "required": ["Landmarks"]
+}

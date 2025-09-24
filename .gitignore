@@ -1,3 +1,5 @@
+.config
+.bonsai
 node_modules
 obj
 bin
@@ -5,6 +7,7 @@ bin
 data
 resources
 Packages
+Settings
 *.exe.settings
 *.exe
 *.avi

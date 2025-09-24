@@ -1,0 +1,6 @@
+
+dotnet new tool-manifest --force
+
+dotnet tool install --local Bonsai.Sgen
+
+dotnet bonsai.sgen VRCorridorSchema.json --serializer yaml -o ../Extensions
