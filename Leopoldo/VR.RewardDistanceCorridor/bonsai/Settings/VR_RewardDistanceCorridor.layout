@@ -20,6 +20,7 @@
       <WindowSettings Index="4">
         <NestedLayout>
           <WindowSettings Index="2">
+            <Visible>false</Visible>
             <Location>
               <X>130</X>
               <Y>333</Y>
@@ -32,16 +33,17 @@
             <VisualizerSettings>
               <TimeSeriesVisualizer>
                 <Capacity>640</Capacity>
-                <Min>-0.008</Min>
-                <Max>0.008</Max>
+                <Min>0</Min>
+                <Max>1.1</Max>
                 <AutoScale>true</AutoScale>
               </TimeSeriesVisualizer>
             </VisualizerSettings>
           </WindowSettings>
           <WindowSettings Index="3">
+            <Visible>false</Visible>
             <Location>
-              <X>208</X>
-              <Y>208</Y>
+              <X>197</X>
+              <Y>533</Y>
             </Location>
             <Size>
               <Width>416</Width>
@@ -51,8 +53,8 @@
             <VisualizerSettings>
               <TimeSeriesVisualizer>
                 <Capacity>640</Capacity>
-                <Min>-1</Min>
-                <Max>1</Max>
+                <Min>0</Min>
+                <Max>1.1</Max>
                 <AutoScale>true</AutoScale>
               </TimeSeriesVisualizer>
             </VisualizerSettings>
@@ -75,9 +77,10 @@
         </NestedLayout>
       </WindowSettings>
       <WindowSettings Index="7">
+        <Visible>false</Visible>
         <Location>
-          <X>197</X>
-          <Y>352</Y>
+          <X>767</X>
+          <Y>488</Y>
         </Location>
         <Size>
           <Width>416</Width>
@@ -87,9 +90,9 @@
         <VisualizerSettings>
           <TimeSeriesVisualizer>
             <Capacity>640</Capacity>
-            <Min>1.202</Min>
-            <Max>1.216</Max>
-            <AutoScale>true</AutoScale>
+            <Min>-57.866370078413532</Min>
+            <Max>57.866370078413532</Max>
+            <AutoScale>false</AutoScale>
           </TimeSeriesVisualizer>
         </VisualizerSettings>
       </WindowSettings>
@@ -214,5 +217,48 @@
         </VisualizerSettings>
       </WindowSettings>
     </NestedLayout>
+  </WindowSettings>
+  <WindowSettings Index="12">
+    <NestedLayout>
+      <WindowSettings Index="12">
+        <Visible>false</Visible>
+        <Location>
+          <X>1944</X>
+          <Y>26</Y>
+        </Location>
+        <Size>
+          <Width>413</Width>
+          <Height>278</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <TimeSeriesVisualizer>
+            <Capacity>640</Capacity>
+            <Min>9.5</Min>
+            <Max>10.5</Max>
+            <AutoScale>true</AutoScale>
+          </TimeSeriesVisualizer>
+        </VisualizerSettings>
+      </WindowSettings>
+    </NestedLayout>
+  </WindowSettings>
+  <WindowSettings Index="24">
+    <Location>
+      <X>327</X>
+      <Y>478</Y>
+    </Location>
+    <Size>
+      <Width>413</Width>
+      <Height>278</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <TimeSeriesVisualizer>
+        <Capacity>640</Capacity>
+        <Min>-0.5</Min>
+        <Max>10.5</Max>
+        <AutoScale>false</AutoScale>
+      </TimeSeriesVisualizer>
+    </VisualizerSettings>
   </WindowSettings>
 </VisualizerLayout>

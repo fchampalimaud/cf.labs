@@ -1141,7 +1141,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>Protocols\default_settings.yaml</io:Path>
+          <io:Path>Protocols\paralax_settings.yaml</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p3:DeserializeFromYaml">
@@ -1604,9 +1604,9 @@ Item1 * Math.Cos(Item2) as Z
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>-0</gl:X>
+                <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.1</gl:Z>
+                <gl:Z>0.1</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:Accumulate" />
@@ -1629,7 +1629,7 @@ it.Z % 10.0 as Z
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-4.30001831</gl:Z>
+                <gl:Z>-2.00000072</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1713,81 +1713,89 @@ it.Z % 10.0 as Z
               <Name>RightWall</Name>
               <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:BindTexture">
-                <gl:TextureSlot>Texture0</gl:TextureSlot>
-                <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
-                <gl:TextureTarget>Texture2D</gl:TextureTarget>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:BindTexture">
+                  <gl:TextureSlot>Texture0</gl:TextureSlot>
+                  <gl:ShaderName>TexturedModel</gl:ShaderName>
+                  <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                  <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
-              <TranslationX>0.5</TranslationX>
-              <TranslationY>0</TranslationY>
-              <TranslationZ>0</TranslationZ>
-              <RotationZ>0</RotationZ>
-              <RotationY>90</RotationY>
-              <RotationX>0</RotationX>
-              <ScaleX>200</ScaleX>
-              <ScaleY>0.4</ScaleY>
-              <ScaleZ>1</ScaleZ>
-              <Ambient>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Diffuse>
-              <Specular>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Specular>
-              <SpecularExponent>10</SpecularExponent>
-              <MeshName>Plane</MeshName>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                <TranslationX>0.5</TranslationX>
+                <TranslationY>0</TranslationY>
+                <TranslationZ>0</TranslationZ>
+                <RotationZ>0</RotationZ>
+                <RotationY>90</RotationY>
+                <RotationX>0</RotationX>
+                <ScaleX>200</ScaleX>
+                <ScaleY>0.4</ScaleY>
+                <ScaleZ>1</ScaleZ>
+                <Ambient>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Ambient>
+                <Diffuse>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Diffuse>
+                <Specular>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Specular>
+                <SpecularExponent>10</SpecularExponent>
+                <MeshName>Plane</MeshName>
+              </Builder>
             </Expression>
             <Expression xsi:type="Annotation">
               <Name>LeftWall</Name>
               <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:BindTexture">
-                <gl:TextureSlot>Texture0</gl:TextureSlot>
-                <gl:ShaderName>TexturedModel</gl:ShaderName>
-                <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
-                <gl:TextureTarget>Texture2D</gl:TextureTarget>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="gl:BindTexture">
+                  <gl:TextureSlot>Texture0</gl:TextureSlot>
+                  <gl:ShaderName>TexturedModel</gl:ShaderName>
+                  <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                  <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
-              <TranslationX>-0.5</TranslationX>
-              <TranslationY>0</TranslationY>
-              <TranslationZ>0</TranslationZ>
-              <RotationZ>0</RotationZ>
-              <RotationY>90</RotationY>
-              <RotationX>0</RotationX>
-              <ScaleX>200</ScaleX>
-              <ScaleY>0.4</ScaleY>
-              <ScaleZ>1</ScaleZ>
-              <Ambient>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Ambient>
-              <Diffuse>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Diffuse>
-              <Specular>
-                <X>0.8</X>
-                <Y>0.8</Y>
-                <Z>0.8</Z>
-              </Specular>
-              <SpecularExponent>10</SpecularExponent>
-              <MeshName>Plane</MeshName>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                <TranslationX>-0.5</TranslationX>
+                <TranslationY>0</TranslationY>
+                <TranslationZ>0</TranslationZ>
+                <RotationZ>0</RotationZ>
+                <RotationY>90</RotationY>
+                <RotationX>0</RotationX>
+                <ScaleX>200</ScaleX>
+                <ScaleY>0.4</ScaleY>
+                <ScaleZ>1</ScaleZ>
+                <Ambient>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Ambient>
+                <Diffuse>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Diffuse>
+                <Specular>
+                  <X>0.8</X>
+                  <Y>0.8</Y>
+                  <Z>0.8</Z>
+                </Specular>
+                <SpecularExponent>10</SpecularExponent>
+                <MeshName>Plane</MeshName>
+              </Builder>
             </Expression>
             <Expression xsi:type="Annotation">
               <Name>Landmarks</Name>
@@ -1831,9 +1839,9 @@ it.Z % 10.0 as Z
                     <Selector>Item1</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
-                    <TranslationX>-0.49</TranslationX>
+                    <TranslationX>3</TranslationX>
                     <TranslationY>0</TranslationY>
-                    <TranslationZ>-1</TranslationZ>
+                    <TranslationZ>-4.6</TranslationZ>
                     <RotationZ>0</RotationZ>
                     <RotationY>89.95438</RotationY>
                     <RotationX>0</RotationX>
@@ -1842,8 +1850,8 @@ it.Z % 10.0 as Z
                     <ScaleZ>0.5</ScaleZ>
                     <Ambient>
                       <X>0</X>
-                      <Y>0</Y>
-                      <Z>1</Z>
+                      <Y>1</Y>
+                      <Z>0</Z>
                     </Ambient>
                     <Diffuse>
                       <X>1</X>
@@ -1868,7 +1876,7 @@ it.Z % 10.0 as Z
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Take">
-                      <rx:Count>6</rx:Count>
+                      <rx:Count>4</rx:Count>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -2060,7 +2068,7 @@ it.Z % 10.0 as Z
               <Eye>
                 <X>0</X>
                 <Y>0</Y>
-                <Z>-4.30001831</Z>
+                <Z>-2.00000072</Z>
               </Eye>
               <NearClip>0.1</NearClip>
               <FarClip>1000</FarClip>
@@ -2171,7 +2179,7 @@ Item1.Light as Light
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>Protocols\default_settings.yaml</io:Path>
+                <io:Path>Protocols\paralax_settings.yaml</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="p3:DeserializeFromYaml">

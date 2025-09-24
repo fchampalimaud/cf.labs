@@ -15,32 +15,32 @@ namespace VRCorridorSchema
     public partial class Landmark
     {
     
-        private object _name;
+        private string _name;
     
         private string _meshType;
     
-        private System.Collections.Generic.List<float> _translation;
+        private System.Collections.Generic.List<double> _translation;
     
-        private System.Collections.Generic.List<float> _scale;
+        private System.Collections.Generic.List<double> _scale;
     
-        private System.Collections.Generic.List<float> _rotation;
+        private System.Collections.Generic.List<double> _rotation;
     
-        private System.Collections.Generic.List<float> _ambientColor;
+        private System.Collections.Generic.List<double> _ambientColor;
     
-        private System.Collections.Generic.List<float> _diffuseColor;
+        private System.Collections.Generic.List<double> _diffuseColor;
     
-        private System.Collections.Generic.List<float> _specularColor;
+        private System.Collections.Generic.List<double> _specularColor;
     
         private string _texture;
     
         public Landmark()
         {
-            _translation = new System.Collections.Generic.List<float>();
-            _scale = new System.Collections.Generic.List<float>();
-            _rotation = new System.Collections.Generic.List<float>();
-            _ambientColor = new System.Collections.Generic.List<float>();
-            _diffuseColor = new System.Collections.Generic.List<float>();
-            _specularColor = new System.Collections.Generic.List<float>();
+            _translation = new System.Collections.Generic.List<double>();
+            _scale = new System.Collections.Generic.List<double>();
+            _rotation = new System.Collections.Generic.List<double>();
+            _ambientColor = new System.Collections.Generic.List<double>();
+            _diffuseColor = new System.Collections.Generic.List<double>();
+            _specularColor = new System.Collections.Generic.List<double>();
         }
     
         protected Landmark(Landmark other)
@@ -56,9 +56,8 @@ namespace VRCorridorSchema
             _texture = other._texture;
         }
     
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Name")]
-        public object Name
+        public string Name
         {
             get
             {
@@ -85,7 +84,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Translation")]
-        public System.Collections.Generic.List<float> Translation
+        public System.Collections.Generic.List<double> Translation
         {
             get
             {
@@ -99,7 +98,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Scale")]
-        public System.Collections.Generic.List<float> Scale
+        public System.Collections.Generic.List<double> Scale
         {
             get
             {
@@ -113,7 +112,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Rotation")]
-        public System.Collections.Generic.List<float> Rotation
+        public System.Collections.Generic.List<double> Rotation
         {
             get
             {
@@ -127,7 +126,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="AmbientColor")]
-        public System.Collections.Generic.List<float> AmbientColor
+        public System.Collections.Generic.List<double> AmbientColor
         {
             get
             {
@@ -141,7 +140,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="DiffuseColor")]
-        public System.Collections.Generic.List<float> DiffuseColor
+        public System.Collections.Generic.List<double> DiffuseColor
         {
             get
             {
@@ -155,7 +154,7 @@ namespace VRCorridorSchema
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="SpecularColor")]
-        public System.Collections.Generic.List<float> SpecularColor
+        public System.Collections.Generic.List<double> SpecularColor
         {
             get
             {

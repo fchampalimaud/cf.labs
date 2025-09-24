@@ -6,7 +6,7 @@
       "type": "object",
       "properties": {
         "Name": {
-          "type": "name"
+          "type": "string"
         },
         "MeshType": {
           "type": "string"
