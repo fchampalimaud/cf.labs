@@ -1,0 +1,14 @@
+{
+  "Landmarks": [
+    { "Name": "L1_Right", "MeshType": "Plane", "Translation": [0.049, 0.0, -0.0],"Scale": [0.1, 0.4, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "Floor"},
+    { "Name": "L1_Left", "MeshType": "Plane", "Translation": [-0.049, 0.0, -.62832],"Scale": [0.05, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+    { "Name": "L2_Right", "MeshType": "Plane", "Translation": [0.049, 0.0, -1.25664],"Scale": [0.05, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+    { "Name": "L2_Left", "MeshType": "Plane", "Translation": [-0.049, 0.0, -1.25664],"Scale": [0.05, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+    { "Name": "L3_Right", "MeshType": "Plane", "Translation": [0.049, 0.0, -1.88496],"Scale": [0.05, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 0, 1], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+    { "Name": "L3_Left", "MeshType": "Plane", "Translation": [-0.049, 0.0, -1.88496],"Scale": [0.05, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 0, 1], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+  ],
+
+  "Floor": { "Translation": [0.0, -0.01, -0.5], "Scale": [0.62832, 0.62832, 0.1], "Rotation": [-1.5708, 0.0, 0.0 ], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Rocks"},
+  "RightWall": { "Translation": [0.05, 0.0, -1.0], "Scale": [0.62832, 0.08, 0.1], "Rotation": [0.0, -1.5708, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"},
+  "LeftWall": { "Translation": [-0.05, 0.0, -1.0], "Scale": [0.62832, 0.08, 0.1], "Rotation": [0.0, 1.5708, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"}
+} 

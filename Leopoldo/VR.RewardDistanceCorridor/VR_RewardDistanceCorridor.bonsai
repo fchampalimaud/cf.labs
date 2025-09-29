@@ -2,6 +2,8 @@
 <WorkflowBuilder Version="2.9.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
+                 xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
+                 xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
@@ -12,8 +14,6 @@
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:p3="clr-namespace:VRCorridorSchema;assembly=Extensions"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
-                 xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
-                 xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -36,349 +36,546 @@
         </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
-        <Name>ProcessWheelData</Name>
+        <Name>InitShaders</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="WheelEncoderMin (V)" />
-              <Property Name="WheelEncoderMax (V)" />
-            </Expression>
-            <Expression xsi:type="GroupWorkflow">
-              <Name>InitWheelData</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="WheelEncoderMin (V)" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0.1</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>RotEncMin</Name>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" DisplayName="WheelEncoderMax (V)" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>4.7</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>RotEncMax</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="IntProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-0.0 as Position,
-0.0 as Diference,
-0 as Turns)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>WheelData</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>Encoder</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>TotalDistance</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>RunSpeed</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="rx:BehaviorSubject">
-                    <Name>TimeOut</Name>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="9" To="10" Label="Source1" />
-                  <Edge From="11" To="12" Label="Source1" />
-                  <Edge From="13" To="14" Label="Source1" />
-                  <Edge From="15" To="16" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>WheelEncoder</Name>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>new(
-it as Position,
-0.0 as Diference,
-0 as Turns)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="rx:Scan">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.Position</Selector>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="dsp:Difference">
-                      <dsp:Order>1</dsp:Order>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>it &gt; 1 ? 1.0 : it &lt; -1 ? -1.0 : 0.0</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Zip" />
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>new(
-Item2.Value.Position as Position,
-Item1 as Diference,
-Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 &gt; 0 ? -1 : (Item1 &lt; 0 ? 1 : 0)))) as Turns)</scr:Expression>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Accumulation.Diference</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Value.Diference</Selector>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="scr:ExpressionTransform">
-                    <scr:Expression>Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 &gt; 0 ? -1 : (Item1 &lt; 0 ? 1 : 0)))</scr:Expression>
-                  </Expression>
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="0" To="4" Label="Source2" />
-                  <Edge From="0" To="7" Label="Source1" />
-                  <Edge From="0" To="8" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="4" To="9" Label="Source1" />
-                  <Edge From="4" To="10" Label="Source1" />
-                  <Edge From="5" To="6" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>WheelData</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>WheelData</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Position</Selector>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotEncMin</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Subtract">
-              <Operand xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotEncMax</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Divide">
-              <Operand xsi:type="FloatProperty">
-                <Value>4.7</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Turns</Selector>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Add">
-              <Operand xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Operand>
-            </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Butterworth">
-                <dsp:SampleRate>1000</dsp:SampleRate>
-                <dsp:Cutoff1>6</dsp:Cutoff1>
-                <dsp:Cutoff2>0</dsp:Cutoff2>
-                <dsp:FilterOrder>3</dsp:FilterOrder>
-                <dsp:FilterType>LowPass</dsp:FilterType>
+              <Combinator xsi:type="gl:CreateWindow">
+                <gl:Width>320</gl:Width>
+                <gl:Height>240</gl:Height>
+                <gl:VSync>On</gl:VSync>
+                <gl:SwapSync>false</gl:SwapSync>
+                <gl:ClearColor>Gray</gl:ClearColor>
+                <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
+                <gl:CursorVisible>true</gl:CursorVisible>
+                <gl:Location>
+                  <gl:X>0</gl:X>
+                  <gl:Y>0</gl:Y>
+                </gl:Location>
+                <gl:WindowBorder>Resizable</gl:WindowBorder>
+                <gl:WindowState>Normal</gl:WindowState>
+                <gl:DisplayDevice>First</gl:DisplayDevice>
+                <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
+                <gl:TargetUpdateFrequency xsi:nil="true" />
+                <gl:RenderState />
+                <gl:GraphicsMode>
+                  <gl:ColorFormat>
+                    <gl:Red>8</gl:Red>
+                    <gl:Green>8</gl:Green>
+                    <gl:Blue>8</gl:Blue>
+                    <gl:Alpha>8</gl:Alpha>
+                  </gl:ColorFormat>
+                  <gl:Depth>16</gl:Depth>
+                  <gl:Stencil>0</gl:Stencil>
+                  <gl:Samples>0</gl:Samples>
+                  <gl:AccumulatorFormat>
+                    <gl:Red>0</gl:Red>
+                    <gl:Green>0</gl:Green>
+                    <gl:Blue>0</gl:Blue>
+                    <gl:Alpha>0</gl:Alpha>
+                  </gl:AccumulatorFormat>
+                  <gl:Buffers>2</gl:Buffers>
+                  <gl:Stereo>false</gl:Stereo>
+                </gl:GraphicsMode>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.BonVisionResources.bonsai" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:TextureResources">
+                <gl:Textures>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>BackWall</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\calibration_back.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>Floor</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\floor\checkerboard2.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>FrontWall</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\calibration_front.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>LeftWall</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\calibration_left.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>RightWall</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\calibration_right.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>BG_0.04_0.32_100</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\background\BG_0.04_0.32_100.png</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
+                    <gl:Name>Rocks</gl:Name>
+                    <gl:Width xsi:nil="true" />
+                    <gl:Height xsi:nil="true" />
+                    <gl:InternalFormat>Rgba</gl:InternalFormat>
+                    <gl:WrapS>Repeat</gl:WrapS>
+                    <gl:WrapT>Repeat</gl:WrapT>
+                    <gl:MinFilter>Linear</gl:MinFilter>
+                    <gl:MagFilter>Linear</gl:MagFilter>
+                    <gl:FileName>Textures\floor\rocks.jpg</gl:FileName>
+                    <gl:ColorType>Unchanged</gl:ColorType>
+                    <gl:FlipMode>Vertical</gl:FlipMode>
+                  </gl:TextureConfiguration>
+                </gl:Textures>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="dsp:Difference">
-                <dsp:Order>1</dsp:Order>
+              <Combinator xsi:type="gl:ShaderResources">
+                <gl:Shaders>
+                  <gl:ShaderConfiguration xsi:type="gl:Material">
+                    <gl:Name>PanoramicShader</gl:Name>
+                    <gl:RenderState />
+                    <gl:ShaderUniforms />
+                    <gl:BufferBindings />
+                    <gl:FramebufferAttachments />
+                    <gl:VertexShader>Shaders\panoramic.vert</gl:VertexShader>
+                    <gl:FragmentShader>Shaders\panoramic.frag</gl:FragmentShader>
+                  </gl:ShaderConfiguration>
+                  <gl:ShaderConfiguration xsi:type="gl:Material">
+                    <gl:Name>PlainColorShader</gl:Name>
+                    <gl:RenderState />
+                    <gl:ShaderUniforms />
+                    <gl:BufferBindings />
+                    <gl:FramebufferAttachments />
+                    <gl:VertexShader>Shaders\plain_color.vert</gl:VertexShader>
+                    <gl:FragmentShader>Shaders\plain_color.frag</gl:FragmentShader>
+                  </gl:ShaderConfiguration>
+                </gl:Shaders>
               </Combinator>
             </Expression>
-            <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="WheelPerimeter(cm)" />
-            </Expression>
-            <Expression xsi:type="Multiply">
-              <Operand xsi:type="DoubleProperty">
-                <Value>62.832</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TimeOut</Name>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>it ? 1 : 0</scr:Expression>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>1-it</scr:Expression>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Multiply">
-              <Operand xsi:type="DoubleProperty">
-                <Value>1</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="rx:Accumulate" />
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>single(it)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>TotalDistance</Name>
-            </Expression>
-            <Expression xsi:type="Multiply">
-              <Operand xsi:type="DoubleProperty">
-                <Value>1000</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>RunSpeed</Name>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>UpdateEncoderLimits</Name>
-              <Text><![CDATA[]]></Text>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>WheelData</Name>
-            </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Position</Selector>
-            </Expression>
-            <Expression xsi:type="scr:ExpressionTransform">
-              <scr:Expression>Convert.ToSingle(it)</scr:Expression>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotEncMin</Name>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:MeshResources">
+                <gl:Meshes>
+                  <gl:MeshConfiguration xsi:type="gl:TexturedQuad">
+                    <gl:Name>PanoramicQuad</gl:Name>
+                    <gl:QuadEffects>None</gl:QuadEffects>
+                  </gl:MeshConfiguration>
+                  <gl:MeshConfiguration xsi:type="gl:TexturedModel">
+                    <gl:Name>Cylinder</gl:Name>
+                    <gl:FileName>Models\cylinder.obj</gl:FileName>
+                  </gl:MeshConfiguration>
+                </gl:Meshes>
+              </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
+              <Combinator xsi:type="res:LoadResources" />
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="num:Min" />
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>RotEncMin</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>RotEncMax</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:WithLatestFrom" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="num:Max" />
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>RotEncMax</Name>
-            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="6" To="14" Label="Source1" />
-            <Edge From="7" To="10" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
-            <Edge From="10" To="13" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source2" />
-            <Edge From="13" To="16" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source2" />
-            <Edge From="16" To="17" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="20" Label="Source1" />
-            <Edge From="19" To="20" Label="Source2" />
-            <Edge From="20" To="25" Label="Source1" />
-            <Edge From="20" To="29" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="33" Label="Source1" />
-            <Edge From="33" To="34" Label="Source1" />
-            <Edge From="34" To="36" Label="Source1" />
-            <Edge From="34" To="40" Label="Source1" />
-            <Edge From="35" To="36" Label="Source2" />
-            <Edge From="36" To="37" Label="Source1" />
-            <Edge From="37" To="38" Label="Source1" />
-            <Edge From="39" To="40" Label="Source2" />
-            <Edge From="40" To="41" Label="Source1" />
-            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
           </Edges>
         </Workflow>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>ProcessWheelData</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="ExternalizedMapping">
+                <Property Name="WheelEncoderMin (V)" />
+                <Property Name="WheelEncoderMax (V)" />
+              </Expression>
+              <Expression xsi:type="GroupWorkflow">
+                <Name>InitWheelData</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Value" DisplayName="WheelEncoderMin (V)" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>0.1</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>RotEncMin</Name>
+                    </Expression>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Value" DisplayName="WheelEncoderMax (V)" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>4.7</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>RotEncMax</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="IntProperty">
+                        <Value>0</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="scr:ExpressionTransform">
+                      <scr:Expression>new(
+0.0 as Position,
+0.0 as Diference,
+0 as Turns)</scr:Expression>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>WheelData</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>0</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>Encoder</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>0</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>TotalDistance</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="FloatProperty">
+                        <Value>0</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>RunSpeed</Name>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="BooleanProperty">
+                        <Value>false</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="rx:BehaviorSubject">
+                      <Name>TimeOut</Name>
+                    </Expression>
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                    <Edge From="7" To="8" Label="Source1" />
+                    <Edge From="9" To="10" Label="Source1" />
+                    <Edge From="11" To="12" Label="Source1" />
+                    <Edge From="13" To="14" Label="Source1" />
+                    <Edge From="15" To="16" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>WheelEncoder</Name>
+              </Expression>
+              <Expression xsi:type="scr:ExpressionTransform">
+                <scr:Expression>new(
+it as Position,
+0.0 as Diference,
+0 as Turns)</scr:Expression>
+              </Expression>
+              <Expression xsi:type="rx:Scan">
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value.Position</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="dsp:Difference">
+                        <dsp:Order>1</dsp:Order>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="scr:ExpressionTransform">
+                      <scr:Expression>it &gt; 1 ? 1.0 : it &lt; -1 ? -1.0 : 0.0</scr:Expression>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:Zip" />
+                    </Expression>
+                    <Expression xsi:type="scr:ExpressionTransform">
+                      <scr:Expression>new(
+Item2.Value.Position as Position,
+Item1 as Diference,
+Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 &gt; 0 ? -1 : (Item1 &lt; 0 ? 1 : 0)))) as Turns)</scr:Expression>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Accumulation.Diference</Selector>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Value.Diference</Selector>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="scr:ExpressionTransform">
+                      <scr:Expression>Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 &gt; 0 ? -1 : (Item1 &lt; 0 ? 1 : 0)))</scr:Expression>
+                    </Expression>
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="0" To="4" Label="Source2" />
+                    <Edge From="0" To="7" Label="Source1" />
+                    <Edge From="0" To="8" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                    <Edge From="3" To="4" Label="Source1" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="4" To="9" Label="Source1" />
+                    <Edge From="4" To="10" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>WheelData</Name>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>WheelData</Name>
+              </Expression>
+              <Expression xsi:type="MemberSelector">
+                <Selector>Position</Selector>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>RotEncMin</Name>
+              </Expression>
+              <Expression xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
+              </Expression>
+              <Expression xsi:type="Subtract">
+                <Operand xsi:type="FloatProperty">
+                  <Value>0</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>RotEncMax</Name>
+              </Expression>
+              <Expression xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
+              </Expression>
+              <Expression xsi:type="Divide">
+                <Operand xsi:type="FloatProperty">
+                  <Value>4.7</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="MemberSelector">
+                <Selector>Turns</Selector>
+              </Expression>
+              <Expression xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
+              </Expression>
+              <Expression xsi:type="Add">
+                <Operand xsi:type="FloatProperty">
+                  <Value>0</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="dsp:Butterworth">
+                  <dsp:SampleRate>1000</dsp:SampleRate>
+                  <dsp:Cutoff1>6</dsp:Cutoff1>
+                  <dsp:Cutoff2>0</dsp:Cutoff2>
+                  <dsp:FilterOrder>3</dsp:FilterOrder>
+                  <dsp:FilterType>LowPass</dsp:FilterType>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="dsp:Difference">
+                  <dsp:Order>1</dsp:Order>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="ExternalizedMapping">
+                <Property Name="Value" DisplayName="WheelPerimeter(cm)" />
+              </Expression>
+              <Expression xsi:type="Multiply">
+                <Operand xsi:type="DoubleProperty">
+                  <Value>0.62832</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>TimeOut</Name>
+              </Expression>
+              <Expression xsi:type="scr:ExpressionTransform">
+                <scr:Expression>it ? 1 : 0</scr:Expression>
+              </Expression>
+              <Expression xsi:type="scr:ExpressionTransform">
+                <scr:Expression>1-it</scr:Expression>
+              </Expression>
+              <Expression xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
+              </Expression>
+              <Expression xsi:type="Multiply">
+                <Operand xsi:type="DoubleProperty">
+                  <Value>1</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="rx:Accumulate" />
+              <Expression xsi:type="scr:ExpressionTransform">
+                <scr:Expression>single(it)</scr:Expression>
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>TotalDistance</Name>
+              </Expression>
+              <Expression xsi:type="Multiply">
+                <Operand xsi:type="DoubleProperty">
+                  <Value>1000</Value>
+                </Operand>
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>RunSpeed</Name>
+              </Expression>
+              <Expression xsi:type="Annotation">
+                <Name>UpdateEncoderLimits</Name>
+                <Text><![CDATA[]]></Text>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>WheelData</Name>
+              </Expression>
+              <Expression xsi:type="MemberSelector">
+                <Selector>Position</Selector>
+              </Expression>
+              <Expression xsi:type="scr:ExpressionTransform">
+                <scr:Expression>Convert.ToSingle(it)</scr:Expression>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>RotEncMin</Name>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="rx:WithLatestFrom" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="num:Min" />
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>RotEncMin</Name>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>RotEncMax</Name>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="rx:WithLatestFrom" />
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="num:Max" />
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>RotEncMax</Name>
+              </Expression>
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="1" Label="Source1" />
+              <Edge From="2" To="3" Label="Source1" />
+              <Edge From="3" To="4" Label="Source1" />
+              <Edge From="4" To="5" Label="Source1" />
+              <Edge From="6" To="7" Label="Source1" />
+              <Edge From="6" To="14" Label="Source1" />
+              <Edge From="7" To="10" Label="Source1" />
+              <Edge From="8" To="9" Label="Source1" />
+              <Edge From="9" To="10" Label="Source2" />
+              <Edge From="10" To="13" Label="Source1" />
+              <Edge From="11" To="12" Label="Source1" />
+              <Edge From="12" To="13" Label="Source2" />
+              <Edge From="13" To="16" Label="Source1" />
+              <Edge From="14" To="15" Label="Source1" />
+              <Edge From="15" To="16" Label="Source2" />
+              <Edge From="16" To="17" Label="Source1" />
+              <Edge From="17" To="18" Label="Source1" />
+              <Edge From="18" To="20" Label="Source1" />
+              <Edge From="19" To="20" Label="Source2" />
+              <Edge From="20" To="25" Label="Source1" />
+              <Edge From="20" To="29" Label="Source1" />
+              <Edge From="21" To="22" Label="Source1" />
+              <Edge From="22" To="23" Label="Source1" />
+              <Edge From="23" To="24" Label="Source1" />
+              <Edge From="24" To="25" Label="Source2" />
+              <Edge From="25" To="26" Label="Source1" />
+              <Edge From="26" To="27" Label="Source1" />
+              <Edge From="27" To="28" Label="Source1" />
+              <Edge From="29" To="30" Label="Source1" />
+              <Edge From="31" To="32" Label="Source1" />
+              <Edge From="32" To="33" Label="Source1" />
+              <Edge From="33" To="34" Label="Source1" />
+              <Edge From="34" To="36" Label="Source1" />
+              <Edge From="34" To="40" Label="Source1" />
+              <Edge From="35" To="36" Label="Source2" />
+              <Edge From="36" To="37" Label="Source1" />
+              <Edge From="37" To="38" Label="Source1" />
+              <Edge From="39" To="40" Label="Source2" />
+              <Edge From="40" To="41" Label="Source1" />
+              <Edge From="41" To="42" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="GroupWorkflow">
@@ -1141,7 +1338,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="io:ReadAllText">
-          <io:Path>Protocols\default_settings.yaml</io:Path>
+          <io:Path>Protocols\kerem_settings.yaml</io:Path>
         </Combinator>
       </Expression>
       <Expression xsi:type="p3:DeserializeFromYaml">
@@ -1276,188 +1473,6 @@ Item1 * Math.Cos(Item2) as Z
           </Workflow>
         </Builder>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>InitShaders</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:CreateWindow">
-                <gl:Width>320</gl:Width>
-                <gl:Height>240</gl:Height>
-                <gl:VSync>On</gl:VSync>
-                <gl:SwapSync>false</gl:SwapSync>
-                <gl:ClearColor>Gray</gl:ClearColor>
-                <gl:ClearMask>DepthBufferBit ColorBufferBit</gl:ClearMask>
-                <gl:CursorVisible>true</gl:CursorVisible>
-                <gl:Location>
-                  <gl:X>0</gl:X>
-                  <gl:Y>0</gl:Y>
-                </gl:Location>
-                <gl:WindowBorder>Resizable</gl:WindowBorder>
-                <gl:WindowState>Normal</gl:WindowState>
-                <gl:DisplayDevice>First</gl:DisplayDevice>
-                <gl:TargetRenderFrequency>60</gl:TargetRenderFrequency>
-                <gl:TargetUpdateFrequency xsi:nil="true" />
-                <gl:RenderState />
-                <gl:GraphicsMode>
-                  <gl:ColorFormat>
-                    <gl:Red>8</gl:Red>
-                    <gl:Green>8</gl:Green>
-                    <gl:Blue>8</gl:Blue>
-                    <gl:Alpha>8</gl:Alpha>
-                  </gl:ColorFormat>
-                  <gl:Depth>16</gl:Depth>
-                  <gl:Stencil>0</gl:Stencil>
-                  <gl:Samples>0</gl:Samples>
-                  <gl:AccumulatorFormat>
-                    <gl:Red>0</gl:Red>
-                    <gl:Green>0</gl:Green>
-                    <gl:Blue>0</gl:Blue>
-                    <gl:Alpha>0</gl:Alpha>
-                  </gl:AccumulatorFormat>
-                  <gl:Buffers>2</gl:Buffers>
-                  <gl:Stereo>false</gl:Stereo>
-                </gl:GraphicsMode>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.BonVisionResources.bonsai" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:TextureResources">
-                <gl:Textures>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>BackWall</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\calibration_back.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>Floor</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\floor\checkerboard2.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>FrontWall</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\calibration_front.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>LeftWall</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\calibration_left.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>RightWall</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\calibration_right.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                  <gl:TextureConfiguration xsi:type="gl:ImageTexture">
-                    <gl:Name>BG_0.04_0.32_100</gl:Name>
-                    <gl:Width xsi:nil="true" />
-                    <gl:Height xsi:nil="true" />
-                    <gl:InternalFormat>Rgba</gl:InternalFormat>
-                    <gl:WrapS>Repeat</gl:WrapS>
-                    <gl:WrapT>Repeat</gl:WrapT>
-                    <gl:MinFilter>Linear</gl:MinFilter>
-                    <gl:MagFilter>Linear</gl:MagFilter>
-                    <gl:FileName>Arena\background\BG_0.04_0.32_100.png</gl:FileName>
-                    <gl:ColorType>Unchanged</gl:ColorType>
-                    <gl:FlipMode>Vertical</gl:FlipMode>
-                  </gl:TextureConfiguration>
-                </gl:Textures>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:ShaderResources">
-                <gl:Shaders>
-                  <gl:ShaderConfiguration xsi:type="gl:Material">
-                    <gl:Name>PanoramicShader</gl:Name>
-                    <gl:RenderState />
-                    <gl:ShaderUniforms />
-                    <gl:BufferBindings />
-                    <gl:FramebufferAttachments />
-                    <gl:VertexShader>Shaders\panoramic.vert</gl:VertexShader>
-                    <gl:FragmentShader>Shaders\panoramic.frag</gl:FragmentShader>
-                  </gl:ShaderConfiguration>
-                  <gl:ShaderConfiguration xsi:type="gl:Material">
-                    <gl:Name>PlainColorShader</gl:Name>
-                    <gl:RenderState />
-                    <gl:ShaderUniforms />
-                    <gl:BufferBindings />
-                    <gl:FramebufferAttachments />
-                    <gl:VertexShader>Shaders\plain_color.vert</gl:VertexShader>
-                    <gl:FragmentShader>Shaders\plain_color.frag</gl:FragmentShader>
-                  </gl:ShaderConfiguration>
-                </gl:Shaders>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:MeshResources">
-                <gl:Meshes>
-                  <gl:MeshConfiguration xsi:type="gl:TexturedQuad">
-                    <gl:Name>PanoramicQuad</gl:Name>
-                    <gl:QuadEffects>None</gl:QuadEffects>
-                  </gl:MeshConfiguration>
-                  <gl:MeshConfiguration xsi:type="gl:TexturedModel">
-                    <gl:Name>Cylinder</gl:Name>
-                    <gl:FileName>Models\cylinder.obj</gl:FileName>
-                  </gl:MeshConfiguration>
-                </gl:Meshes>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="res:LoadResources" />
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-          </Edges>
-        </Workflow>
-      </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="GroupWorkflow">
           <Name>HarpWheelNavigation</Name>
@@ -1478,7 +1493,7 @@ Item1 * Math.Cos(Item2) as Z
                 <scr:Expression>new( 
 0 as X, 
 0 as Y, 
--it as Z
+-it%1.88496 as Z
 )</scr:Expression>
               </Expression>
               <Expression xsi:type="InputMapping">
@@ -1493,7 +1508,7 @@ Item1 * Math.Cos(Item2) as Z
                 <Combinator xsi:type="gl:CreateVector3">
                   <gl:X>0</gl:X>
                   <gl:Y>0</gl:Y>
-                  <gl:Z>-455.9802</gl:Z>
+                  <gl:Z>-0.509001434</gl:Z>
                 </Combinator>
               </Expression>
               <Expression xsi:type="rx:BehaviorSubject">
@@ -1546,7 +1561,7 @@ Item1 * Math.Cos(Item2) as Z
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>-0.05</Value>
+                <Value>-0.02</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:Condition">
@@ -1570,7 +1585,7 @@ Item1 * Math.Cos(Item2) as Z
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.05</Value>
+                <Value>0.02</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1606,7 +1621,7 @@ Item1 * Math.Cos(Item2) as Z
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.05</gl:Z>
+                <gl:Z>0.02</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:Accumulate" />
@@ -1629,7 +1644,7 @@ it.Z % 10.0 as Z
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.199999809</gl:Z>
+                <gl:Z>-0.520000041</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1731,9 +1746,9 @@ it.Z % 10.0 as Z
                     <Selector>Item1</Selector>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
-                    <TranslationX>-0.099</TranslationX>
+                    <TranslationX>-0.049</TranslationX>
                     <TranslationY>0</TranslationY>
-                    <TranslationZ>-1</TranslationZ>
+                    <TranslationZ>-1.88496</TranslationZ>
                     <RotationZ>0</RotationZ>
                     <RotationY>89.95438</RotationY>
                     <RotationX>0</RotationX>
@@ -1814,15 +1829,15 @@ it.Z % 10.0 as Z
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
-                    <TranslationX>0.099</TranslationX>
+                    <TranslationX>0.049</TranslationX>
                     <TranslationY>0</TranslationY>
-                    <TranslationZ>-0.62</TranslationZ>
+                    <TranslationZ>0</TranslationZ>
                     <RotationZ>0</RotationZ>
                     <RotationY>89.95438</RotationY>
                     <RotationX>0</RotationX>
-                    <ScaleX>0.05</ScaleX>
+                    <ScaleX>0.1</ScaleX>
                     <ScaleY>0.4</ScaleY>
-                    <ScaleZ>0.5</ScaleZ>
+                    <ScaleZ>0.1</ScaleZ>
                     <Ambient>
                       <X>1</X>
                       <Y>0</Y>
@@ -1887,6 +1902,10 @@ it.Z % 10.0 as Z
               <Name>DrawFloor</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="Annotation">
+                    <Name>Drawing 4 Parts</Name>
+                    <Text><![CDATA[It tiles the floor in four parts by drawing four copies of the same texture 4 times along the Z axis.]]></Text>
+                  </Expression>
                   <Expression xsi:type="WorkflowInput">
                     <Name>Source1</Name>
                   </Expression>
@@ -1907,7 +1926,6 @@ it.Z % 10.0 as Z
                       <Property Name="TextureName" Selector="Item2.Texture" />
                       <Property Name="TranslationX" Selector="Item2.Translation[0]" />
                       <Property Name="TranslationY" Selector="Item2.Translation[1]" />
-                      <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
                       <Property Name="ScaleX" Selector="Item2.Scale[0]" />
                       <Property Name="ScaleY" Selector="Item2.Scale[1]" />
                       <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
@@ -1934,14 +1952,13 @@ it.Z % 10.0 as Z
                           <Combinator xsi:type="gl:BindTexture">
                             <gl:TextureSlot>Texture0</gl:TextureSlot>
                             <gl:ShaderName>TexturedModel</gl:ShaderName>
-                            <gl:TextureName>Floor</gl:TextureName>
+                            <gl:TextureName>Rocks</gl:TextureName>
                             <gl:TextureTarget>Texture2D</gl:TextureTarget>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedMapping">
                           <Property Name="TranslationX" />
                           <Property Name="TranslationY" />
-                          <Property Name="TranslationZ" />
                           <Property Name="RotationZ" />
                           <Property Name="RotationY" />
                           <Property Name="RotationX" />
@@ -1952,16 +1969,41 @@ it.Z % 10.0 as Z
                           <Property Name="Diffuse" />
                           <Property Name="Specular" />
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>-1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
                           <TranslationX>0</TranslationX>
-                          <TranslationY>-0.1</TranslationY>
-                          <TranslationZ>0</TranslationZ>
+                          <TranslationY>-0.01</TranslationY>
+                          <TranslationZ>0.31416</TranslationZ>
                           <RotationZ>0</RotationZ>
                           <RotationY>0</RotationY>
-                          <RotationX>90.000206</RotationX>
-                          <ScaleX>0.2</ScaleX>
-                          <ScaleY>20</ScaleY>
-                          <ScaleZ>1</ScaleZ>
+                          <RotationX>-90.000206</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.62832</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
                           <Ambient>
                             <X>1</X>
                             <Y>1</Y>
@@ -1985,22 +2027,493 @@ it.Z % 10.0 as Z
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
-                        <Edge From="2" To="4" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>Rocks</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0</TranslationX>
+                          <TranslationY>-0.01</TranslationY>
+                          <TranslationZ>-0.31416</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>0</RotationY>
+                          <RotationX>-90.000206</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.62832</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>Rocks</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0</TranslationX>
+                          <TranslationY>-0.01</TranslationY>
+                          <TranslationZ>-0.94248</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>0</RotationY>
+                          <RotationX>-90.000206</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.62832</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>Rocks</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>2</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0</TranslationX>
+                          <TranslationY>-0.01</TranslationY>
+                          <TranslationZ>-1.5708</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>0</RotationY>
+                          <RotationX>-90.000206</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.62832</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="TextureName" Selector="Item2.Texture" />
+                        <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                        <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                        <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                        <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                        <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                        <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                        <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                        <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                        <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                        <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                        <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                        <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                      </PropertyMappings>
+                      <Selector>Item1</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="GroupWorkflow">
+                      <Name>DrawTexture</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TextureName" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="gl:BindTexture">
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:ShaderName>TexturedModel</gl:ShaderName>
+                              <gl:TextureName>Rocks</gl:TextureName>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TranslationX" />
+                            <Property Name="TranslationY" />
+                            <Property Name="TranslationZ" />
+                            <Property Name="RotationZ" />
+                            <Property Name="RotationY" />
+                            <Property Name="RotationX" />
+                            <Property Name="ScaleX" />
+                            <Property Name="ScaleY" />
+                            <Property Name="ScaleZ" />
+                            <Property Name="Ambient" />
+                            <Property Name="Diffuse" />
+                            <Property Name="Specular" />
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                            <TranslationX>0</TranslationX>
+                            <TranslationY>-0.01</TranslationY>
+                            <TranslationZ>-0.5</TranslationZ>
+                            <RotationZ>0</RotationZ>
+                            <RotationY>0</RotationY>
+                            <RotationX>-90.000206</RotationX>
+                            <ScaleX>1</ScaleX>
+                            <ScaleY>1</ScaleY>
+                            <ScaleZ>0.1</ScaleZ>
+                            <Ambient>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Ambient>
+                            <Diffuse>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Diffuse>
+                            <Specular>
+                              <X>0</X>
+                              <Y>0</Y>
+                              <Z>0</Z>
+                            </Specular>
+                            <SpecularExponent>10</SpecularExponent>
+                            <MeshName>Plane</MeshName>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source2" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Builder>
+                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="3" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
                   <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
+                  <Edge From="5" To="10" Label="Source1" />
+                  <Edge From="5" To="12" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="14" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="14" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source3" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source4" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2008,6 +2521,10 @@ it.Z % 10.0 as Z
               <Name>DrawRightWall</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="Annotation">
+                    <Name>Drawing 4 Parts</Name>
+                    <Text><![CDATA[It tiles the floor in four parts by drawing four copies of the same texture 4 times along the Z axis.]]></Text>
+                  </Expression>
                   <Expression xsi:type="WorkflowInput">
                     <Name>Source1</Name>
                   </Expression>
@@ -2028,7 +2545,6 @@ it.Z % 10.0 as Z
                       <Property Name="TextureName" Selector="Item2.Texture" />
                       <Property Name="TranslationX" Selector="Item2.Translation[0]" />
                       <Property Name="TranslationY" Selector="Item2.Translation[1]" />
-                      <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
                       <Property Name="ScaleX" Selector="Item2.Scale[0]" />
                       <Property Name="ScaleY" Selector="Item2.Scale[1]" />
                       <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
@@ -2062,7 +2578,6 @@ it.Z % 10.0 as Z
                         <Expression xsi:type="ExternalizedMapping">
                           <Property Name="TranslationX" />
                           <Property Name="TranslationY" />
-                          <Property Name="TranslationZ" />
                           <Property Name="RotationZ" />
                           <Property Name="RotationY" />
                           <Property Name="RotationX" />
@@ -2073,16 +2588,41 @@ it.Z % 10.0 as Z
                           <Property Name="Diffuse" />
                           <Property Name="Specular" />
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>-1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
-                          <TranslationX>0.2</TranslationX>
+                          <TranslationX>0.05</TranslationX>
                           <TranslationY>0</TranslationY>
-                          <TranslationZ>0</TranslationZ>
+                          <TranslationZ>0.31416</TranslationZ>
                           <RotationZ>0</RotationZ>
                           <RotationY>-90.000206</RotationY>
                           <RotationX>0</RotationX>
-                          <ScaleX>20</ScaleX>
-                          <ScaleY>0.5</ScaleY>
-                          <ScaleZ>1</ScaleZ>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
                           <Ambient>
                             <X>1</X>
                             <Y>1</Y>
@@ -2106,22 +2646,493 @@ it.Z % 10.0 as Z
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
-                        <Edge From="2" To="4" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-0.31416</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-0.94248</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>2</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-1.5708</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="TextureName" Selector="Item2.Texture" />
+                        <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                        <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                        <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                        <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                        <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                        <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                        <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                        <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                        <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                        <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                        <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                        <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                      </PropertyMappings>
+                      <Selector>Item1</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="GroupWorkflow">
+                      <Name>DrawTexture</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TextureName" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="gl:BindTexture">
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:ShaderName>TexturedModel</gl:ShaderName>
+                              <gl:TextureName>Rocks</gl:TextureName>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TranslationX" />
+                            <Property Name="TranslationY" />
+                            <Property Name="TranslationZ" />
+                            <Property Name="RotationZ" />
+                            <Property Name="RotationY" />
+                            <Property Name="RotationX" />
+                            <Property Name="ScaleX" />
+                            <Property Name="ScaleY" />
+                            <Property Name="ScaleZ" />
+                            <Property Name="Ambient" />
+                            <Property Name="Diffuse" />
+                            <Property Name="Specular" />
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                            <TranslationX>0</TranslationX>
+                            <TranslationY>-0.01</TranslationY>
+                            <TranslationZ>-0.5</TranslationZ>
+                            <RotationZ>0</RotationZ>
+                            <RotationY>0</RotationY>
+                            <RotationX>-90.000206</RotationX>
+                            <ScaleX>1</ScaleX>
+                            <ScaleY>1</ScaleY>
+                            <ScaleZ>0.1</ScaleZ>
+                            <Ambient>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Ambient>
+                            <Diffuse>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Diffuse>
+                            <Specular>
+                              <X>0</X>
+                              <Y>0</Y>
+                              <Z>0</Z>
+                            </Specular>
+                            <SpecularExponent>10</SpecularExponent>
+                            <MeshName>Plane</MeshName>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source2" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Builder>
+                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="3" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
                   <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
+                  <Edge From="5" To="10" Label="Source1" />
+                  <Edge From="5" To="12" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="14" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="14" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source3" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source4" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2129,6 +3140,10 @@ it.Z % 10.0 as Z
               <Name>DrawLeftWall</Name>
               <Workflow>
                 <Nodes>
+                  <Expression xsi:type="Annotation">
+                    <Name>Drawing 4 Parts</Name>
+                    <Text><![CDATA[It tiles the floor in four parts by drawing four copies of the same texture 4 times along the Z axis.]]></Text>
+                  </Expression>
                   <Expression xsi:type="WorkflowInput">
                     <Name>Source1</Name>
                   </Expression>
@@ -2149,7 +3164,6 @@ it.Z % 10.0 as Z
                       <Property Name="TextureName" Selector="Item2.Texture" />
                       <Property Name="TranslationX" Selector="Item2.Translation[0]" />
                       <Property Name="TranslationY" Selector="Item2.Translation[1]" />
-                      <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
                       <Property Name="ScaleX" Selector="Item2.Scale[0]" />
                       <Property Name="ScaleY" Selector="Item2.Scale[1]" />
                       <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
@@ -2183,7 +3197,6 @@ it.Z % 10.0 as Z
                         <Expression xsi:type="ExternalizedMapping">
                           <Property Name="TranslationX" />
                           <Property Name="TranslationY" />
-                          <Property Name="TranslationZ" />
                           <Property Name="RotationZ" />
                           <Property Name="RotationY" />
                           <Property Name="RotationX" />
@@ -2194,16 +3207,41 @@ it.Z % 10.0 as Z
                           <Property Name="Diffuse" />
                           <Property Name="Specular" />
                         </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>-1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
                         <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
-                          <TranslationX>-0.2</TranslationX>
+                          <TranslationX>0.05</TranslationX>
                           <TranslationY>0</TranslationY>
-                          <TranslationZ>0</TranslationZ>
+                          <TranslationZ>0.31416</TranslationZ>
                           <RotationZ>0</RotationZ>
-                          <RotationY>90.000206</RotationY>
+                          <RotationY>-90.000206</RotationY>
                           <RotationX>0</RotationX>
-                          <ScaleX>20</ScaleX>
-                          <ScaleY>0.5</ScaleY>
-                          <ScaleZ>1</ScaleZ>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
                           <Ambient>
                             <X>1</X>
                             <Y>1</Y>
@@ -2227,24 +3265,741 @@ it.Z % 10.0 as Z
                       <Edges>
                         <Edge From="0" To="2" Label="Source1" />
                         <Edge From="1" To="2" Label="Source2" />
-                        <Edge From="2" To="4" Label="Source1" />
-                        <Edge From="3" To="4" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
                         <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>0</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-0.31416</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>1</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-0.94248</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="GroupWorkflow">
+                    <Name>DrawTexture</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TextureName" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="gl:BindTexture">
+                            <gl:TextureSlot>Texture0</gl:TextureSlot>
+                            <gl:ShaderName>TexturedModel</gl:ShaderName>
+                            <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                            <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="TranslationX" />
+                          <Property Name="TranslationY" />
+                          <Property Name="RotationZ" />
+                          <Property Name="RotationY" />
+                          <Property Name="RotationX" />
+                          <Property Name="ScaleX" />
+                          <Property Name="ScaleY" />
+                          <Property Name="ScaleZ" />
+                          <Property Name="Ambient" />
+                          <Property Name="Diffuse" />
+                          <Property Name="Specular" />
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>TaskProperties</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Floor.Scale</Selector>
+                        </Expression>
+                        <Expression xsi:type="ExternalizedMapping">
+                          <Property Name="Value" DisplayName="Iteration(#)" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="FloatProperty">
+                            <Value>2</Value>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="rx:WithLatestFrom" />
+                        </Expression>
+                        <Expression xsi:type="scr:ExpressionTransform">
+                          <scr:Expression>-Item1[0]*Item2-Item1[0]/2</scr:Expression>
+                        </Expression>
+                        <Expression xsi:type="PropertyMapping">
+                          <PropertyMappings>
+                            <Property Name="TranslationZ" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                          <TranslationX>0.05</TranslationX>
+                          <TranslationY>0</TranslationY>
+                          <TranslationZ>-1.5708</TranslationZ>
+                          <RotationZ>0</RotationZ>
+                          <RotationY>-90.000206</RotationY>
+                          <RotationX>0</RotationX>
+                          <ScaleX>0.62832</ScaleX>
+                          <ScaleY>0.08</ScaleY>
+                          <ScaleZ>0.1</ScaleZ>
+                          <Ambient>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Ambient>
+                          <Diffuse>
+                            <X>1</X>
+                            <Y>1</Y>
+                            <Z>1</Z>
+                          </Diffuse>
+                          <Specular>
+                            <X>0</X>
+                            <Y>0</Y>
+                            <Z>0</Z>
+                          </Specular>
+                          <SpecularExponent>10</SpecularExponent>
+                          <MeshName>Plane</MeshName>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="2" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source2" />
+                        <Edge From="2" To="11" Label="Source1" />
+                        <Edge From="3" To="11" Label="Source2" />
+                        <Edge From="4" To="5" Label="Source1" />
+                        <Edge From="5" To="8" Label="Source1" />
+                        <Edge From="6" To="7" Label="Source1" />
+                        <Edge From="7" To="8" Label="Source2" />
+                        <Edge From="8" To="9" Label="Source1" />
+                        <Edge From="9" To="10" Label="Source1" />
+                        <Edge From="10" To="11" Label="Source3" />
+                        <Edge From="11" To="12" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="WorkflowOutput" />
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="TextureName" Selector="Item2.Texture" />
+                        <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                        <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                        <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                        <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                        <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                        <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                        <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                        <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                        <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                        <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                        <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                        <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                      </PropertyMappings>
+                      <Selector>Item1</Selector>
+                    </Builder>
+                  </Expression>
+                  <Expression xsi:type="Disable">
+                    <Builder xsi:type="GroupWorkflow">
+                      <Name>DrawTexture</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TextureName" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="gl:BindTexture">
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:ShaderName>TexturedModel</gl:ShaderName>
+                              <gl:TextureName>Rocks</gl:TextureName>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TranslationX" />
+                            <Property Name="TranslationY" />
+                            <Property Name="TranslationZ" />
+                            <Property Name="RotationZ" />
+                            <Property Name="RotationY" />
+                            <Property Name="RotationX" />
+                            <Property Name="ScaleX" />
+                            <Property Name="ScaleY" />
+                            <Property Name="ScaleZ" />
+                            <Property Name="Ambient" />
+                            <Property Name="Diffuse" />
+                            <Property Name="Specular" />
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                            <TranslationX>0</TranslationX>
+                            <TranslationY>-0.01</TranslationY>
+                            <TranslationZ>-0.5</TranslationZ>
+                            <RotationZ>0</RotationZ>
+                            <RotationY>0</RotationY>
+                            <RotationX>-90.000206</RotationX>
+                            <ScaleX>1</ScaleX>
+                            <ScaleY>1</ScaleY>
+                            <ScaleZ>0.1</ScaleZ>
+                            <Ambient>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Ambient>
+                            <Diffuse>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Diffuse>
+                            <Specular>
+                              <X>0</X>
+                              <Y>0</Y>
+                              <Z>0</Z>
+                            </Specular>
+                            <SpecularExponent>10</SpecularExponent>
+                            <MeshName>Plane</MeshName>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source2" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Builder>
+                  </Expression>
                 </Nodes>
                 <Edges>
-                  <Edge From="0" To="4" Label="Source1" />
-                  <Edge From="1" To="3" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source2" />
+                  <Edge From="1" To="5" Label="Source1" />
+                  <Edge From="2" To="4" Label="Source1" />
                   <Edge From="3" To="4" Label="Source2" />
-                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source2" />
                   <Edge From="5" To="6" Label="Source1" />
+                  <Edge From="5" To="8" Label="Source1" />
+                  <Edge From="5" To="10" Label="Source1" />
+                  <Edge From="5" To="12" Label="Source1" />
                   <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="14" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="14" Label="Source2" />
+                  <Edge From="10" To="11" Label="Source1" />
+                  <Edge From="11" To="14" Label="Source3" />
+                  <Edge From="12" To="13" Label="Source1" />
+                  <Edge From="13" To="14" Label="Source4" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>DrawRightWall</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>TaskProperties</Name>
+                    </Expression>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Selector" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>RightWall</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="TextureName" Selector="Item2.Texture" />
+                        <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                        <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                        <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                        <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                        <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                        <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                        <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                        <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                        <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                        <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                        <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                        <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                      </PropertyMappings>
+                      <Selector>Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="GroupWorkflow">
+                      <Name>DrawTexture</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TextureName" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="gl:BindTexture">
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:ShaderName>TexturedModel</gl:ShaderName>
+                              <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TranslationX" />
+                            <Property Name="TranslationY" />
+                            <Property Name="TranslationZ" />
+                            <Property Name="RotationZ" />
+                            <Property Name="RotationY" />
+                            <Property Name="RotationX" />
+                            <Property Name="ScaleX" />
+                            <Property Name="ScaleY" />
+                            <Property Name="ScaleZ" />
+                            <Property Name="Ambient" />
+                            <Property Name="Diffuse" />
+                            <Property Name="Specular" />
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                            <TranslationX>0.05</TranslationX>
+                            <TranslationY>0</TranslationY>
+                            <TranslationZ>-1</TranslationZ>
+                            <RotationZ>0</RotationZ>
+                            <RotationY>-90.000206</RotationY>
+                            <RotationX>0</RotationX>
+                            <ScaleX>2</ScaleX>
+                            <ScaleY>0.08</ScaleY>
+                            <ScaleZ>0.1</ScaleZ>
+                            <Ambient>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Ambient>
+                            <Diffuse>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Diffuse>
+                            <Specular>
+                              <X>0</X>
+                              <Y>0</Y>
+                              <Z>0</Z>
+                            </Specular>
+                            <SpecularExponent>10</SpecularExponent>
+                            <MeshName>Plane</MeshName>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source2" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="4" Label="Source1" />
+                    <Edge From="1" To="3" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source2" />
+                    <Edge From="3" To="4" Label="Source2" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="GroupWorkflow">
+                <Name>DrawLeftWall</Name>
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="SubscribeSubject">
+                      <Name>TaskProperties</Name>
+                    </Expression>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Selector" />
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>LeftWall</Selector>
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="rx:WithLatestFrom" />
+                    </Expression>
+                    <Expression xsi:type="InputMapping">
+                      <PropertyMappings>
+                        <Property Name="TextureName" Selector="Item2.Texture" />
+                        <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                        <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                        <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                        <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                        <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                        <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                        <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                        <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                        <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                        <Property Name="Ambient" Selector="Item2.AmbientColor[0], Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                        <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                        <Property Name="Specular" Selector="Item2.SpecularColor[0], Item2.SpecularColor[1], Item2.SpecularColor[2]" />
+                      </PropertyMappings>
+                      <Selector>Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="GroupWorkflow">
+                      <Name>DrawTexture</Name>
+                      <Workflow>
+                        <Nodes>
+                          <Expression xsi:type="WorkflowInput">
+                            <Name>Source1</Name>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TextureName" />
+                          </Expression>
+                          <Expression xsi:type="Combinator">
+                            <Combinator xsi:type="gl:BindTexture">
+                              <gl:TextureSlot>Texture0</gl:TextureSlot>
+                              <gl:ShaderName>TexturedModel</gl:ShaderName>
+                              <gl:TextureName>BG_0.04_0.32_100</gl:TextureName>
+                              <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                            </Combinator>
+                          </Expression>
+                          <Expression xsi:type="ExternalizedMapping">
+                            <Property Name="TranslationX" />
+                            <Property Name="TranslationY" />
+                            <Property Name="TranslationZ" />
+                            <Property Name="RotationZ" />
+                            <Property Name="RotationY" />
+                            <Property Name="RotationX" />
+                            <Property Name="ScaleX" />
+                            <Property Name="ScaleY" />
+                            <Property Name="ScaleZ" />
+                            <Property Name="Ambient" />
+                            <Property Name="Diffuse" />
+                            <Property Name="Specular" />
+                          </Expression>
+                          <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                            <TranslationX>-0.05</TranslationX>
+                            <TranslationY>0</TranslationY>
+                            <TranslationZ>0</TranslationZ>
+                            <RotationZ>0</RotationZ>
+                            <RotationY>90.000206</RotationY>
+                            <RotationX>0</RotationX>
+                            <ScaleX>2</ScaleX>
+                            <ScaleY>0.08</ScaleY>
+                            <ScaleZ>0.1</ScaleZ>
+                            <Ambient>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Ambient>
+                            <Diffuse>
+                              <X>1</X>
+                              <Y>1</Y>
+                              <Z>1</Z>
+                            </Diffuse>
+                            <Specular>
+                              <X>0</X>
+                              <Y>0</Y>
+                              <Z>0</Z>
+                            </Specular>
+                            <SpecularExponent>10</SpecularExponent>
+                            <MeshName>Plane</MeshName>
+                          </Expression>
+                          <Expression xsi:type="WorkflowOutput" />
+                        </Nodes>
+                        <Edges>
+                          <Edge From="0" To="2" Label="Source1" />
+                          <Edge From="1" To="2" Label="Source2" />
+                          <Edge From="2" To="4" Label="Source1" />
+                          <Edge From="3" To="4" Label="Source2" />
+                          <Edge From="4" To="5" Label="Source1" />
+                        </Edges>
+                      </Workflow>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="4" Label="Source1" />
+                    <Edge From="1" To="3" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source2" />
+                    <Edge From="3" To="4" Label="Source2" />
+                    <Edge From="4" To="5" Label="Source1" />
+                    <Edge From="5" To="6" Label="Source1" />
+                    <Edge From="6" To="7" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="GroupWorkflow">
@@ -2417,7 +4172,9 @@ it.Z % 10.0 as Z
             <Edge From="1" To="4" Label="Source1" />
             <Edge From="1" To="5" Label="Source1" />
             <Edge From="1" To="6" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="1" To="7" Label="Source1" />
+            <Edge From="1" To="8" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2443,7 +4200,7 @@ it.Z % 10.0 as Z
               <Eye>
                 <X>0</X>
                 <Y>0</Y>
-                <Z>-0.199999809</Z>
+                <Z>-0.520000041</Z>
               </Eye>
               <NearClip>0.1</NearClip>
               <FarClip>1000</FarClip>
@@ -2554,7 +4311,7 @@ Item1.Light as Light
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="io:ReadAllText">
-                <io:Path>Protocols\default_settings.yaml</io:Path>
+                <io:Path>Protocols\kerem_settings.yaml</io:Path>
               </Combinator>
             </Expression>
             <Expression xsi:type="p3:DeserializeFromYaml">
@@ -2586,8 +4343,8 @@ Item1.Light as Light
       </Expression>
     </Nodes>
     <Edges>
-      <Edge From="5" To="6" Label="Source1" />
       <Edge From="6" To="7" Label="Source1" />
+      <Edge From="7" To="8" Label="Source1" />
       <Edge From="13" To="14" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
