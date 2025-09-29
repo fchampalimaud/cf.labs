@@ -1629,7 +1629,7 @@ it.Z % 10.0 as Z
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-0.2</gl:Z>
+                <gl:Z>-0.199999809</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1688,6 +1688,30 @@ it.Z % 10.0 as Z
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:CombineLatest" />
                   </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Not Textured?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2.Texture</Selector>
+                        </Expression>
+                        <Expression xsi:type="Equal">
+                          <Operand xsi:type="StringProperty">
+                            <Value>None</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
                   <Expression xsi:type="InputMapping">
                     <PropertyMappings>
                       <Property Name="MeshName" Selector="Item2.MeshType" />
@@ -1734,6 +1758,92 @@ it.Z % 10.0 as Z
                     <SpecularExponent>10</SpecularExponent>
                     <MeshName>Plane</MeshName>
                   </Expression>
+                  <Expression xsi:type="rx:Condition">
+                    <Name>Textured?</Name>
+                    <Workflow>
+                      <Nodes>
+                        <Expression xsi:type="WorkflowInput">
+                          <Name>Source1</Name>
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Item2.Texture</Selector>
+                        </Expression>
+                        <Expression xsi:type="NotEqual">
+                          <Operand xsi:type="StringProperty">
+                            <Value>None</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="WorkflowOutput" />
+                      </Nodes>
+                      <Edges>
+                        <Edge From="0" To="1" Label="Source1" />
+                        <Edge From="1" To="2" Label="Source1" />
+                        <Edge From="2" To="3" Label="Source1" />
+                      </Edges>
+                    </Workflow>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property Name="TextureName" Selector="Item2.Texture" />
+                    </PropertyMappings>
+                    <Selector>Item1</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="gl:BindTexture">
+                      <gl:TextureSlot>Texture0</gl:TextureSlot>
+                      <gl:ShaderName>TexturedModel</gl:ShaderName>
+                      <gl:TextureName>Floor</gl:TextureName>
+                      <gl:TextureTarget>Texture2D</gl:TextureTarget>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="MeshName" Selector="Item2.MeshType" />
+                      <Property Name="TranslationX" Selector="Item2.Translation[0]" />
+                      <Property Name="TranslationY" Selector="Item2.Translation[1]" />
+                      <Property Name="TranslationZ" Selector="Item2.Translation[2]" />
+                      <Property Name="ScaleX" Selector="Item2.Scale[0]" />
+                      <Property Name="ScaleY" Selector="Item2.Scale[1]" />
+                      <Property Name="ScaleZ" Selector="Item2.Scale[2]" />
+                      <Property Name="RotationX" Selector="Item2.Rotation[0]" />
+                      <Property Name="RotationY" Selector="Item2.Rotation[1]" />
+                      <Property Name="RotationZ" Selector="Item2.Rotation[2]" />
+                      <Property Name="Ambient" Selector="Item2.AmbientColor[0],Item2.AmbientColor[1],Item2.AmbientColor[2]" />
+                      <Property Name="Diffuse" Selector="Item2.DiffuseColor[0],Item2.DiffuseColor[1],Item2.DiffuseColor[2]" />
+                      <Property Name="Specular" Selector="Item2.SpecularColor[0],Item2.SpecularColor[1],Item2.SpecularColor[2]" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
+                    <TranslationX>0.099</TranslationX>
+                    <TranslationY>0</TranslationY>
+                    <TranslationZ>-0.62</TranslationZ>
+                    <RotationZ>0</RotationZ>
+                    <RotationY>89.95438</RotationY>
+                    <RotationX>0</RotationX>
+                    <ScaleX>0.05</ScaleX>
+                    <ScaleY>0.4</ScaleY>
+                    <ScaleZ>0.5</ScaleZ>
+                    <Ambient>
+                      <X>1</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Ambient>
+                    <Diffuse>
+                      <X>1</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Diffuse>
+                    <Specular>
+                      <X>0</X>
+                      <Y>0</Y>
+                      <Z>0</Z>
+                    </Specular>
+                    <SpecularExponent>10</SpecularExponent>
+                    <MeshName>Plane</MeshName>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Merge" />
+                  </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Landmarks.Count</Selector>
                   </Expression>
@@ -1752,15 +1862,24 @@ it.Z % 10.0 as Z
                 <Edges>
                   <Edge From="0" To="4" Label="Source1" />
                   <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="1" To="7" Label="Source1" />
+                  <Edge From="1" To="14" Label="Source1" />
                   <Edge From="2" To="3" Label="Source1" />
                   <Edge From="3" To="4" Label="Source2" />
                   <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="4" To="8" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
-                  <Edge From="6" To="9" Label="Source1" />
-                  <Edge From="7" To="8" Label="Source1" />
-                  <Edge From="8" To="9" Label="Source2" />
+                  <Edge From="6" To="7" Label="Source1" />
+                  <Edge From="7" To="13" Label="Source1" />
+                  <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="8" To="11" Label="Source1" />
                   <Edge From="9" To="10" Label="Source1" />
+                  <Edge From="10" To="12" Label="Source1" />
+                  <Edge From="11" To="12" Label="Source2" />
+                  <Edge From="12" To="13" Label="Source2" />
+                  <Edge From="13" To="16" Label="Source1" />
+                  <Edge From="14" To="15" Label="Source1" />
+                  <Edge From="15" To="16" Label="Source2" />
+                  <Edge From="16" To="17" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -2324,7 +2443,7 @@ it.Z % 10.0 as Z
               <Eye>
                 <X>0</X>
                 <Y>0</Y>
-                <Z>-0.2</Z>
+                <Z>-0.199999809</Z>
               </Eye>
               <NearClip>0.1</NearClip>
               <FarClip>1000</FarClip>

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VisualizerLayout Version="2.9.0">
   <WindowSettings Index="18">
+    <Visible>false</Visible>
     <Location>
       <X>2018</X>
       <Y>130</Y>
