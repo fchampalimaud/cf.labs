@@ -226,23 +226,18 @@ namespace VRCorridorSchema
     
         private System.Collections.Generic.List<Landmark> _landmarks;
     
-        private Landmark _floor;
-    
-        private Landmark _rightWall;
-    
-        private Landmark _leftWall;
+        private System.Collections.Generic.List<Landmark> _arena;
     
         public VRCorridorSchema()
         {
             _landmarks = new System.Collections.Generic.List<Landmark>();
+            _arena = new System.Collections.Generic.List<Landmark>();
         }
     
         protected VRCorridorSchema(VRCorridorSchema other)
         {
             _landmarks = other._landmarks;
-            _floor = other._floor;
-            _rightWall = other._rightWall;
-            _leftWall = other._leftWall;
+            _arena = other._arena;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -260,44 +255,16 @@ namespace VRCorridorSchema
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Floor")]
-        public Landmark Floor
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Arena")]
+        public System.Collections.Generic.List<Landmark> Arena
         {
             get
             {
-                return _floor;
+                return _arena;
             }
             set
             {
-                _floor = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="RightWall")]
-        public Landmark RightWall
-        {
-            get
-            {
-                return _rightWall;
-            }
-            set
-            {
-                _rightWall = value;
-            }
-        }
-    
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="LeftWall")]
-        public Landmark LeftWall
-        {
-            get
-            {
-                return _leftWall;
-            }
-            set
-            {
-                _leftWall = value;
+                _arena = value;
             }
         }
     
@@ -314,9 +281,7 @@ namespace VRCorridorSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Landmarks = " + _landmarks + ", ");
-            stringBuilder.Append("Floor = " + _floor + ", ");
-            stringBuilder.Append("RightWall = " + _rightWall + ", ");
-            stringBuilder.Append("LeftWall = " + _leftWall);
+            stringBuilder.Append("Arena = " + _arena);
             return true;
         }
     

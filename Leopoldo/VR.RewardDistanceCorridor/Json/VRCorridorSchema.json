@@ -70,10 +70,12 @@
       "items": { "$ref": "#/definitions/Landmark" }
     },
 
-    "Floor": { "$ref": "#/definitions/Landmark" },
-    "RightWall": { "$ref": "#/definitions/Landmark" },
-    "LeftWall": { "$ref": "#/definitions/Landmark" }
+    "Arena": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
+    }
+
 
   },
-  "required": ["Landmarks"]
+  "required": []
 }
