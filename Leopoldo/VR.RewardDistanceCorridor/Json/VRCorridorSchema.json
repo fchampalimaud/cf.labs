@@ -73,6 +73,11 @@
     "Arena": { 
       "type": "array",
       "items": { "$ref": "#/definitions/Landmark" }
+    },
+
+    "Reward": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
     }
 
 

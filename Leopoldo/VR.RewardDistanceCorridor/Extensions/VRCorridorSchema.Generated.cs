@@ -228,16 +228,20 @@ namespace VRCorridorSchema
     
         private System.Collections.Generic.List<Landmark> _arena;
     
+        private System.Collections.Generic.List<Landmark> _reward;
+    
         public VRCorridorSchema()
         {
             _landmarks = new System.Collections.Generic.List<Landmark>();
             _arena = new System.Collections.Generic.List<Landmark>();
+            _reward = new System.Collections.Generic.List<Landmark>();
         }
     
         protected VRCorridorSchema(VRCorridorSchema other)
         {
             _landmarks = other._landmarks;
             _arena = other._arena;
+            _reward = other._reward;
         }
     
         [System.Xml.Serialization.XmlIgnoreAttribute()]
@@ -268,6 +272,20 @@ namespace VRCorridorSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Reward")]
+        public System.Collections.Generic.List<Landmark> Reward
+        {
+            get
+            {
+                return _reward;
+            }
+            set
+            {
+                _reward = value;
+            }
+        }
+    
         public System.IObservable<VRCorridorSchema> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new VRCorridorSchema(this)));
@@ -281,7 +299,8 @@ namespace VRCorridorSchema
         protected virtual bool PrintMembers(System.Text.StringBuilder stringBuilder)
         {
             stringBuilder.Append("Landmarks = " + _landmarks + ", ");
-            stringBuilder.Append("Arena = " + _arena);
+            stringBuilder.Append("Arena = " + _arena + ", ");
+            stringBuilder.Append("Reward = " + _reward);
             return true;
         }
     
