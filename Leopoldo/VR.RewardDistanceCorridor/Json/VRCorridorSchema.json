@@ -55,9 +55,18 @@
         },
         "Texture": {
           "type": "string"
+        },
+        "Repetitions": {
+          "type": "number",
+          "format": "float"
+        },
+        "RepeatInterval": {
+          "type": "number",
+          "format": "float"
         }
+
      },
-      "required": ["Name", "MeshType", "Translation", "Scale", "Rotation", "AmbientColor", "DiffuseColor", "SpecularColor", "Texture"] 
+      "required": ["Name", "MeshType", "Translation", "Scale", "Rotation", "AmbientColor", "DiffuseColor", "SpecularColor", "Texture", "Repetitions", "RepeatEvery"] 
     }
 
   },

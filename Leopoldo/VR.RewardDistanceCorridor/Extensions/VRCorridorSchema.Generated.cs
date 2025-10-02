@@ -33,6 +33,10 @@ namespace VRCorridorSchema
     
         private string _texture;
     
+        private float _repetitions;
+    
+        private float _repeatInterval;
+    
         public Landmark()
         {
             _translation = new System.Collections.Generic.List<double>();
@@ -54,6 +58,8 @@ namespace VRCorridorSchema
             _diffuseColor = other._diffuseColor;
             _specularColor = other._specularColor;
             _texture = other._texture;
+            _repetitions = other._repetitions;
+            _repeatInterval = other._repeatInterval;
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Name")]
@@ -179,6 +185,32 @@ namespace VRCorridorSchema
             }
         }
     
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Repetitions")]
+        public float Repetitions
+        {
+            get
+            {
+                return _repetitions;
+            }
+            set
+            {
+                _repetitions = value;
+            }
+        }
+    
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="RepeatInterval")]
+        public float RepeatInterval
+        {
+            get
+            {
+                return _repeatInterval;
+            }
+            set
+            {
+                _repeatInterval = value;
+            }
+        }
+    
         public System.IObservable<Landmark> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Landmark(this)));
@@ -199,7 +231,9 @@ namespace VRCorridorSchema
             stringBuilder.Append("AmbientColor = " + _ambientColor + ", ");
             stringBuilder.Append("DiffuseColor = " + _diffuseColor + ", ");
             stringBuilder.Append("SpecularColor = " + _specularColor + ", ");
-            stringBuilder.Append("Texture = " + _texture);
+            stringBuilder.Append("Texture = " + _texture + ", ");
+            stringBuilder.Append("Repetitions = " + _repetitions + ", ");
+            stringBuilder.Append("RepeatInterval = " + _repeatInterval);
             return true;
         }
     
