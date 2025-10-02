@@ -2,7 +2,7 @@
   "Landmarks": [
     { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.0],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
     { "Name": "RightLeft", "MeshType": "Plane", "Translation": [-0.045, 0.0, -0.0],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
-    { "Name": "L2_Right", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.62832],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
+    { "Name": "L2_Right", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.4],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
     { "Name": "L2_Left", "MeshType": "Plane", "Translation": [-0.045, 0.0, -0.62832],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
     { "Name": "L3_Right", "MeshType": "Plane", "Translation": [0.045, 0.0, -1.25664],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0, 0, 1], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
     { "Name": "L3_Left", "MeshType": "Plane", "Translation": [-0.045, 0.0, -1.25664],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 0, 1], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None"},
