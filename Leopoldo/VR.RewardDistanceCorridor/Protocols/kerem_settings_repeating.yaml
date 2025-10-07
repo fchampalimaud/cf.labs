@@ -2,19 +2,8 @@
 # The Planes are slightly overscaled to avoid seeing the edges when the camera moves
 
 {
-  "Landmarks": [
-    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.0],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
-    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.62832],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
-  ],
-
   "Arena": [
     { "Name": "Floor", "MeshType": "Plane", "Translation": [0.049, -0.04, 0.94248],"Scale": [0.63, 0.63, 0.1], "Rotation": [-1.57, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Rocks", "Repetitions": 4,"RepeatInterval": 0.62832},
-    { "Name": "RightWall", "MeshType": "Plane", "Translation": [0.049, 0.0, 0.94248],"Scale": [0.63, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100", "Repetitions": 4, "RepeatInterval": 0.62832},
-    { "Name": "LeftWall", "MeshType": "Plane", "Translation": [-0.049, 0.0, 0.94248],"Scale": [0.63, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100", "Repetitions": 4, "RepeatInterval": 0.62832},
   ],
 
-  "Reward": [
-    { "Name": "RewardRight", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4},
-    { "Name": "RewardLeft", "MeshType": "Plane", "Translation": [-0.045, 0.0, -0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4},
-  ],
 } 
