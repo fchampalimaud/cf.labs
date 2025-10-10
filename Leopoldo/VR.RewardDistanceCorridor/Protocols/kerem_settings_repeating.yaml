@@ -9,10 +9,10 @@
   ],
 
 
-  "Landmarks": [
-    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.0],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
-    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.62832],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
-  ],
+#  "Landmarks": [
+#    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.0],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
+#    { "Name": "RightStart", "MeshType": "Plane", "Translation": [0.045, 0.0, -0.62832],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 0.62832}, 
+#  ],
 
 
   "Reward": [

@@ -1,12 +1,17 @@
+
 {
-  "Landmarks": [
-    { "Name": "Cylinder1", "MeshType": "Cylinder", "Translation": [-1.0, 0.0, -3.0], "Scale": [0.2, 0.4, 0.2], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [0, 1, 0], "SpecularColor": [0, 0, 0]},
-    { "Name": "Cylinder2", "MeshType": "Cylinder", "Translation": [-3.0, 0.0, -4.6], "Scale": [0.2, 0.4, 0.2], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [0, 0, 1], "SpecularColor": [0, 0, 0]},
-    { "Name": "Plane1", "MeshType": "Plane", "Translation": [1.0, 0.0, -3.],"Scale": [0.2, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0]},
-    { "Name": "Plane2", "MeshType": "Plane", "Translation": [3.0, 0.0, -4.6],"Scale": [0.2, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0]},
+  "Arena": [
+    { "Name": "Floor", "MeshType": "Plane", "Translation": [0.0, -0.04, 0.94248],"Scale": [0.63, 0.63, 0.1], "Rotation": [-1.57, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Rocks", "Repetitions": 4,"RepeatInterval": 0.62832},  
+#    { "Name": "RightWall", "MeshType": "Plane", "Translation": [0.049, 0.0, 0.94248],"Scale": [0.63, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100", "Repetitions": 4, "RepeatInterval": 0.62832},
+#    { "Name": "LeftWall", "MeshType": "Plane", "Translation": [-0.049, 0.0, 0.94248],"Scale": [0.63, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100", "Repetitions": 4, "RepeatInterval": 0.62832}
   ],
 
-  "Floor": { "Translation": [0.0, -0.1, 0.0], "Scale": [10.0, 200.0, 1.0], "Rotation": [90.0, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Floor"},
-  "LeftWall": { "Translation": [-0.5, 0.0, 0.0], "Scale": [200.0, 8.0, 1.0], "Rotation": [0.0, 1.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"},
-  "RightWall": { "Translation": [0.5, 0.0, 0.0], "Scale": [1.0, 8.0, 1.0], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100"}
-}
+
+  "Landmarks": [
+    { "Name": "Cylinder1", "MeshType": "Cylinder", "Translation": [-1.0, 0.0, -3.0], "Scale": [0.2, 0.4, 0.2], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [0, 1, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 1, "RepeatInterval": -9999999},
+    { "Name": "Cylinder2", "MeshType": "Cylinder", "Translation": [-3.0, 0.0, -4.6], "Scale": [0.2, 0.4, 0.2], "Rotation": [0.0, 0.0, 0.0], "AmbientColor": [1, 0, 0], "DiffuseColor": [0, 0, 1], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 1, "RepeatInterval": -9999999},
+    { "Name": "Plane1", "MeshType": "Plane", "Translation": [1.0, 0.0, -3.],"Scale": [0.2, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 1, "RepeatInterval": -9999999},
+    { "Name": "Plane2", "MeshType": "Plane", "Translation": [3.0, 0.0, -4.6],"Scale": [0.2, 0.4, 0.5], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0, 1, 0], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 1, "RepeatInterval": -9999999},
+  ],
+
+} 
