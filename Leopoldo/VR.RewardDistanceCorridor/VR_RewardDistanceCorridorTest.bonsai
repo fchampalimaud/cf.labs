@@ -115,7 +115,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0.9</Value>
+                <Value>0.5</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -602,7 +602,7 @@ it.Z % 10.0 as Z
               <Combinator xsi:type="gl:CreateVector3">
                 <gl:X>0</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>-1.65999877</gl:Z>
+                <gl:Z>-2.599998</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="MulticastSubject">
@@ -2361,7 +2361,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
                                     <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawTexturedModel.bonsai">
                                       <TranslationX>-0.049</TranslationX>
                                       <TranslationY>0</TranslationY>
-                                      <TranslationZ>-2.82743979</TranslationZ>
+                                      <TranslationZ>-4.08407974</TranslationZ>
                                       <RotationZ>0</RotationZ>
                                       <RotationY>-89.95438</RotationY>
                                       <RotationX>0</RotationX>
@@ -3149,7 +3149,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
                                       <Selector>Item2</Selector>
                                     </Expression>
                                     <Expression xsi:type="scr:ExpressionTransform">
-                                      <scr:Expression>-RewardInterval * Landmark.RepeatInterval + RewardPosition</scr:Expression>
+                                      <scr:Expression>-RewardInterval * Repetition + RewardPosition</scr:Expression>
                                     </Expression>
                                     <Expression xsi:type="PropertyMapping">
                                       <PropertyMappings>
@@ -3259,7 +3259,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
                                       <Selector>Item2</Selector>
                                     </Expression>
                                     <Expression xsi:type="scr:ExpressionTransform">
-                                      <scr:Expression>-RewardInterval * Landmark.RepeatInterval + RewardPosition</scr:Expression>
+                                      <scr:Expression>-RewardInterval * Repetition + RewardPosition</scr:Expression>
                                     </Expression>
                                     <Expression xsi:type="PropertyMapping">
                                       <PropertyMappings>
@@ -3269,7 +3269,7 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
                                     <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawModel.bonsai">
                                       <TranslationX>-0.045</TranslationX>
                                       <TranslationY>0</TranslationY>
-                                      <TranslationZ>-1.80999947</TranslationZ>
+                                      <TranslationZ>-4.529998</TranslationZ>
                                       <RotationZ>0</RotationZ>
                                       <RotationY>89.95438</RotationY>
                                       <RotationX>0</RotationX>
@@ -4379,7 +4379,7 @@ it as RewardTime
               <Eye>
                 <X>0</X>
                 <Y>0</Y>
-                <Z>-1.65999877</Z>
+                <Z>-2.599998</Z>
               </Eye>
               <NearClip>0.01</NearClip>
               <FarClip>20</FarClip>
