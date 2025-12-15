@@ -3460,57 +3460,62 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="GroupWorkflow">
-          <Name>CameraData</Name>
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="pgr:FlyCapture">
-                  <pgr:Index>0</pgr:Index>
-                  <pgr:ColorProcessing>Default</pgr:ColorProcessing>
-                  <pgr:NumBuffers>10</pgr:NumBuffers>
-                  <pgr:GrabMode>BufferFrames</pgr:GrabMode>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="rx:BehaviorSubject">
-                <Name>FrameData</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Image</Selector>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="cv:Crop">
-                  <cv:RegionOfInterest>
-                    <cv:X>0</cv:X>
-                    <cv:Y>0</cv:Y>
-                    <cv:Width>0</cv:Width>
-                    <cv:Height>0</cv:Height>
-                  </cv:RegionOfInterest>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="dsp:Average" />
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Val0</Selector>
-              </Expression>
-              <Expression xsi:type="rx:BehaviorSubject">
-                <Name>ROIValue</Name>
-              </Expression>
-              <Expression xsi:type="WorkflowOutput" />
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="2" Label="Source1" />
-              <Edge From="2" To="3" Label="Source1" />
-              <Edge From="3" To="4" Label="Source1" />
-              <Edge From="4" To="5" Label="Source1" />
-              <Edge From="5" To="6" Label="Source1" />
-              <Edge From="6" To="7" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>CameraData</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="pgr:FlyCapture">
+                <pgr:Index>0</pgr:Index>
+                <pgr:ColorProcessing>Default</pgr:ColorProcessing>
+                <pgr:NumBuffers>10</pgr:NumBuffers>
+                <pgr:GrabMode>BufferFrames</pgr:GrabMode>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>FrameData</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:Crop">
+                <cv:RegionOfInterest>
+                  <cv:X>0</cv:X>
+                  <cv:Y>0</cv:Y>
+                  <cv:Width>0</cv:Width>
+                  <cv:Height>0</cv:Height>
+                </cv:RegionOfInterest>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="dsp:Average" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Val0</Selector>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>ROIValue</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="GroupWorkflow">
@@ -4539,6 +4544,12 @@ Item1.Light as Light
           <al:SampleRate>44100</al:SampleRate>
           <al:State>Playing</al:State>
         </Combinator>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>Frames</Name>
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>ROIValue</Name>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="GroupWorkflow">
