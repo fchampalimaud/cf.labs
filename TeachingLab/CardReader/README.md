@@ -15,6 +15,6 @@ Click on the **Init** node and set the arduino COM pot in the **PortName** prope
 
 Run the code and double-clik on the **DrawCanvas** node to show the visualization. The visualization uses two images **emtpy.jpg** and **eagle2.jpg**. You can simply modify the contents of the images in the project folder while keeping their names.
 
-
+The file **CardTable.csv** expects a database with two colums separated by a ',': CardNumber,Name. The file **LibraryDatabase.csv** contains the library entrances. It should start only with the header: ID,Name,Booked; and it gets updated automatically. 
 
 
