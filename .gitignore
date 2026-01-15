@@ -6,6 +6,7 @@ bin
 .vs
 data/
 Data/
+Bonsai.exe.WebView2/
 resources
 Packages
 Settings
