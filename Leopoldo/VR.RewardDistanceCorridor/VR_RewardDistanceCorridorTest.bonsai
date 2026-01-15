@@ -4238,33 +4238,33 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="GroupWorkflow">
-          <Name>CameraData</Name>
-          <Workflow>
-            <Nodes>
-              <Expression xsi:type="Combinator">
-                <Combinator xsi:type="pgr:FlyCapture">
-                  <pgr:Index>0</pgr:Index>
-                  <pgr:ColorProcessing>Default</pgr:ColorProcessing>
-                  <pgr:NumBuffers>10</pgr:NumBuffers>
-                  <pgr:GrabMode>BufferFrames</pgr:GrabMode>
-                </Combinator>
-              </Expression>
-              <Expression xsi:type="rx:BehaviorSubject">
-                <Name>FrameData</Name>
-              </Expression>
-              <Expression xsi:type="MemberSelector">
-                <Selector>Image</Selector>
-              </Expression>
-              <Expression xsi:type="rx:BehaviorSubject">
-                <Name>Frames</Name>
-              </Expression>
-              <Expression xsi:type="WorkflowOutput" />
-              <Expression xsi:type="SubscribeSubject">
-                <Name>Frames</Name>
-              </Expression>
-              <Expression xsi:type="Combinator">
+      <Expression xsi:type="GroupWorkflow">
+        <Name>CameraData</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="pgr:FlyCapture">
+                <pgr:Index>0</pgr:Index>
+                <pgr:ColorProcessing>Default</pgr:ColorProcessing>
+                <pgr:NumBuffers>10</pgr:NumBuffers>
+                <pgr:GrabMode>BufferFrames</pgr:GrabMode>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>FrameData</Name>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Frames</Name>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
                 <Combinator xsi:type="cv:Crop">
                   <cv:RegionOfInterest>
                     <cv:X>0</cv:X>
@@ -4273,29 +4273,82 @@ Item2.Accumulation.Turns + (Item2.Accumulation.Diference == Item1 ? 0 : ((Item1 
                     <cv:Height>0</cv:Height>
                   </cv:RegionOfInterest>
                 </Combinator>
-              </Expression>
-              <Expression xsi:type="Combinator">
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
                 <Combinator xsi:type="dsp:Average" />
-              </Expression>
-              <Expression xsi:type="MemberSelector">
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
                 <Selector>Val0</Selector>
-              </Expression>
-              <Expression xsi:type="rx:BehaviorSubject">
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:BehaviorSubject">
                 <Name>ROIValue</Name>
-              </Expression>
-            </Nodes>
-            <Edges>
-              <Edge From="0" To="1" Label="Source1" />
-              <Edge From="1" To="2" Label="Source1" />
-              <Edge From="2" To="3" Label="Source1" />
-              <Edge From="3" To="4" Label="Source1" />
-              <Edge From="5" To="6" Label="Source1" />
-              <Edge From="6" To="7" Label="Source1" />
-              <Edge From="7" To="8" Label="Source1" />
-              <Edge From="8" To="9" Label="Source1" />
-            </Edges>
-          </Workflow>
-        </Builder>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:RoiActivity">
+                <cv:Regions>
+                  <cv:ArrayOfPoint>
+                    <cv:Point>
+                      <cv:X>70</cv:X>
+                      <cv:Y>247</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>101</cv:X>
+                      <cv:Y>247</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>101</cv:X>
+                      <cv:Y>281</cv:Y>
+                    </cv:Point>
+                    <cv:Point>
+                      <cv:X>70</cv:X>
+                      <cv:Y>281</cv:Y>
+                    </cv:Point>
+                  </cv:ArrayOfPoint>
+                </cv:Regions>
+                <cv:Operation>Avg</cv:Operation>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>LickActivityThreshold</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Threshold" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="cv:RoiActivityDetected">
+                <cv:Index>0</cv:Index>
+                <cv:Threshold>100</cv:Threshold>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Licking?</Name>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="5" To="10" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="10" To="13" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
+            <Edge From="13" To="14" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="GroupWorkflow">
@@ -5370,117 +5423,119 @@ Item1.Light as Light
           <al:State>Playing</al:State>
         </Combinator>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>AlternativeCameraData</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="vid:VideoCaptureDevice">
-                <vid:Index>0</vid:Index>
-                <vid:CaptureProperties />
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:Grayscale" />
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Frames</Name>
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Frames</Name>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="cv:Crop">
-                  <cv:RegionOfInterest>
-                    <cv:X>0</cv:X>
-                    <cv:Y>0</cv:Y>
-                    <cv:Width>0</cv:Width>
-                    <cv:Height>0</cv:Height>
-                  </cv:RegionOfInterest>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>AlternativeCameraData</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="vid:VideoCaptureDevice">
+                  <vid:Index>0</vid:Index>
+                  <vid:CaptureProperties />
                 </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="dsp:Average" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="MemberSelector">
-                <Selector>Val0</Selector>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="rx:BehaviorSubject">
-                <Name>ROIValue</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:WithLatestFrom" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:RoiActivity">
-                <cv:Regions>
-                  <cv:ArrayOfPoint>
-                    <cv:Point>
-                      <cv:X>70</cv:X>
-                      <cv:Y>247</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>101</cv:X>
-                      <cv:Y>247</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>101</cv:X>
-                      <cv:Y>281</cv:Y>
-                    </cv:Point>
-                    <cv:Point>
-                      <cv:X>70</cv:X>
-                      <cv:Y>281</cv:Y>
-                    </cv:Point>
-                  </cv:ArrayOfPoint>
-                </cv:Regions>
-                <cv:Operation>Avg</cv:Operation>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>LickActivityThreshold</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Threshold" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="cv:RoiActivityDetected">
-                <cv:Index>0</cv:Index>
-                <cv:Threshold>100</cv:Threshold>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Licking?</Name>
-            </Expression>
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
-            <Edge From="4" To="10" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="10" To="13" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source2" />
-            <Edge From="13" To="14" Label="Source1" />
-          </Edges>
-        </Workflow>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:Grayscale" />
+              </Expression>
+              <Expression xsi:type="rx:BehaviorSubject">
+                <Name>Frames</Name>
+              </Expression>
+              <Expression xsi:type="WorkflowOutput" />
+              <Expression xsi:type="SubscribeSubject">
+                <Name>Frames</Name>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="cv:Crop">
+                    <cv:RegionOfInterest>
+                      <cv:X>0</cv:X>
+                      <cv:Y>0</cv:Y>
+                      <cv:Width>0</cv:Width>
+                      <cv:Height>0</cv:Height>
+                    </cv:RegionOfInterest>
+                  </Combinator>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="dsp:Average" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="MemberSelector">
+                  <Selector>Val0</Selector>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="rx:BehaviorSubject">
+                  <Name>ROIValue</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:WithLatestFrom" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:RoiActivity">
+                  <cv:Regions>
+                    <cv:ArrayOfPoint>
+                      <cv:Point>
+                        <cv:X>70</cv:X>
+                        <cv:Y>247</cv:Y>
+                      </cv:Point>
+                      <cv:Point>
+                        <cv:X>101</cv:X>
+                        <cv:Y>247</cv:Y>
+                      </cv:Point>
+                      <cv:Point>
+                        <cv:X>101</cv:X>
+                        <cv:Y>281</cv:Y>
+                      </cv:Point>
+                      <cv:Point>
+                        <cv:X>70</cv:X>
+                        <cv:Y>281</cv:Y>
+                      </cv:Point>
+                    </cv:ArrayOfPoint>
+                  </cv:Regions>
+                  <cv:Operation>Avg</cv:Operation>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>LickActivityThreshold</Name>
+              </Expression>
+              <Expression xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Threshold" />
+                </PropertyMappings>
+              </Expression>
+              <Expression xsi:type="Combinator">
+                <Combinator xsi:type="cv:RoiActivityDetected">
+                  <cv:Index>0</cv:Index>
+                  <cv:Threshold>100</cv:Threshold>
+                </Combinator>
+              </Expression>
+              <Expression xsi:type="MulticastSubject">
+                <Name>Licking?</Name>
+              </Expression>
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="1" Label="Source1" />
+              <Edge From="1" To="2" Label="Source1" />
+              <Edge From="2" To="3" Label="Source1" />
+              <Edge From="4" To="5" Label="Source1" />
+              <Edge From="4" To="10" Label="Source1" />
+              <Edge From="5" To="6" Label="Source1" />
+              <Edge From="6" To="7" Label="Source1" />
+              <Edge From="7" To="8" Label="Source1" />
+              <Edge From="8" To="9" Label="Source1" />
+              <Edge From="10" To="13" Label="Source1" />
+              <Edge From="11" To="12" Label="Source1" />
+              <Edge From="12" To="13" Label="Source2" />
+              <Edge From="13" To="14" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="SubscribeSubject">
