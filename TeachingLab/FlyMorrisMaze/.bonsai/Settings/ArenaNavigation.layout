@@ -1,7 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <VisualizerLayout Version="2.9.0">
   <WindowSettings Index="1">
+    <Visible>false</Visible>
+    <Location>
+      <X>208</X>
+      <Y>208</Y>
+    </Location>
+    <Size>
+      <Width>336</Width>
+      <Height>65</Height>
+    </Size>
+    <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <ObjectTextVisualizer />
+    </VisualizerSettings>
     <NestedLayout>
+      <WindowSettings Index="14">
+        <Location>
+          <X>208</X>
+          <Y>112</Y>
+        </Location>
+        <Size>
+          <Width>336</Width>
+          <Height>82</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <ObjectTextVisualizer />
+        </VisualizerSettings>
+      </WindowSettings>
+      <WindowSettings Index="16">
+        <Location>
+          <X>208</X>
+          <Y>208</Y>
+        </Location>
+        <Size>
+          <Width>336</Width>
+          <Height>65</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <ObjectTextVisualizer />
+        </VisualizerSettings>
+      </WindowSettings>
+      <WindowSettings Index="17">
+        <Location>
+          <X>182</X>
+          <Y>182</Y>
+        </Location>
+        <Size>
+          <Width>336</Width>
+          <Height>82</Height>
+        </Size>
+        <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <ObjectTextVisualizer />
+        </VisualizerSettings>
+      </WindowSettings>
       <WindowSettings Index="19">
         <Visible>false</Visible>
         <Location>
@@ -35,8 +90,8 @@
   </WindowSettings>
   <WindowSettings Index="7">
     <Location>
-      <X>130</X>
-      <Y>130</Y>
+      <X>338</X>
+      <Y>10</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -48,6 +103,7 @@
     </VisualizerSettings>
   </WindowSettings>
   <WindowSettings Index="8">
+    <Visible>false</Visible>
     <Location>
       <X>26</X>
       <Y>26</Y>
@@ -77,8 +133,8 @@
   </WindowSettings>
   <WindowSettings Index="24">
     <Location>
-      <X>667</X>
-      <Y>125</Y>
+      <X>714</X>
+      <Y>614</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -106,8 +162,8 @@
   </WindowSettings>
   <WindowSettings Index="34">
     <Location>
-      <X>182</X>
-      <Y>198</Y>
+      <X>380</X>
+      <Y>269</Y>
     </Location>
     <Size>
       <Width>336</Width>

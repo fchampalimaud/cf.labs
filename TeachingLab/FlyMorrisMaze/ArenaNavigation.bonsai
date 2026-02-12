@@ -666,9 +666,9 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0</gl:X>
+                      <gl:X>-2.68210435</gl:X>
                       <gl:Y>-0</gl:Y>
-                      <gl:Z>-0</gl:Z>
+                      <gl:Z>4.456274</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -678,9 +678,9 @@
                   </Expression>
                   <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.CubemapView.bonsai">
                     <Eye>
-                      <X>0</X>
+                      <X>-2.68210435</X>
                       <Y>-0</Y>
-                      <Z>-0</Z>
+                      <Z>4.456274</Z>
                     </Eye>
                     <NearClip>0.1</NearClip>
                     <FarClip>1000</FarClip>
@@ -707,7 +707,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:RotateY">
                       <gl:Order>Append</gl:Order>
-                      <gl:Angle>3.07079649</gl:Angle>
+                      <gl:Angle>1.87079632</gl:Angle>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -900,20 +900,20 @@ Item2.Light as Light
               <ClearColor>IndianRed</ClearColor>
               <Destination>
                 <Point2f>
-                  <X>-0.210460782</X>
-                  <Y>-0.3460722</Y>
-                </Point2f>
-                <Point2f>
                   <X>-0.21875</X>
-                  <Y>0.25</Y>
+                  <Y>-0.291666627</Y>
                 </Point2f>
                 <Point2f>
-                  <X>-0.3275218</X>
-                  <Y>0.2611465</Y>
+                  <X>-0.212499976</X>
+                  <Y>0.408333361</Y>
                 </Point2f>
                 <Point2f>
-                  <X>-0.320049822</X>
-                  <Y>-0.341825843</Y>
+                  <X>-0.33125</X>
+                  <Y>0.308333337</Y>
+                </Point2f>
+                <Point2f>
+                  <X>-0.33125</X>
+                  <Y>-0.308333278</Y>
                 </Point2f>
               </Destination>
             </Expression>
@@ -1218,16 +1218,16 @@ Item2.Light as Light
               <ClearColor>IndianRed</ClearColor>
               <Destination>
                 <Point2f>
-                  <X>0.428571463</X>
-                  <Y>-0.340579748</Y>
+                  <X>0.418750048</X>
+                  <Y>-0.325000048</Y>
                 </Point2f>
                 <Point2f>
-                  <X>0.4409938</X>
-                  <Y>0.300724626</Y>
+                  <X>0.4375</X>
+                  <Y>0.274999976</Y>
                 </Point2f>
                 <Point2f>
-                  <X>0.309316754</X>
-                  <Y>0.260869563</Y>
+                  <X>0.337499976</X>
+                  <Y>0.266666651</Y>
                 </Point2f>
                 <Point2f>
                   <X>0.309316754</X>
@@ -1336,9 +1336,9 @@ Item2.Light as Light
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:CreateVector3">
-                <gl:X>0.0707371458</gl:X>
+                <gl:X>0.9553365</gl:X>
                 <gl:Y>0</gl:Y>
-                <gl:Z>0.997495</gl:Z>
+                <gl:Z>0.295520216</gl:Z>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -1433,9 +1433,9 @@ Item2.Light as Light
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0.07061747</gl:X>
+                      <gl:X>0.953720152</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0.9958073</gl:Z>
+                      <gl:Z>0.295020223</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1487,7 +1487,7 @@ Item2.Light as Light
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>0.5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1521,9 +1521,9 @@ Item2.Light as Light
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="gl:CreateVector3">
-                      <gl:X>0</gl:X>
+                      <gl:X>0.1808723</gl:X>
                       <gl:Y>0</gl:Y>
-                      <gl:Z>0</gl:Z>
+                      <gl:Z>0.465231061</gl:Z>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
