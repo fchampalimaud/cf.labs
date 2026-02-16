@@ -1,0 +1,24 @@
+# The Planes are slightly overscaled to avoid seeing the edges when the camera moves
+
+{
+  "Arena": [
+    { "Name": "Floor", "MeshType": "Plane", "Translation": [0.0, -0.04, 0.94248],"Scale": [1.9, 1.885, 0.1], "Rotation": [-1.57, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Rocks_adjusted", "Repetitions": 2,"RepeatInterval": 1.88496},  
+    { "Name": "RightWall", "MeshType": "Plane", "Translation": [0.05, 0.0, 0.94248],"Scale": [1.9, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100_adjusted", "Repetitions": 2, "RepeatInterval": 1.88496},
+    { "Name": "LeftWall", "MeshType": "Plane", "Translation": [-0.05, 0.0, 0.94248],"Scale": [1.9, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100_adjusted", "Repetitions": 2, "RepeatInterval": 1.88496}
+  ],
+
+
+  "Landmarks": [
+    { "Name": "CheckerboardR", "MeshType": "Plane", "Translation": [0.049, 0.0, 1.25664],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Checkerboard", "Repetitions": 2, "RepeatInterval": 1.88496}, 
+    { "Name": "CheckerboardL", "MeshType": "Plane", "Translation": [-0.049, 0.0, 1.25664],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Checkerboard", "Repetitions": 2, "RepeatInterval": 1.88496}, 
+    { "Name": "CirclesL", "MeshType": "Plane", "Translation": [0.049, 0.0, 0.628],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Circles", "Repetitions": 2, "RepeatInterval": 1.88496}, 
+    { "Name": "CirclesR", "MeshType": "Plane", "Translation": [-0.045, 0.0, 0.628],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Circles", "Repetitions": 2, "RepeatInterval": 1.88496}, 
+  ],
+
+  "Reward": [
+    { "Name": "RewardRight", "MeshType": "Plane", "Translation": [0.049, 0.0, 1.88496],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor":[1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 1.88496},
+    { "Name": "RewardLeft", "MeshType": "Plane", "Translation": [-0.049, 0.0, 1.88496],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 1.88496},
+    { "Name": "RewardFloor", "MeshType": "Plane", "Translation": [-0.0, -0.039, 1.88496],"Scale": [0.1, 0.1, 0.1], "Rotation": [-1.57,0.0, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 2, "RepeatInterval": 1.88496},
+  ],
+
+} 

@@ -16,9 +16,9 @@
   ],
 
   "Reward": [
-    { "Name": "RewardRight", "MeshType": "Plane", "Translation": [0.049, 0.0, 0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor":[1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4},
-    { "Name": "RewardLeft", "MeshType": "Plane", "Translation": [-0.049, 0.0, 0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4},
-    { "Name": "RewardFloor", "MeshType": "Plane", "Translation": [-0.0, -0.039, 0.9],"Scale": [0.1, 0.1, 0.1], "Rotation": [-1.57,0.0, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4},
+    { "Name": "RewardRight", "MeshType": "Plane", "Translation": [0.049, 0.0, 0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor":[1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4, "RepeatInterval": 1.88496},
+    { "Name": "RewardLeft", "MeshType": "Plane", "Translation": [-0.049, 0.0, 0.9],"Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4, "RepeatInterval": 1.88496},
+    { "Name": "RewardFloor", "MeshType": "Plane", "Translation": [-0.0, -0.039, 0.9],"Scale": [0.1, 0.1, 0.1], "Rotation": [-1.57,0.0, 0.0], "AmbientColor": [0.8, 0.8, 0.8], "DiffuseColor": [1, 0, 0], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 4, "RepeatInterval": 1.88496},
   ],
 
 } 

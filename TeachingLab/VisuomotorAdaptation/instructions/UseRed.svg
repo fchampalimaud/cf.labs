@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1000"
+   height="1000"
+   viewBox="0 0 1000 1000"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="UseRed.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.81454783"
+     inkscape:cx="562.88898"
+     inkscape:cy="514.39582"
+     inkscape:window-width="1920"
+     inkscape:window-height="1002"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:pageshadow="2" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:42.6667px;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.0377953;stroke-dasharray:none;stroke-opacity:1"
+       x="498.58334"
+       y="290.58331"
+       id="text395"><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="290.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan2398">Welcome! This is a visuomotor learning</tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="350.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan1550">task, where you are supposed to </tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="410.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan962">hit a <tspan
+   style="fill:#0000ff;fill-opacity:1"
+   id="tspan1348">blue</tspan> target with a cursor. </tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="470.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan1552">Please, execute the succession of </tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="530.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan1554">movements as fast as possible.</tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="590.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan1556" /><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="650.58331"
+         style="font-size:48px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan1547">Use the <tspan
+   style="font-size:48px;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.0377953;stroke-dasharray:none;stroke-opacity:1"
+   id="tspan2205">red</tspan> cursor to hit the target!</tspan><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="705.71759"
+         style="font-size:42.6667px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan2201" /><tspan
+         sodipodi:role="line"
+         x="498.58334"
+         y="759.05096"
+         style="font-size:32px;text-align:center;text-anchor:middle;stroke-width:0.0377953;stroke-dasharray:none"
+         id="tspan2203">[Press any button to continue]</tspan></text>
+  </g>
+</svg>
