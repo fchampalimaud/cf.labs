@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Workflow xmlns="clr-namespace:Bonsai;assembly=Bonsai.Core">
+  <Nodes>
+    <!-- Read CSV file -->
+    <Node Id="1" Type="Bonsai.IO.CsvReader">
+      <Properties>
+        <Property Name="FileName" Value="C:\\path\\to\\your\\data.csv" /> <!-- Change to your CSV path -->
+        <Property Name="HasHeaders" Value="True" />
+      </Properties>
+    </Node>
+
+    <!-- Repeat the CSV file indefinitely -->
+    <Node Id="2" Type="Bonsai.Repeat" />
+
+    <!-- Format row as "col1,col2" -->
+    <Node Id="3" Type="Bonsai.Expressions.Select">
+      <Properties>
+        <Property Name="Selector" Value="string.Format(&quot;{0},{1}&quot;, row.Column1, row.Column2)" />
+      </Properties>
+    </Node>
+
+    <!-- Delay between sends -->
+    <Node Id="4" Type="Bonsai.Expressions.Delay">
+      <Properties>
+        <Property Name="DueTime" Value="00:00:01" /> <!-- 1 second delay -->
+      </Properties>
+    </Node>
+
+    <!-- Send to serial port -->
+    <Node Id="5" Type="Bonsai.IO.SerialCommand">
+      <Properties>
+        <Property Name="PortName" Value="COM3" /> <!-- Change to your COM port -->
+        <Property Name="BaudRate" Value="115200" />
+        <Property Name="NewLine" Value="\n" />
+      </Properties>
+    </Node>
+  </Nodes>
+
+  <Connections>
+    <Connection From="1" To="2" />
+    <Connection From="2" To="3" />
+    <Connection From="3" To="4" />
+    <Connection From="4" To="5" />
+  </Connections>
+</Workflow>
+How to Use
+Change these values in the file before opening in Bonsai:
+
+C:\\path\\to\\your\\data.csv → your CSV file path.
+row.Column1 and row.Column2 → your actual column names (case-sensitive).
+COM3 → your serial port.
+115200 → your baud rate.
+00:00:01 → delay between rows (HH:MM:SS format).
+Open in Bonsai
+
+Double-click the .bonsai file or open it from Bonsai’s File → Open menu.
+Run the workflow
+
+Press F5 or click Run.
+Each row will be sent to the serial port with the specified delay.
+If you want, I can also make a version that automatically detects the CSV column names so you don’t have to edit them manually.
+
+Do you want me to make that auto-detect version?
+

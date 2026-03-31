@@ -1,0 +1,4 @@
+Bonsai note
+Windows: keep first but change location to 2000;200 so it appears on the projector on the right spot
+WxH : 800*350
+Background is currently grey but might change to black 
