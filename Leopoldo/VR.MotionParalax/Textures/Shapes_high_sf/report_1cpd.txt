@@ -1,0 +1,9 @@
+Requested physical size 40.0×35.0 cm -> 1285×1124 px on this 27" 1920×1080 screen.
+Note: requested grating region does not fully fit the 1920×1080 image; it will be centered and clipped to image bounds.
+Spatial frequency: 0.5 cycles/deg -> 0.130948 cycles/cm -> 5.238 cycles across requested width.
+Which corresponds to 0.004076207 cycles/pixel, or 245.326 pixels per cycle.
+
+Requested physical size 15.0×35.0 cm -> 482×1124 px on this 27" 1920×1080 screen.
+Note: requested grating region does not fully fit the 1920×1080 image; it will be centered and clipped to image bounds.
+Spatial frequency: 0.5 cycles/deg -> 0.130948 cycles/cm -> 1.964 cycles across requested width.
+Which corresponds to 0.004075150 cycles/pixel, or 245.390 pixels per cycle.

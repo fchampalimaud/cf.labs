@@ -1,0 +1,79 @@
+{
+  "Arena": [
+    {
+      "Name": "Floor",
+      "MeshType": "Plane",
+      "Translation": [ 0.0, -0.08, 0.94248 ],
+      "Scale": [ 0.63, 0.63, 0.1 ],
+      "Rotation": [ -1.57, 0.0, 0.0 ],
+      "AmbientColor": [ 1, 1, 1 ],
+      "DiffuseColor": [ 1, 1, 1 ],
+      "SpecularColor": [ 0, 0, 0 ],
+      "Texture": "checker",
+      "Repetitions": 4,
+      "RepeatInterval": 0.62832
+    }
+  ],
+  "Landmarks": [
+    {
+      "Name": "Plane1",
+      "MeshType": "Plane",
+      "Translation": [ -1.4, 0.0, -2.58829 ],
+      "Scale": [ 0.56, 0.56, 0.0 ],
+      "Rotation": [ 0.0, 1.57, 0.0 ],
+      "AmbientColor": [ 1, 1, 1 ],
+      "DiffuseColor": [ 0, 0, 0 ],
+      "SpecularColor": [ 0, 0, 0 ],
+      "Texture": "zigzag_near",
+      "ChangeLocation": 500,
+      "ChangeColor": [ 1, 1, 1 ],
+      "Repetitions": 1,
+      "RepeatInterval": -9999999
+    },
+    {
+      "Name": "Plane2",
+      "MeshType": "Cylinder",
+      "Translation": [ -3.4, 0.0, -3.57762 ],
+      "Scale": [ 0.255, 0.629, 0.255 ],
+      "Rotation": [ 0.0, 1.57, 0.0 ],
+      "AmbientColor": [ 1, 1, 0 ],
+      "DiffuseColor": [ 0, 0, 0 ],
+      "SpecularColor": [ 0, 0, 0 ],
+      "Texture": "None",
+      "ChangeLocation": 170,
+      "ChangeColor": [ 1, 1, 0 ],
+      "Repetitions": 1,
+      "RepeatInterval": -9999999
+    },
+    {
+      "Name": "Plane7",
+      "MeshType": "Plane",
+      "Translation": [ 1.4, 0.0, -2.58829 ],
+      "Scale": [ 0.56, 0.56, 0.0 ],
+      "Rotation": [ 0.0, 1.57, 0.0 ],
+      "AmbientColor": [ 1, 1, 1 ],
+      "DiffuseColor": [ 0, 0, 0 ],
+      "SpecularColor": [ 0, 0, 0 ],
+      "Texture": "zigzag_near",
+      "ChangeLocation": 500,
+      "ChangeColor": [ 1, 1, 1 ],
+      "Repetitions": 1,
+      "RepeatInterval": -9999999
+    },
+    {
+      "Name": "Plane8",
+      "MeshType": "Cylinder",
+      "Translation": [ 3.4, 0.0, -3.57762 ],
+      "Scale": [ 0.255, 0.629, 0.255 ],
+      "Rotation": [ 0.0, 1.57, 0.0 ],
+      "AmbientColor": [ 1, 1, 0 ],
+      "DiffuseColor": [ 0, 0, 0 ],
+      "SpecularColor": [ 0, 0, 0 ],
+      "Texture": "None",
+      "ChangeLocation": 170,
+      "ChangeColor": [ 1, 1, 0 ],
+      "Repetitions": 1,
+      "RepeatInterval": -9999999
+    }
+  ]
+}

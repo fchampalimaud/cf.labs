@@ -1,0 +1,24 @@
+Visual Stimulus Generation Report
+========================================
+
+Generated 8 pattern files:
+  - vertical
+  - horizontal
+  - diag_45
+  - diag_135
+
+Parameters used:
+  - Shape spacing: 500 pixels
+  - Shape size: 0.3 (fraction of spacing)
+  - Shape color: 128 (gray level)
+  - Background color: 255 (gray level)
+
+Requested physical size 40.0×35.0 cm -> 1285×1124 px on this 27" screen.
+Note: requested region does not fully fit; will be centered and clipped.
+Spatial frequency: 0.5 cpd -> 0.130948 cycles/cm
+-> 5.238 cycles across width -> 245.326 px/cycle
+
+Requested physical size 15.0×35.0 cm -> 482×1124 px on this 27" screen.
+Note: requested region does not fully fit; will be centered and clipped.
+Spatial frequency: 0.5 cpd -> 0.130948 cycles/cm
+-> 1.964 cycles across width -> 245.390 px/cycle

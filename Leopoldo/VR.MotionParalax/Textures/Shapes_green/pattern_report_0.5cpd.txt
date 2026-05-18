@@ -1,0 +1,30 @@
+Visual Stimulus Generation Report
+========================================
+
+Generated 18 pattern files:
+  - circles
+  - squares
+  - triangles
+  - stars
+  - diamonds
+  - hexagons
+
+Parameters used:
+  - Shape spacing (adaptive): Small objects=120 px, Large objects=250 px
+  - Shape size: 0.35 (fraction of spacing)
+  - Shape color: (0, 128, 0) (RGB green)
+  - Background color: 255 (white)
+
+Requested physical size 40.0×35.0 cm -> 1285×1124 px on this 27" screen.
+Note: requested region does not fully fit; will be centered and clipped.
+Spatial frequency: 0.5 cpd -> 0.130948 cycles/cm
+-> 5.238 cycles across width -> 245.326 px/cycle
+
+Requested physical size 15.0×35.0 cm -> 482×1124 px on this 27" screen.
+Note: requested region does not fully fit; will be centered and clipped.
+Spatial frequency: 0.5 cpd -> 0.130948 cycles/cm
+-> 1.964 cycles across width -> 245.390 px/cycle
+
+Requested physical size 2.0×11.0 cm -> 64×353 px on this 27" screen.
+Spatial frequency: 0.5 cpd -> 0.130948 cycles/cm
+-> 0.262 cycles across width -> 244.372 px/cycle

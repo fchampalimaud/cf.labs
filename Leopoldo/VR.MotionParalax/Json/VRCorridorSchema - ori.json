@@ -1,0 +1,21 @@
+{
+  "title": "VRCorridorSchema",
+  "definitions": {
+    "Landmark": {
+      "title": "Landmark",
+      "type": "object",
+      "properties": {
+        "Position": { "type": "number" },
+        "Size": { "type": "number" }
+      }
+    }
+  },
+  "type": "object",
+  "properties": {
+    "Landmarks": { 
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Landmark" }
+    }
+  }
+}

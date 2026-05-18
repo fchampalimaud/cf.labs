@@ -1,0 +1,105 @@
+{
+  "title": "VRCorridorSchema",
+  "definitions": {
+    "Landmark": {
+      "title": "Landmark",
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "MeshType": {
+          "type": "string"
+        },
+        "Translation": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Scale": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Rotation": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "AmbientColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "DiffuseColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "SpecularColor": {
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "Texture": {
+          "type": "string"
+        },
+        "Repetitions": {
+          "type": "number",
+          "format": "float"
+        },
+        "RepeatInterval": {
+          "type": "number",
+          "format": "float"
+        },
+        "ChangeLocation": {
+          "type": "number",
+          "format": "float"
+        },
+        "ChangeColor":{
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        }
+     },
+      "required": ["Name", "MeshType", "Translation", "Scale", "Rotation", "AmbientColor", "DiffuseColor", "SpecularColor", "Texture", "Repetitions", "RepeatEvery"] 
+    }
+
+  },
+
+
+  "type": "object",
+  "properties": {
+    "Landmarks": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
+    },
+
+    "Arena": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
+    },
+
+    "Reward": { 
+      "type": "array",
+      "items": { "$ref": "#/definitions/Landmark" }
+    }
+
+
+  },
+  "required": []
+}
