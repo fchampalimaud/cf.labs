@@ -1,0 +1,28 @@
+# The planes are slightly overscaled to avoid seeing the edges when the camera moves
+# 2 m corridor with landmarks at 40, 80, 120, 160 cm and reward at 200 cm.
+# In this setup, forward movement means decreasing z.
+
+{
+  "Arena": [
+    { "Name": "Floor", "MeshType": "Plane", "Translation": [0.0, -0.04, 3.0],"Scale": [2.05, 2.0, 0.1], "Rotation": [-1.57, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "Rocks_adjusted", "Repetitions": 3,"RepeatInterval": 2.0},  
+    { "Name": "RightWall", "MeshType": "Plane", "Translation": [0.05, 0.0, 3.0],"Scale": [2.05, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100_adjusted", "Repetitions": 3, "RepeatInterval": 2.0},
+    { "Name": "LeftWall", "MeshType": "Plane", "Translation": [-0.05, 0.0, 3.0],"Scale": [2.05, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "BG_0.04_0.32_100_adjusted", "Repetitions": 3, "RepeatInterval": 2.0}
+  ],
+
+  "Landmarks": [
+    { "Name": "First_R", "MeshType": "Plane", "Translation": [0.049, 0.0, 3.6], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "checker", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "First_L", "MeshType": "Plane", "Translation": [-0.049, 0.0, 3.6], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "checker", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Second_R", "MeshType": "Plane", "Translation": [0.049, 0.0, 3.2], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "pinstripe", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Second_L", "MeshType": "Plane", "Translation": [-0.049, 0.0, 3.2], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "pinstripe", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Third_R", "MeshType": "Plane", "Translation": [0.049, 0.0, 2.8], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "chevron", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Third_L", "MeshType": "Plane", "Translation": [-0.049, 0.0, 2.8], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "chevron", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Fourth_R", "MeshType": "Plane", "Translation": [0.049, 0.0, 2.4], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "blobs", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "Fourth_L", "MeshType": "Plane", "Translation": [-0.049, 0.0, 2.4], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "blobs", "Repetitions": 3, "RepeatInterval": 2.0 }
+  ],
+
+  "Reward": [
+    { "Name": "RewardRight", "MeshType": "Plane", "Translation": [0.049, 0.0, 2.0], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, -1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "RewardLeft", "MeshType": "Plane", "Translation": [-0.049, 0.0, 2.0], "Scale": [0.1, 0.08, 0.1], "Rotation": [0.0, 1.57, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 3, "RepeatInterval": 2.0 },
+    { "Name": "RewardFloor", "MeshType": "Plane", "Translation": [0.0, -0.039, 2.0], "Scale": [0.1, 0.1, 0.1], "Rotation": [-1.57, 0.0, 0.0], "AmbientColor": [1, 1, 1], "DiffuseColor": [1, 1, 1], "SpecularColor": [0, 0, 0], "Texture": "None", "Repetitions": 3, "RepeatInterval": 2.0 }
+  ]
+}
