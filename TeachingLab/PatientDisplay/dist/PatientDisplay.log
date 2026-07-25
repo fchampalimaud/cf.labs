@@ -1,0 +1,48 @@
+2026-07-25 20:27:28 [INFO] PatientDisplay: App started
+2026-07-25 20:27:28 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:29:30 [INFO] PatientDisplay: App closed
+2026-07-25 20:29:33 [INFO] PatientDisplay: App started
+2026-07-25 20:29:33 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:30:54 [INFO] PatientDisplay: App closed
+2026-07-25 20:30:58 [INFO] PatientDisplay: App started
+2026-07-25 20:30:58 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:31:01 [INFO] PatientDisplay: App closed
+2026-07-25 20:32:56 [INFO] PatientDisplay: App started
+2026-07-25 20:32:56 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:35:25 [INFO] PatientDisplay: App started
+2026-07-25 20:35:25 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:41:59 [INFO] PatientDisplay: App started
+2026-07-25 20:41:59 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:42:06 [ERROR] PatientDisplay: Error during start
+Traceback (most recent call last):
+  File "main.py", line 214, in _start
+  File "main.py", line 238, in _do_start
+  File "overlay.py", line 54, in __init__
+  File "tkinter\__init__.py", line 2471, in pack_configure
+_tkinter.TclError: bad pad value "-100": must be positive screen distance
+2026-07-25 20:42:10 [ERROR] PatientDisplay: Error during start
+Traceback (most recent call last):
+  File "main.py", line 214, in _start
+  File "main.py", line 238, in _do_start
+  File "overlay.py", line 54, in __init__
+  File "tkinter\__init__.py", line 2471, in pack_configure
+_tkinter.TclError: bad pad value "-100": must be positive screen distance
+2026-07-25 20:42:33 [INFO] PatientDisplay: App closed
+2026-07-25 20:45:01 [INFO] PatientDisplay: App started
+2026-07-25 20:45:01 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:45:02 [INFO] PatientDisplay: Monitoring started — 2 ROIs
+2026-07-25 20:45:03 [INFO] PatientDisplay: ROI '1': current=36.9  baseline=0.0  diff=36.9  threshold=30
+2026-07-25 20:45:03 [INFO] PatientDisplay: ROI '2': current=243.0  baseline=16.5  diff=226.5  threshold=30
+2026-07-25 20:45:05 [INFO] PatientDisplay: App closed
+2026-07-25 20:52:19 [INFO] PatientDisplay: App started
+2026-07-25 20:52:19 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 20:52:21 [INFO] PatientDisplay: Monitoring started — 2 ROIs
+2026-07-25 20:52:22 [INFO] PatientDisplay: ROI '1': current=36.9  baseline=0.0  diff=36.9  threshold=30
+2026-07-25 20:52:22 [INFO] PatientDisplay: ROI '2': current=241.8  baseline=16.5  diff=225.3  threshold=30
+2026-07-25 20:52:26 [INFO] PatientDisplay: App closed
+2026-07-25 21:10:30 [INFO] PatientDisplay: App started
+2026-07-25 21:10:30 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 21:12:09 [INFO] PatientDisplay: App closed
+2026-07-25 21:16:55 [INFO] PatientDisplay: App started
+2026-07-25 21:16:55 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-25 21:17:16 [INFO] PatientDisplay: App closed

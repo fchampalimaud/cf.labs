@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <RootNamespace>Bonsai.Dexter</RootNamespace>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>annotations</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- NuGet package metadata -->
+    <Version>0.1.0</Version>
+    <Title>Bonsai.Dexter</Title>
+    <Description>Bonsai source operator for streaming load cell data from the Dexter BLE device.</Description>
+    <Authors>HugoMarques</Authors>
+    <PackageTags>Bonsai BLE LoadCell Dexter</PackageTags>
+
+    <!-- Required for the Bonsai package manager to discover this package -->
+    <PackageType>Dependency;BonsaiLibrary</PackageType>
+
+    <!-- Emit a .nupkg on every build -->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bonsai.Core" Version="2.9.1" />
+    <PackageReference Include="Bonsai.Dsp" Version="2.9.1" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
+  </ItemGroup>
+
+</Project>

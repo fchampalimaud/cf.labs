@@ -1,0 +1,33 @@
+{
+  "rois": [
+    {
+      "id": "1",
+      "x": 486,
+      "y": 94,
+      "w": 100,
+      "h": 104,
+      "baseline": 0.0,
+      "threshold": 30
+    },
+    {
+      "id": "2",
+      "x": 548,
+      "y": 300,
+      "w": 144,
+      "h": 102,
+      "baseline": 16.470588235294116,
+      "threshold": 30
+    }
+  ],
+  "check_interval_ms": 1000,
+  "display_interval_ms": 1000,
+  "threshold": 8,
+  "monitor_index": 1,
+  "display_x": 0.5,
+  "display_y": 0.7,
+  "font_size": 318,
+  "window_x": 1091,
+  "window_y": 455,
+  "sub_font_size": 66,
+  "sub_gap": 0
+}

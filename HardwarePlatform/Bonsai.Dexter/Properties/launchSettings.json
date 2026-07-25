@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Bonsai": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\HugoMarques\\AppData\\Local\\Bonsai\\Bonsai.exe",
+      "commandLineArgs": "--lib C:\\Users\\HugoMarques\\Downloads\\Bonsai.Dexter\\bin\\Debug\\net472",
+      "workingDirectory": "C:\\Users\\HugoMarques\\Downloads\\Bonsai.Dexter"
+    }
+  }
+}
