@@ -301,7 +301,7 @@ class App:
             messagebox.showerror("No ROIs", "No ROIs defined — run Setup first.", parent=self.root)
             return
 
-        missing = [r["id"] for r in rois if r.get("baseline") is None]
+        missing = list(dict.fromkeys(r["id"] for r in rois if r.get("baseline") is None))
         if missing:
             messagebox.showerror(
                 "Missing Baselines",

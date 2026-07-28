@@ -6,28 +6,40 @@
       "y": 94,
       "w": 100,
       "h": 104,
-      "baseline": 0.0,
-      "threshold": 30
+      "baseline": 19.47298076923077,
+      "threshold": 20,
+      "key": "c4a467f3ef864adb922dccc032ae8bb8"
+    },
+    {
+      "id": "1",
+      "key": "7f81de24b5764198a3185a3cf2f1094e",
+      "x": 718,
+      "y": 106,
+      "w": 88,
+      "h": 90,
+      "baseline": 12.0,
+      "threshold": 20
     },
     {
       "id": "2",
-      "x": 548,
-      "y": 300,
-      "w": 144,
-      "h": 102,
-      "baseline": 16.470588235294116,
-      "threshold": 30
+      "key": "e41f8922167d4138b85d665157640fdf",
+      "x": 498,
+      "y": 272,
+      "w": 78,
+      "h": 110,
+      "baseline": 12.0,
+      "threshold": 20
     }
   ],
   "check_interval_ms": 1000,
   "display_interval_ms": 1000,
-  "threshold": 8,
+  "threshold": 20,
   "monitor_index": 1,
   "display_x": 0.5,
   "display_y": 0.7,
   "font_size": 318,
-  "window_x": 1091,
-  "window_y": 455,
+  "window_x": 897,
+  "window_y": 292,
   "sub_font_size": 66,
   "sub_gap": 0
 }

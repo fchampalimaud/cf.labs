@@ -1,4 +1,5 @@
 import tkinter as tk
+import uuid
 from tkinter import messagebox, simpledialog
 
 import mss
@@ -25,6 +26,8 @@ class SetupWindow:
         self.parent = parent
         self.cfg = config.load()
         self.rois: list[dict] = list(self.cfg.get("rois", []))
+        for roi in self.rois:
+            roi.setdefault("key", uuid.uuid4().hex)
         self.scale = 1.0
         self.photo = None  # keep reference so GC doesn't collect it
 
@@ -153,7 +156,7 @@ class SetupWindow:
     def _draw_roi(self, roi):
         x1, y1 = self._s2c(roi["x"], roi["y"])
         x2, y2 = self._s2c(roi["x"] + roi["w"], roi["y"] + roi["h"])
-        tag = f"roi_{roi['id']}"
+        tag = f"roi_{roi['key']}"
         self.canvas.delete(tag)
 
         self.canvas.create_rectangle(
@@ -227,6 +230,7 @@ class SetupWindow:
 
         roi = {
             "id": label,
+            "key": uuid.uuid4().hex,
             "x": sx1,
             "y": sy1,
             "w": max(sx2 - sx1, 1),
@@ -234,8 +238,6 @@ class SetupWindow:
             "baseline": None,
             "threshold": self._threshold_var.get(),
         }
-        # Replace if same id already exists
-        self.rois = [r for r in self.rois if r["id"] != label]
         self.rois.append(roi)
         self._draw_roi(roi)
         self._status.set(f"ROI '{label}' added. Click 'Sample Baselines' when ready.")
@@ -246,11 +248,14 @@ class SetupWindow:
         for item in hits:
             for tag in self.canvas.gettags(item):
                 if tag.startswith("roi_"):
-                    roi_id = tag[4:]
-                    if messagebox.askyesno("Delete ROI", f"Delete '{roi_id}'?", parent=self.win):
-                        self.rois = [r for r in self.rois if r["id"] != roi_id]
+                    roi_key = tag[4:]
+                    roi = next((r for r in self.rois if r["key"] == roi_key), None)
+                    if roi is None:
+                        return
+                    if messagebox.askyesno("Delete ROI", f"Delete '{roi['id']}'?", parent=self.win):
+                        self.rois = [r for r in self.rois if r["key"] != roi_key]
                         self.canvas.delete(tag)
-                        self._status.set(f"ROI '{roi_id}' deleted.")
+                        self._status.set(f"ROI '{roi['id']}' deleted.")
                     return
 
     # ------------------------------------------------------------------

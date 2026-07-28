@@ -46,3 +46,19 @@ _tkinter.TclError: bad pad value "-100": must be positive screen distance
 2026-07-25 21:16:55 [INFO] PatientDisplay: App started
 2026-07-25 21:16:55 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
 2026-07-25 21:17:16 [INFO] PatientDisplay: App closed
+2026-07-28 14:14:36 [INFO] PatientDisplay: App started
+2026-07-28 14:14:36 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-28 14:14:37 [INFO] PatientDisplay: App closed
+2026-07-28 14:38:19 [INFO] PatientDisplay: App started
+2026-07-28 14:38:19 [INFO] PatientDisplay: Global hotkey registered: ctrl+shift+h
+2026-07-28 14:40:43 [INFO] PatientDisplay: Monitoring started — 3 ROIs
+2026-07-28 14:40:45 [INFO] PatientDisplay: ROI '1': current=19.5  peak=19.5  threshold=20  active=False
+2026-07-28 14:40:45 [INFO] PatientDisplay: ROI '1': current=12.0  peak=19.5  threshold=20  active=False
+2026-07-28 14:40:45 [INFO] PatientDisplay: ROI '2': current=12.0  peak=12.0  threshold=20  active=False
+2026-07-28 14:40:56 [INFO] PatientDisplay: ROI '1': current=232.5  peak=232.5  threshold=20  active=True
+2026-07-28 14:40:56 [INFO] PatientDisplay: ROI '1': current=231.8  peak=232.5  threshold=20  active=True
+2026-07-28 14:40:56 [INFO] PatientDisplay: ROI '2': current=231.0  peak=231.9  threshold=20  active=True
+2026-07-28 14:41:08 [INFO] PatientDisplay: ROI '1': current=42.2  peak=232.5  threshold=20  active=True
+2026-07-28 14:41:08 [INFO] PatientDisplay: ROI '1': current=224.1  peak=232.5  threshold=20  active=True
+2026-07-28 14:41:08 [INFO] PatientDisplay: ROI '2': current=36.5  peak=231.9  threshold=20  active=True
+2026-07-28 14:41:13 [INFO] PatientDisplay: App closed

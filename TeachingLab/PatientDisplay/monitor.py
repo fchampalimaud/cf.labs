@@ -65,4 +65,4 @@ class ScreenMonitor:
                     })
 
                 if self.on_update:
-                    self.on_update(active, roi_data)
+                    self.on_update(list(dict.fromkeys(active)), roi_data)
