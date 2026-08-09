@@ -74,6 +74,20 @@
           "items": { "type": "number" },
           "minItems": 3,
           "maxItems": 3
+        },
+        "ChangeTranslation":{
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "ChangeScale":{
+          "type": "array",
+          "format": "float",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3
         }
      },
       "required": ["Name", "MeshType", "Translation", "Scale", "Rotation", "AmbientColor", "DiffuseColor", "SpecularColor", "Texture", "Repetitions", "RepeatEvery"] 

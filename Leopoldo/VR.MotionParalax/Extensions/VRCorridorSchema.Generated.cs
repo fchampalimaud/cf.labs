@@ -41,6 +41,10 @@ namespace VRCorridorSchema
     
         private System.Collections.Generic.List<double> _changeColor;
     
+        private System.Collections.Generic.List<double> _changeTranslation;
+    
+        private System.Collections.Generic.List<double> _changeScale;
+    
         public Landmark()
         {
             _translation = new System.Collections.Generic.List<double>();
@@ -50,6 +54,8 @@ namespace VRCorridorSchema
             _diffuseColor = new System.Collections.Generic.List<double>();
             _specularColor = new System.Collections.Generic.List<double>();
             _changeColor = new System.Collections.Generic.List<double>();
+            _changeTranslation = new System.Collections.Generic.List<double>();
+            _changeScale = new System.Collections.Generic.List<double>();
         }
     
         protected Landmark(Landmark other)
@@ -67,6 +73,8 @@ namespace VRCorridorSchema
             _repeatInterval = other._repeatInterval;
             _changeLocation = other._changeLocation;
             _changeColor = other._changeColor;
+            _changeTranslation = other._changeTranslation;
+            _changeScale = other._changeScale;
         }
     
         [YamlDotNet.Serialization.YamlMemberAttribute(Alias="Name")]
@@ -245,6 +253,34 @@ namespace VRCorridorSchema
             }
         }
     
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ChangeTranslation")]
+        public System.Collections.Generic.List<double> ChangeTranslation
+        {
+            get
+            {
+                return _changeTranslation;
+            }
+            set
+            {
+                _changeTranslation = value;
+            }
+        }
+    
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        [YamlDotNet.Serialization.YamlMemberAttribute(Alias="ChangeScale")]
+        public System.Collections.Generic.List<double> ChangeScale
+        {
+            get
+            {
+                return _changeScale;
+            }
+            set
+            {
+                _changeScale = value;
+            }
+        }
+    
         public System.IObservable<Landmark> Generate()
         {
             return System.Reactive.Linq.Observable.Defer(() => System.Reactive.Linq.Observable.Return(new Landmark(this)));
@@ -269,7 +305,9 @@ namespace VRCorridorSchema
             stringBuilder.Append("Repetitions = " + _repetitions + ", ");
             stringBuilder.Append("RepeatInterval = " + _repeatInterval + ", ");
             stringBuilder.Append("ChangeLocation = " + _changeLocation + ", ");
-            stringBuilder.Append("ChangeColor = " + _changeColor);
+            stringBuilder.Append("ChangeColor = " + _changeColor + ", ");
+            stringBuilder.Append("ChangeTranslation = " + _changeTranslation + ", ");
+            stringBuilder.Append("ChangeScale = " + _changeScale);
             return true;
         }
     
